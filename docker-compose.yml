@@ -14,11 +14,11 @@ services:
              python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - SECRET_KEY=${SECRET_KEY}
-      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+      - DB_NAME=dummydb
+      - DB_USER=dummyuser
+      - DB_PASS=dummypass
+      - SECRET_KEY=dummykey
+      - DJANGO_ALLOWED_HOSTS=127.0.0.1
       - DEBUG=1
     depends_on:
       - db
