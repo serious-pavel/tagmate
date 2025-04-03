@@ -8,6 +8,8 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
 
         # Populate custom fields
         user.full_name = sociallogin.account.extra_data.get('name', '')
-        user.profile_picture = sociallogin.account.extra_data.get('picture', '')
+        user.profile_picture = sociallogin.account.extra_data.get(
+            'picture', ''
+        )
 
         return user

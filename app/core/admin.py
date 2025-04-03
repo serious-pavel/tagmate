@@ -12,16 +12,21 @@ class SocialAccountInline(admin.TabularInline):
     model = SocialAccount
     extra = 0
 
+
 class EmailAddressInline(admin.TabularInline):
     model = EmailAddress
     extra = 0
+
 
 class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users"""
     ordering = ['id']
     list_display = ['email', 'full_name', 'id']
     fieldsets = (
-        (None, {'fields': ('email', 'full_name', 'profile_picture', 'password')}),
+        (
+            None,
+            {'fields': ('email', 'full_name', 'profile_picture', 'password')}
+        ),
         (
             _('Permissions'),
             {'fields': ('is_active', 'is_staff', 'is_superuser')}
