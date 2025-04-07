@@ -13,3 +13,25 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         )
 
         return user
+
+    def pre_social_login(self, request, sociallogin):
+        """
+        Refresh data if changed. Called with every social login.
+        """
+        if sociallogin.is_existing:
+            user = sociallogin.user
+            extra_data = sociallogin.account.extra_data
+
+            # Update the fields if they’ve changed
+            full_name = extra_data.get('name', '')
+            profile_pic = extra_data.get('picture', '')
+
+            if full_name and user.full_name != full_name:
+                user.full_name = full_name
+
+            if profile_pic and user.profile_picture != profile_pic:
+                user.profile_picture = profile_pic
+
+            user.save()
+
+        super().pre_social_login(request, sociallogin)
