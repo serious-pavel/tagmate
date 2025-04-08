@@ -10,7 +10,8 @@ services:
       - ./app:/app
     command: >
       sh -c "python manage.py wait_for_db && 
-             python manage.py migrate && 
+             python manage.py migrate &&
+             python manage.py pre_create_su &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
@@ -21,6 +22,8 @@ services:
       - DEBUG=1
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - SU_UID=${SU_UID}
+      - SU_EMAIL=${SU_EMAIL}
     depends_on:
       - db
 
