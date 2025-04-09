@@ -76,3 +76,17 @@ class PreCreateCommandTests(TestCase):
         call_command("pre_create_su")
 
         self.assertEqual(SocialAccount.objects.filter(user=user).count(), 2)
+
+    @patch.dict(os.environ, {"SU_EMAIL": SU_EMAIL, "SU_UID": SU_UID})
+    def test_other_email_address_is_retained(self):
+        """Test that other linked email addresses are not changed"""
+        other_email = 'other@example.com'
+        User = get_user_model()
+        user = User.objects.create(email=SU_EMAIL)
+        EmailAddress.objects.create(user=user, email=other_email)
+
+        self.assertEqual(EmailAddress.objects.filter(user=user).count(), 1)
+
+        call_command("pre_create_su")
+
+        self.assertEqual(EmailAddress.objects.filter(user=user).count(), 2)
