@@ -42,3 +42,19 @@ class PreCreateCommandTests(TestCase):
         email_address = EmailAddress.objects.get(user=user, email=SU_EMAIL)
         self.assertTrue(email_address.verified)
         self.assertTrue(email_address.primary)
+
+    @patch.dict(os.environ, {"SU_EMAIL": SU_EMAIL, "SU_UID": SU_UID})
+    def test_existing_user_is_updated(self):
+        """
+        Test updating an existing user
+        """
+        User = get_user_model()
+        user = User.objects.create(email=SU_EMAIL, password="generic_pass")
+        self.assertTrue(user.has_usable_password())
+
+        call_command("pre_create_su")
+
+        user.refresh_from_db()
+        self.assertTrue(user.is_staff)
+        self.assertTrue(user.is_superuser)
+        self.assertFalse(user.has_usable_password())
