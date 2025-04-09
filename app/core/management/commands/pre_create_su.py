@@ -26,15 +26,15 @@ class Command(BaseCommand):
 
         if user.has_usable_password():
             user.set_unusable_password()
-            update_fields.append("password")
+            update_fields.append('password')
 
         if not user.is_staff:
             user.is_staff = True
-            update_fields.append("is_staff")
+            update_fields.append('is_staff')
 
         if not user.is_superuser:
             user.is_superuser = True
-            update_fields.append("is_superuser")
+            update_fields.append('is_superuser')
 
         if update_fields:
             user.save(update_fields=update_fields)
@@ -42,7 +42,7 @@ class Command(BaseCommand):
         # Link the social account
         social_account, _ = SocialAccount.objects.get_or_create(
             user=user,
-            provider="google",
+            provider='google',
             uid=uid,
         )
 
@@ -51,8 +51,8 @@ class Command(BaseCommand):
             user=user,
             email=email,
             defaults={
-                "verified": True,
-                "primary": True,
+                'verified': True,
+                'primary': True,
             }
         )
 

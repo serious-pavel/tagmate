@@ -15,17 +15,15 @@ SU_UID = 'google-uid-123'
 
 
 class PreCreateCommandTests(TestCase):
-    """
-    Tests for pre_create_su command
-    """
-    @patch.dict(os.environ, {"SU_EMAIL": SU_EMAIL, "SU_UID": SU_UID})
+    """Tests for pre_create_su command"""
+    @patch.dict(os.environ, {'SU_EMAIL': SU_EMAIL, 'SU_UID': SU_UID})
     def test_creates_new_superuser_with_social_account(self):
         """
         Test that pre-creating a user with social account works
         """
         User = get_user_model()
 
-        call_command("pre_create_su")
+        call_command('pre_create_su')
 
         # Check user created
         user = User.objects.get(email=SU_EMAIL)
@@ -35,7 +33,7 @@ class PreCreateCommandTests(TestCase):
         self.assertFalse(user.has_usable_password())
 
         # Check social account created
-        social_acc = SocialAccount.objects.get(user=user, provider="google")
+        social_acc = SocialAccount.objects.get(user=user, provider='google')
         self.assertEqual(social_acc.uid, SU_UID)
 
         # Check email address record
@@ -43,23 +41,23 @@ class PreCreateCommandTests(TestCase):
         self.assertTrue(email_address.verified)
         self.assertTrue(email_address.primary)
 
-    @patch.dict(os.environ, {"SU_EMAIL": SU_EMAIL, "SU_UID": SU_UID})
+    @patch.dict(os.environ, {'SU_EMAIL': SU_EMAIL, 'SU_UID': SU_UID})
     def test_existing_user_is_updated(self):
         """
         Test updating an existing user
         """
         User = get_user_model()
-        user = User.objects.create(email=SU_EMAIL, password="generic_pass")
+        user = User.objects.create(email=SU_EMAIL, password='generic_pass')
         self.assertTrue(user.has_usable_password())
 
-        call_command("pre_create_su")
+        call_command('pre_create_su')
 
         user.refresh_from_db()
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)
         self.assertFalse(user.has_usable_password())
 
-    @patch.dict(os.environ, {"SU_EMAIL": SU_EMAIL, "SU_UID": SU_UID})
+    @patch.dict(os.environ, {'SU_EMAIL': SU_EMAIL, 'SU_UID': SU_UID})
     def test_other_social_account_is_retained(self):
         """Test that other linked social accounts are not changed"""
         other_social_uid = 'other-google-uid'
@@ -67,17 +65,17 @@ class PreCreateCommandTests(TestCase):
         user = User.objects.create(email=SU_EMAIL)
         SocialAccount.objects.create(
             user=user,
-            provider="google",
+            provider='google',
             uid=other_social_uid
         )
 
         self.assertEqual(SocialAccount.objects.filter(user=user).count(), 1)
 
-        call_command("pre_create_su")
+        call_command('pre_create_su')
 
         self.assertEqual(SocialAccount.objects.filter(user=user).count(), 2)
 
-    @patch.dict(os.environ, {"SU_EMAIL": SU_EMAIL, "SU_UID": SU_UID})
+    @patch.dict(os.environ, {'SU_EMAIL': SU_EMAIL, 'SU_UID': SU_UID})
     def test_other_email_address_is_retained(self):
         """Test that other linked email addresses are not changed"""
         other_email = 'other@example.com'
@@ -87,6 +85,6 @@ class PreCreateCommandTests(TestCase):
 
         self.assertEqual(EmailAddress.objects.filter(user=user).count(), 1)
 
-        call_command("pre_create_su")
+        call_command('pre_create_su')
 
         self.assertEqual(EmailAddress.objects.filter(user=user).count(), 2)
