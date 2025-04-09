@@ -58,3 +58,21 @@ class PreCreateCommandTests(TestCase):
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)
         self.assertFalse(user.has_usable_password())
+
+    @patch.dict(os.environ, {"SU_EMAIL": SU_EMAIL, "SU_UID": SU_UID})
+    def test_other_social_account_is_retained(self):
+        """Test that other linked social accounts are not changed"""
+        other_social_uid = 'other-google-uid'
+        User = get_user_model()
+        user = User.objects.create(email=SU_EMAIL)
+        SocialAccount.objects.create(
+            user=user,
+            provider="google",
+            uid=other_social_uid
+        )
+
+        self.assertEqual(SocialAccount.objects.filter(user=user).count(), 1)
+
+        call_command("pre_create_su")
+
+        self.assertEqual(SocialAccount.objects.filter(user=user).count(), 2)
