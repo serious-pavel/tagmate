@@ -88,3 +88,24 @@ class PreCreateCommandTests(TestCase):
         call_command('pre_create_su')
 
         self.assertEqual(EmailAddress.objects.filter(user=user).count(), 2)
+
+    @patch.dict(os.environ, {'SU_EMAIL': SU_EMAIL, 'SU_UID': SU_UID})
+    def test_email_address_is_updated(self):
+        User = get_user_model()
+        user = User.objects.create(email=SU_EMAIL)
+        EmailAddress.objects.create(
+            user=user,
+            email=SU_EMAIL,
+            verified=False,
+            primary=False
+        )
+
+        email_address = EmailAddress.objects.get(user=user, email=SU_EMAIL)
+        self.assertFalse(email_address.verified)
+        self.assertFalse(email_address.primary)
+
+        call_command('pre_create_su')
+
+        email_address = EmailAddress.objects.get(user=user, email=SU_EMAIL)
+        self.assertTrue(email_address.verified)
+        self.assertTrue(email_address.primary)
