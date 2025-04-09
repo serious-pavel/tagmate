@@ -3,6 +3,7 @@ Tests for create superuser commands
 """
 from unittest.mock import patch
 from django.core.management import call_command
+from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
 
 import os
@@ -109,3 +110,8 @@ class PreCreateCommandTests(TestCase):
         email_address = EmailAddress.objects.get(user=user, email=SU_EMAIL)
         self.assertTrue(email_address.verified)
         self.assertTrue(email_address.primary)
+
+    @patch.dict(os.environ, {}, clear=True)
+    def test_missing_env_vars(self):
+        with self.assertRaises(ImproperlyConfigured):
+            call_command('pre_create_su')
