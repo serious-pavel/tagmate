@@ -115,3 +115,13 @@ class PreCreateCommandTests(TestCase):
     def test_missing_env_vars(self):
         with self.assertRaises(ImproperlyConfigured):
             call_command('pre_create_su')
+
+    @patch.dict(os.environ, {'SU_EMAIL': SU_EMAIL, 'SU_UID': SU_UID})
+    def test_idempotency(self):
+        call_command('pre_create_su')
+        call_command('pre_create_su')  # Run twice
+
+        User = get_user_model()
+        self.assertEqual(User.objects.filter(email=SU_EMAIL).count(), 1)
+        self.assertEqual(SocialAccount.objects.filter(uid=SU_UID).count(), 1)
+        self.assertEqual(EmailAddress.objects.filter(email=SU_EMAIL).count(), 1)
