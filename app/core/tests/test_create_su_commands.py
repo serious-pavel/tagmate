@@ -124,4 +124,7 @@ class PreCreateCommandTests(TestCase):
         User = get_user_model()
         self.assertEqual(User.objects.filter(email=SU_EMAIL).count(), 1)
         self.assertEqual(SocialAccount.objects.filter(uid=SU_UID).count(), 1)
-        self.assertEqual(EmailAddress.objects.filter(email=SU_EMAIL).count(), 1)
+        self.assertEqual(
+            EmailAddress.objects.filter(email=SU_EMAIL).count(),
+            1
+        )
