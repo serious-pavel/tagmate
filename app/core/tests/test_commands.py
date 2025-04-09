@@ -9,7 +9,7 @@ from psycopg2 import OperationalError as Psycopg2Error
 
 
 @patch('django.db.utils.ConnectionHandler.__getitem__')
-class CommandTests(TestCase):
+class ConnectivityCommandTests(TestCase):
     """Test the management commands"""
 
     def test_wait_for_db_ready(self, mocked_getitem):
