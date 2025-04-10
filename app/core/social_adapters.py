@@ -35,3 +35,9 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
             user.save()
 
         super().pre_social_login(request, sociallogin)
+
+    def is_open_for_signup(self, request, sociallogin):
+        """
+        Allow signup for social accounts
+        """
+        return True
