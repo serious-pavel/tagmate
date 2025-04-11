@@ -1,4 +1,5 @@
 [flake8]
+max-line-length=89
 exclude =
     migrations,
     __py_cache__,
