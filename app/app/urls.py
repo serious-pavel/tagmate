@@ -32,7 +32,7 @@ account_urlpatterns = [
     path('google/login/callback/', google_views.oauth2_callback, name='google_callback'),
     path('logout/', LogoutView.as_view(), name='account_logout'),
     path('social/connections/', ConnectionsView.as_view(), name='social_connections'),
-    path('social/signup/', SignupView.as_view(), name='social_signup'),
+    # path('social/signup/', SignupView.as_view(), name='social_signup'),
     path('social/login/cancelled/', LoginCancelledView.as_view(),
          name='social_login_cancelled'),
     path('social/login/error/', LoginErrorView.as_view(), name='social_login_error'),
