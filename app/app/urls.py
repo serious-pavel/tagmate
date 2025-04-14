@@ -25,6 +25,7 @@ from allauth.socialaccount.views import (
     LoginErrorView,
     SignupView
 )
+from allauth.account.decorators import secure_admin_login
 
 account_urlpatterns = [
     path('google/login/', google_views.oauth2_login, name='google_login'),
@@ -36,6 +37,9 @@ account_urlpatterns = [
          name='social_login_cancelled'),
     path('social/login/error/', LoginErrorView.as_view(), name='social_login_error'),
 ]
+
+admin.autodiscover()
+admin.site.login = secure_admin_login(admin.site.login)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
