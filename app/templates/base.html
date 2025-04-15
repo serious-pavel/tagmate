@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{% static 'img/hashtag-square-svgrepo-com.svg' %}" sizes="any">
+    <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
+    {% block links %}
+    {% endblock links %}
+    <title>{% block title %}{% endblock title%}</title>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt="" loading="lazy"></a>
+        </div>
+        <div class="header-right">
+            {% block header-filter %}
+                <a href="https://github.com/serious-pavel/personal_site" ><img src="{% static 'img/github-142-svgrepo-com.svg' %}" alt=""></a>
+                <a href="https://www.linkedin.com/in/pavel-makhnev/" ><img src="{% static 'img/linkedin-fill-svgrepo-com.svg' %}" alt=""></a>
+            {% endblock %}
+        </div>
+    </div>
+    <div class="content-main">
+        <div class="content-nested">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+</body>
+</html>
