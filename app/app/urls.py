@@ -23,7 +23,7 @@ from allauth.socialaccount.views import (
     ConnectionsView,
     LoginCancelledView,
     LoginErrorView,
-    SignupView
+    # SignupView
 )
 from allauth.account.decorators import secure_admin_login
 
