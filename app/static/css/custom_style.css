@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap');
+
+/*// <uniquifier>: Use a unique and descriptive class name*/
+/*// <weight>: Use a value from 200 to 900*/
+
+html {
+  font-family: "Reddit Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+html,
+body {
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  position: relative;
+}
+
+.content-main {
+  height: calc(100% - 50px);
+  width: 100%;
+  background-color: #ececec;
+  overflow: auto;
+}
+
+.content-nested {
+  width: 80%;
+  margin: auto;
+  background-color: #b1ddf1;
+  padding: 20px;
+  box-sizing: border-box; /* to count padding outside, don't need to  */
+  min-height: 100%; /* calc(100% - 40px) for 2 paddings by 20px */
+  min-width: 240px;
+}
+
+.header {
+  color: whitesmoke;
+  background-color: steelblue;
+  align-items: center;
+  height: 50px;
+  display: flex;
+  padding: 0 30px;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  font-size: 15px;
+}
+
+.header a {
+  word-spacing: -5px;
+  text-decoration: none;
+  color: #eaeaea;
+}
+
+.header-left a:not(:last-child) {
+  margin-right: 16px;
+}
+
+.header-right a:not(:last-child) {
+  margin-left: 16px;
+}
+
+.header a.nav-active {
+  color: white;
+  font-weight: 600;
+}
+
+.header-logo {
+  color: white;
+  font-weight: 600;
+}
