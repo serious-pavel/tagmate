@@ -27,6 +27,8 @@ from allauth.socialaccount.views import (
 )
 from allauth.account.decorators import secure_admin_login
 
+from core import views as core_views
+
 account_urlpatterns = [
     path('google/login/', google_views.oauth2_login, name='google_login'),
     path('google/login/callback/', google_views.oauth2_callback, name='google_callback'),
@@ -44,4 +46,5 @@ admin.site.login = secure_admin_login(admin.site.login)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include(account_urlpatterns)),
+    path('', core_views.index, name='index'),
 ]
