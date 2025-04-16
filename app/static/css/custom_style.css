@@ -83,3 +83,7 @@ body {
   color: white;
   font-weight: 600;
 }
+
+img.rounded {
+  border-radius: 50%;
+}
