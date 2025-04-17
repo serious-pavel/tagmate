@@ -30,3 +30,17 @@ class AdminLoginTest(TestCase):
         """Test redirect from admin login page."""
         response = self.client.get('/admin/login/', follow=True)
         self.assertRedirects(response, f'{LOGIN_URL}?next=/admin/login/')
+
+    def test_non_staff_user_cannot_access_admin(self):
+        """Test non-staff user cannot access admin page."""
+        user = User.objects.create_user(email="user@example.com")
+        self.client.force_login(user)
+
+        response = self.client.get('/admin/', follow=True)
+        self.assertEqual(response.status_code, 403)
+
+        user.is_staff = True
+        user.save()
+
+        response = self.client.get('/admin/', follow=True)
+        self.assertEqual(response.status_code, 200)
