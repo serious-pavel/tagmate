@@ -11,8 +11,12 @@ class AuthenticationBackendTest(TestCase):
         self.user = User.objects.create_user(
             email='test@example.com',
             password='test_pass123',
-            is_active=True
         )
+
+    def test_user_is_created_correctly(self):
+        self.assertTrue(self.user.is_active)
+        self.assertFalse(self.user.is_staff)
+        self.assertFalse(self.user.is_superuser)
 
     def test_authenticate_with_password_fails(self):
         """Ensure password-based login is completely disabled."""
