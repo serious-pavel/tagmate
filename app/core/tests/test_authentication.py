@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
+from app.settings import LOGIN_URL
 
 User = get_user_model()
 
@@ -22,3 +23,10 @@ class AuthenticationBackendTest(TestCase):
         """Ensure password-based login is completely disabled."""
         user = authenticate(email='test@example.com', password='test_pass123')
         self.assertIsNone(user)
+
+
+class AdminLoginTest(TestCase):
+    def test_admin_login_redirects(self):
+        """Test redirect from admin login page."""
+        response = self.client.get('/admin/login/', follow=True)
+        self.assertRedirects(response, f'{LOGIN_URL}?next=/admin/login/')
