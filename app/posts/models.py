@@ -29,5 +29,24 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
 
+    tags = models.ManyToManyField(
+        Tag,
+        through='PostTag',
+        related_name='posts'
+    )
+
     def __str__(self):
         return self.title
+
+
+class PostTag(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    position = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = ('post', 'tag')
+        ordering = ['position']
+
+    def __str__(self):
+        return f"{self.tag} in {self.post} at {self.position}"
