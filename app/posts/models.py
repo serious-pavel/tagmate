@@ -55,6 +55,16 @@ class Post(models.Model):
 
         PostTag.objects.bulk_update(updated_post_tags, ['position'])
 
+    def update_tags(self, ordered_tag_ids):
+        current_tag_ids = set(self.posttag_set.values_list('tag_id', flat=True))
+        new_tag_ids = set(ordered_tag_ids)
+
+        tags_to_delete = current_tag_ids - new_tag_ids
+        self.posttag_set.filter(tag_id__in=tags_to_delete).delete()
+
+        # Reorder tags
+        self.set_tag_order(ordered_tag_ids)
+
 
 class PostTag(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
