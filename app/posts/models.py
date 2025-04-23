@@ -15,6 +15,15 @@ class Tag(models.Model):
         return f"#{self.name}"
 
 
+class TagGroup(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tag_groups')
+    name = models.CharField(max_length=64)
+    tags = models.ManyToManyField(Tag, related_name='tag_groups')
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(max_length=100)
