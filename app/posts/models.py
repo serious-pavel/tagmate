@@ -38,6 +38,23 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def set_tag_order(self, ordered_tag_ids):
+        """
+        Reorders tags for this post according to the ordered list of tag ids.
+        Any missing or extra ids in the list are ignored/skipped.
+        """
+        post_tags = list(self.posttag_set.select_related('tag'))
+        tag_map = {pt.tag_id: pt for pt in post_tags}
+        updated_post_tags = []
+
+        for position, tag_id in enumerate(ordered_tag_ids):
+            post_tag = tag_map.get(tag_id)
+            if post_tag:
+                post_tag.position = position
+                updated_post_tags.append(post_tag)
+
+        PostTag.objects.bulk_update(updated_post_tags, ['position'])
+
 
 class PostTag(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
