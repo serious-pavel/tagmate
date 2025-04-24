@@ -21,7 +21,7 @@ class PostTagModelTests(TestCase):
             PostTag.objects.create(post=self.post, tag=self.tag1, position=1)
 
     def test_cascade_delete_post(self):
-        """Test PostTag is deleted when Post is deleted"""
+        """Test PostTag is deleted when the Post is deleted"""
         pt = PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
         self.post.delete()
         self.assertFalse(PostTag.objects.filter(pk=pt.pk).exists())
