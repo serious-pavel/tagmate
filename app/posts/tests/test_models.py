@@ -30,3 +30,12 @@ class PostTagModelTests(TestCase):
         pt = PostTag.objects.create(post=self.post, tag=self.tag2, position=2)
         expected = f"{pt.tag} in {pt.post} at {pt.position}"
         self.assertEqual(str(pt), expected)
+
+    def test_ordering_by_position(self):
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=2)
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag3, position=1)
+        positions = list(
+            PostTag.objects.filter(post=self.post).values_list('position', flat=True)
+        )
+        self.assertEqual(positions, [0, 1, 2])
