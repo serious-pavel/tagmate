@@ -119,3 +119,24 @@ class PostTagModelTests(TestCase):
         self.assertEqual(
             [tag.tag_id for tag in post_tags], tag_ids_input
         )
+
+    def test_update_tags_duplicate_input(self):
+        """Test that duplicated tags in input don't cause inconsistencies"""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+
+        tag_ids_input = [
+            self.tag1.id, self.tag2.id, self.tag2.id, self.tag3.id
+        ]
+
+        self.post.update_tags(tag_ids_input)
+
+        post_tags = list(PostTag.objects.filter(post=self.post))
+
+        self.assertEqual(
+            [tag.tag_id for tag in post_tags],
+            [self.tag1.id, self.tag2.id, self.tag3.id]
+        )
+        self.assertNotEqual(
+            [tag.tag_id for tag in post_tags], tag_ids_input
+        )
+        self.assertEqual([tag.position for tag in post_tags], [0, 1, 2])
