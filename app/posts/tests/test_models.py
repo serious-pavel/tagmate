@@ -40,6 +40,7 @@ class PostTagModelTests(TestCase):
         )
         self.assertEqual(positions, [0, 1, 2])
 
+    # Tests for method update_tags
     def test_update_tags_adds_tags_and_orders_them(self):
         """Test that update_tags correctly adds and orders tags."""
         self.post.update_tags([self.tag3.id, self.tag1.id])
