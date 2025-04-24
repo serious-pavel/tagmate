@@ -50,3 +50,16 @@ class PostTagModelTests(TestCase):
             [tag.tag_id for tag in post_tags], [self.tag3.id, self.tag1.id]
         )
         self.assertEqual([tag.position for tag in post_tags], [0, 1])
+
+    def test_update_tags_removes_unlisted_tags(self):
+        """Test that update_tags removes tags not in the given list."""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
+
+        self.post.update_tags([self.tag1.id])
+
+        post_tags = list(PostTag.objects.filter(post=self.post))
+        self.assertEqual(
+            [tag.tag_id for tag in post_tags], [self.tag1.id]
+        )
+        self.assertEqual([tag.position for tag in post_tags], [0])
