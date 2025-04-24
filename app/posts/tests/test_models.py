@@ -76,3 +76,16 @@ class PostTagModelTests(TestCase):
             [tag.tag_id for tag in post_tags], [self.tag2.id, self.tag1.id]
         )
         self.assertEqual([tag.position for tag in post_tags], [0, 1])
+
+    def test_update_tags_idempotent_when_order_and_tags_unchanged(self):
+        """Calling update_tags with the current order does not change anything."""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
+
+        self.post.update_tags([self.tag1.id, self.tag2.id])
+
+        post_tags = list(PostTag.objects.filter(post=self.post))
+        self.assertEqual(
+            [tag.tag_id for tag in post_tags], [self.tag1.id, self.tag2.id]
+        )
+        self.assertEqual([tag.position for tag in post_tags], [0, 1])
