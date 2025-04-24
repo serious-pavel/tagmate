@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import transaction
+from django.apps import apps
 
 User = get_user_model()
 
@@ -38,32 +40,32 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def set_tag_order(self, ordered_tag_ids):
-        """
-        Reorders tags for this post according to the ordered list of tag ids.
-        Any missing or extra ids in the list are ignored/skipped.
-        """
-        post_tags = list(self.posttag_set.select_related('tag'))
-        tag_map = {pt.tag_id: pt for pt in post_tags}
-        updated_post_tags = []
+    @transaction.atomic
+    def update_tags(self, ordered_tag_ids: list):
+        """Rearrange, add and remove tags in Post if needed"""
+        PostTag = apps.get_model('posts', 'PostTag')
+        post_tags = PostTag.objects.filter(post=self)
+        current_tag_ids = list(post_tags.values_list('tag_id', flat=True))
 
-        for position, tag_id in enumerate(ordered_tag_ids):
-            post_tag = tag_map.get(tag_id)
-            if post_tag:
-                post_tag.position = position
-                updated_post_tags.append(post_tag)
+        tags_to_remove = set(current_tag_ids) - set(ordered_tag_ids)
+        if tags_to_remove:
+            post_tags.filter(tag_id__in=tags_to_remove).delete()
 
-        PostTag.objects.bulk_update(updated_post_tags, ['position'])
-
-    def update_tags(self, ordered_tag_ids):
-        current_tag_ids = set(self.posttag_set.values_list('tag_id', flat=True))
-        new_tag_ids = set(ordered_tag_ids)
-
-        tags_to_delete = current_tag_ids - new_tag_ids
-        self.posttag_set.filter(tag_id__in=tags_to_delete).delete()
-
-        # Reorder tags
-        self.set_tag_order(ordered_tag_ids)
+        post_tag_map = {pt.tag_id: pt for pt in PostTag.objects.filter(post=self)}
+        to_update = []
+        to_create = []
+        for pos, tag_id in enumerate(ordered_tag_ids):
+            pt = post_tag_map.get(tag_id)
+            if pt:
+                if pt.position != pos:
+                    pt.position = pos
+                    to_update.append(pt)
+            else:
+                to_create.append(PostTag(post=self, tag_id=tag_id, position=pos))
+        if to_update:
+            PostTag.objects.bulk_update(to_update, ['position'])
+        if to_create:
+            PostTag.objects.bulk_create(to_create)
 
 
 class PostTag(models.Model):
