@@ -105,3 +105,17 @@ class PostTagModelTests(TestCase):
             [tag.tag_id for tag in post_tags], tag_ids_input
         )
         self.assertEqual([tag.position for tag in post_tags], [0, 1, 2])
+
+    def test_update_tags_empty_list_clears_tags_from_post(self):
+        """Test that an empty list removes tags from a post"""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
+
+        tag_ids_input = []
+        self.post.update_tags(tag_ids_input)
+
+        post_tags = list(PostTag.objects.filter(post=self.post))
+
+        self.assertEqual(
+            [tag.tag_id for tag in post_tags], tag_ids_input
+        )
