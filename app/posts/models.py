@@ -49,18 +49,26 @@ class Post(models.Model):
     @transaction.atomic
     def update_tags(self, ordered_tag_ids: list):
         """Rearrange, add and remove tags in Post if needed"""
+        # Deduplicate ordered_tag_ids while preserving order
+        seen = set()
+        unique_ordered_tag_ids = []
+        for tag_id in ordered_tag_ids:
+            if tag_id not in seen:
+                unique_ordered_tag_ids.append(tag_id)
+                seen.add(tag_id)
+
         PostTag = apps.get_model('posts', 'PostTag')
         post_tags = PostTag.objects.filter(post=self)
         current_tag_ids = list(post_tags.values_list('tag_id', flat=True))
 
-        tags_to_remove = set(current_tag_ids) - set(ordered_tag_ids)
+        tags_to_remove = set(current_tag_ids) - set(unique_ordered_tag_ids)
         if tags_to_remove:
             post_tags.filter(tag_id__in=tags_to_remove).delete()
 
         post_tag_map = {pt.tag_id: pt for pt in PostTag.objects.filter(post=self)}
         to_update = []
         to_create = []
-        for pos, tag_id in enumerate(ordered_tag_ids):
+        for pos, tag_id in enumerate(unique_ordered_tag_ids):
             pt = post_tag_map.get(tag_id)
             if pt:
                 if pt.position != pos:
