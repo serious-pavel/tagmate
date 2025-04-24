@@ -90,7 +90,7 @@ class PostTagModelTests(TestCase):
         )
         self.assertEqual([tag.position for tag in post_tags], [0, 1])
 
-    def test_combined_operation(self):
+    def test_update_tags_combined_operation(self):
         """Test that add, remove and rearrange operations work together"""
         PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
         PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
