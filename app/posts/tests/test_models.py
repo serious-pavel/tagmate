@@ -15,10 +15,9 @@ class PostTagModelTests(TestCase):
         self.tag3 = Tag.objects.create(name="tag3")
 
     def test_unique_together_constraint(self):
-        """Test attempt to create duplicates raises an error"""
+        """Test attempt to create duplicates raises IntegrityError"""
         PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
         with self.assertRaises(IntegrityError):
-            # Duplicate (post, tag) should raise an IntegrityError
             PostTag.objects.create(post=self.post, tag=self.tag1, position=1)
 
     def test_cascade_delete_post(self):
