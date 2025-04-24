@@ -25,3 +25,8 @@ class PostTagModelTests(TestCase):
         pt = PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
         self.post.delete()
         self.assertFalse(PostTag.objects.filter(pk=pt.pk).exists())
+
+    def test_str_representation(self):
+        pt = PostTag.objects.create(post=self.post, tag=self.tag2, position=2)
+        expected = f"{pt.tag} in {pt.post} at {pt.position}"
+        self.assertEqual(str(pt), expected)
