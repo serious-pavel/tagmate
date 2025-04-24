@@ -39,3 +39,13 @@ class PostTagModelTests(TestCase):
             PostTag.objects.filter(post=self.post).values_list('position', flat=True)
         )
         self.assertEqual(positions, [0, 1, 2])
+
+    def test_update_tags_adds_tags_and_orders_them(self):
+        """Test that update_tags correctly adds and orders tags."""
+        self.post.update_tags([self.tag3.id, self.tag1.id])
+
+        post_tags = list(PostTag.objects.filter(post=self.post))
+        self.assertEqual(
+            [tag.tag_id for tag in post_tags], [self.tag3.id, self.tag1.id]
+        )
+        self.assertEqual([tag.position for tag in post_tags], [0, 1])
