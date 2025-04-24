@@ -7,6 +7,8 @@ User = get_user_model()
 
 
 class Tag(models.Model):
+    objects: models.Manager['Tag']
+
     name = models.CharField(max_length=64, unique=True)
 
     def save(self, *args, **kwargs):
@@ -18,6 +20,8 @@ class Tag(models.Model):
 
 
 class TagGroup(models.Model):
+    objects: models.Manager['TagGroup']
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tag_groups')
     name = models.CharField(max_length=64)
     tags = models.ManyToManyField(Tag, related_name='tag_groups')
@@ -27,6 +31,8 @@ class TagGroup(models.Model):
 
 
 class Post(models.Model):
+    objects: models.Manager['Post']
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -69,6 +75,8 @@ class Post(models.Model):
 
 
 class PostTag(models.Model):
+    objects: models.Manager['PostTag']
+
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     position = models.PositiveIntegerField()
