@@ -20,3 +20,9 @@ class PostTagModelTests(TestCase):
         with self.assertRaises(IntegrityError):
             # Duplicate (post, tag) should raise an IntegrityError
             PostTag.objects.create(post=self.post, tag=self.tag1, position=1)
+
+    def test_cascade_delete_post(self):
+        """Test PostTag is deleted when Post is deleted"""
+        pt = PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        self.post.delete()
+        self.assertFalse(PostTag.objects.filter(pk=pt.pk).exists())
