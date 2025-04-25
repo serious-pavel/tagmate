@@ -147,5 +147,5 @@ class PostTagModelTests(TestCase):
         PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
 
         tag_ids_input = [self.tag1.id, self.tag2.id, 9999]
-        with self.assertRaises(IntegrityError):
+        with self.assertRaises(ValueError):
             self.post.update_tags(tag_ids_input)
