@@ -140,3 +140,12 @@ class PostTagModelTests(TestCase):
             [tag.tag_id for tag in post_tags], tag_ids_input
         )
         self.assertEqual([tag.position for tag in post_tags], [0, 1, 2])
+
+    def test_update_tags_invalid_tag_id(self):
+        """Test invalid tag raises an error"""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
+
+        tag_ids_input = [self.tag1.id, self.tag2.id, 9999]
+        with self.assertRaises(IntegrityError):
+            self.post.update_tags(tag_ids_input)
