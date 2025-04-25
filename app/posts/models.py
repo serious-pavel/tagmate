@@ -49,6 +49,18 @@ class Post(models.Model):
     @transaction.atomic
     def update_tags(self, ordered_tag_ids: list):
         """Rearrange, add and remove tags in Post if needed"""
+        # Validate ids before any operation
+        if ordered_tag_ids:
+            existing_tag_ids = set(Tag.objects.filter(
+                id__in=ordered_tag_ids
+            ).values_list('id', flat=True))
+
+            invalid_tag_ids = [
+                tag_id for tag_id in ordered_tag_ids if tag_id not in existing_tag_ids
+            ]
+            if invalid_tag_ids:
+                raise ValueError(f"Invalid tag IDs: {invalid_tag_ids}")
+
         # Deduplicate ordered_tag_ids while preserving order
         seen = set()
         unique_ordered_tag_ids = []
