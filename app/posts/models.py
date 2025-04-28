@@ -49,6 +49,10 @@ class Post(models.Model):
     @transaction.atomic
     def update_tags(self, ordered_tag_ids: list):
         """Rearrange, add and remove tags in Post if needed"""
+        PostTag = apps.get_model('posts', 'PostTag')
+        post_tags = PostTag.objects.filter(post=self)
+        current_tag_ids = set(post_tags.values_list('tag_id', flat=True))
+
         # Deduplicate ordered_tag_ids while preserving order
         seen = set()
         unique_ordered_tag_ids = []
@@ -56,10 +60,6 @@ class Post(models.Model):
             if tag_id not in seen:
                 unique_ordered_tag_ids.append(tag_id)
                 seen.add(tag_id)
-
-        PostTag = apps.get_model('posts', 'PostTag')
-        post_tags = PostTag.objects.filter(post=self)
-        current_tag_ids = set(post_tags.values_list('tag_id', flat=True))
 
         # Validate ids only before attaching new tags to Post
         tag_ids_to_attach = set(unique_ordered_tag_ids) - current_tag_ids
