@@ -74,10 +74,12 @@ class Post(models.Model):
             if invalid_tag_ids:
                 raise ValueError(f"Invalid tag IDs: {invalid_tag_ids}")
 
+        # Remove tags from Post
         tag_ids_to_detach = current_tag_ids - set(unique_ordered_tag_ids)
         if tag_ids_to_detach:
             post_tags.filter(tag_id__in=tag_ids_to_detach).delete()
 
+        # Update tags order and create new ones (through PostTag)
         post_tag_map = {pt.tag_id: pt for pt in PostTag.objects.filter(post=self)}
         to_update = []
         to_create = []
