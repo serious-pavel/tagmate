@@ -59,10 +59,10 @@ class Post(models.Model):
 
         PostTag = apps.get_model('posts', 'PostTag')
         post_tags = PostTag.objects.filter(post=self)
-        current_tag_ids = list(post_tags.values_list('tag_id', flat=True))
+        current_tag_ids = set(post_tags.values_list('tag_id', flat=True))
 
         # Validate ids only before attaching new tags to Post
-        tags_to_attach = set(unique_ordered_tag_ids) - set(current_tag_ids)
+        tags_to_attach = set(unique_ordered_tag_ids) - current_tag_ids
         if tags_to_attach:
             existing_tag_ids = set(Tag.objects.filter(
                 id__in=ordered_tag_ids
@@ -74,7 +74,7 @@ class Post(models.Model):
             if invalid_tag_ids:
                 raise ValueError(f"Invalid tag IDs: {invalid_tag_ids}")
 
-        tags_to_remove = set(current_tag_ids) - set(unique_ordered_tag_ids)
+        tags_to_remove = current_tag_ids - set(unique_ordered_tag_ids)
         if tags_to_remove:
             post_tags.filter(tag_id__in=tags_to_remove).delete()
 
