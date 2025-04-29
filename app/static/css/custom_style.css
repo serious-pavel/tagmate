@@ -23,14 +23,14 @@ body {
 .content-main {
   height: calc(100% - 50px);
   width: 100%;
-  background-color: #ececec;
+  background-color: darkgray;
   overflow: auto;
 }
 
 .content-nested {
   width: 80%;
   margin: auto;
-  background-color: #b1ddf1;
+  background-color: lightgray;
   padding: 20px;
   box-sizing: border-box; /* to count padding outside, don't need to  */
   min-height: 100%; /* calc(100% - 40px) for 2 paddings by 20px */
@@ -39,7 +39,7 @@ body {
 
 .header {
   color: whitesmoke;
-  background-color: steelblue;
+  background-color: black;
   align-items: center;
   height: 50px;
   display: flex;
