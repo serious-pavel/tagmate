@@ -11,6 +11,9 @@ class Tag(models.Model):
 
     name = models.CharField(max_length=64, unique=True)
 
+    class Meta:
+        ordering = ['name']
+
     def save(self, *args, **kwargs):
         self.name = self.name.lower()  # enforce lowercase storage
         super().save(*args, **kwargs)
