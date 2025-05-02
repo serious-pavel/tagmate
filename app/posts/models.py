@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.apps import apps
-import re
 from django.core.validators import RegexValidator
 
 
