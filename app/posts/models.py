@@ -2,14 +2,37 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.apps import apps
+import re
+from django.core.validators import RegexValidator
+
 
 User = get_user_model()
+HASHTAG_REGEX = (
+    r'^[\w'
+    r'\U0001F300-\U0001F5FF'  # symbols & pictographs
+    r'\U0001F600-\U0001F64F'  # emoticons
+    r'\U0001F680-\U0001F6FF'  # transport & map
+    r'\U0001F700-\U0001F77F'  # alchemical symbols
+    r'\U0001F780-\U0001F7FF'
+    r'\U0001F800-\U0001F8FF'
+    r'\U0001F900-\U0001F9FF'
+    r'\U0001FA00-\U0001FA6F'
+    r'\U0001FA70-\U0001FAFF'
+    r'\U00002702-\U000027B0'
+    r'\U000024C2-\U0001F251'
+    r']+$'
+)
+
+hashtag_validator = RegexValidator(
+    regex=HASHTAG_REGEX,
+    message="Hashtags may only contain Unicode letters, digits, underscore, or emoji."
+)
 
 
 class Tag(models.Model):
     objects: models.Manager['Tag']
 
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64, unique=True, validators=[hashtag_validator])
 
     class Meta:
         ordering = ['name']
