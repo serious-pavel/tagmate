@@ -149,3 +149,11 @@ class PostTagModelTests(TestCase):
         tag_ids_input = [self.tag1.id, self.tag2.id, 9999]
         with self.assertRaises(ValueError):
             self.post.update_tags(tag_ids_input)
+
+
+class TagModelTests(TestCase):
+    """Test cases for Tag model"""
+    def test_str_representation(self):
+        tag = Tag.objects.create(name="tag1")
+        expected = f"#{tag.name}"
+        self.assertEqual(str(tag), expected)
