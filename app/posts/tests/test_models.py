@@ -173,3 +173,27 @@ class TagModelTests(TestCase):
         grouped_tags = list(tg1.tags.all().values_list('name', flat=True))
 
         self.assertEqual(grouped_tags, ["tag2", "tag3"])
+
+    def test_tag_name_validation(self):
+        """Test that tag names are validated"""
+        from django.core.exceptions import ValidationError
+
+        tag1 = Tag.objects.create(name="tag1")
+        self.assertEqual(tag1.name, "tag1")
+        tag1.full_clean()
+
+        tag2 = Tag.objects.create(name="tag2- ")
+        with self.assertRaises(ValidationError):
+            tag2.full_clean()
+
+        tag3 = Tag.objects.create(name="")
+        with self.assertRaises(ValidationError):
+            tag3.full_clean()
+
+        tag4 = Tag.objects.create(name="t.ag")
+        with self.assertRaises(ValidationError):
+            tag4.full_clean()
+
+        tag5 = Tag.objects.create(name="😁")
+        self.assertEqual(tag5.name, "😁")
+        tag5.full_clean()
