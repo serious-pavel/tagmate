@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
-from posts.models import Post, Tag, PostTag
+from posts.models import Post, Tag, PostTag, TagGroup
 
 User = get_user_model()
 
@@ -157,3 +157,19 @@ class TagModelTests(TestCase):
         tag = Tag.objects.create(name="tag1")
         expected = f"#{tag.name}"
         self.assertEqual(str(tag), expected)
+
+    def test_ordering_by_name(self):
+        Tag.objects.create(name="tag1")
+        Tag.objects.create(name="tag3")
+        Tag.objects.create(name="tag2")
+        tags = list(Tag.objects.all().values_list('name', flat=True))
+        self.assertEqual(tags, ["tag1", "tag2", "tag3"])
+
+        user = User.objects.create_user(email='u@example.com', password='pw')
+        tg1 = TagGroup.objects.create(name="group1", user=user)
+        tg1.tags.add(Tag.objects.get(name="tag3"))
+        tg1.tags.add(Tag.objects.get(name="tag2"))
+
+        grouped_tags = list(tg1.tags.all().values_list('name', flat=True))
+
+        self.assertEqual(grouped_tags, ["tag2", "tag3"])
