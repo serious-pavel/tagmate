@@ -234,3 +234,23 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(self.post.tags.count(), 3)
         self.assertEqual(self.post.tags.first(), self.tag1)
         self.assertEqual(self.post.tags.last(), self.tag3)
+
+    def test_idempotent_add_group_to_post(self):
+        """Test that adding a tag group to a post twice does not change anything"""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
+        self.assertEqual(self.post.tags.count(), 2)
+
+        self.tag_group1.tags.add(self.tag3)
+        self.tag_group1.save()
+        self.post.add_tags_from_group(self.tag_group1)
+
+        self.assertEqual(self.post.tags.count(), 3)
+        self.assertEqual(self.post.tags.first(), self.tag1)
+        self.assertEqual(self.post.tags.last(), self.tag3)
+
+        self.post.add_tags_from_group(self.tag_group1)
+
+        self.assertEqual(self.post.tags.count(), 3)
+        self.assertEqual(self.post.tags.first(), self.tag1)
+        self.assertEqual(self.post.tags.last(), self.tag3)
