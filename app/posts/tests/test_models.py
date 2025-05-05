@@ -274,3 +274,21 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(self.post.tags.count(), 2)
         self.assertEqual(self.post.tags.first(), self.tag1)
         self.assertEqual(self.post.tags.last(), self.tag2)
+
+    def test_adding_another_users_tag_group_to_post(self):
+        """Test that adding a tag group from another user does not change anything"""
+        self.assertEqual(self.post.tags.count(), 0)
+
+        another_user = User.objects.create_user(
+            email='another@example.com',
+            password='pw'
+        )
+
+        tag_group2 = TagGroup.objects.create(user=another_user, name="Tag Group 2")
+        tag_group2.tags.add(self.tag3)
+
+        self.assertEqual(tag_group2.tags.count(), 1)
+
+        self.post.add_tags_from_group(tag_group2)
+        self.assertEqual(self.post.tags.count(), 0)
+
