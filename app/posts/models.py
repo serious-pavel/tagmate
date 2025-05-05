@@ -123,8 +123,8 @@ class Post(models.Model):
 
     @transaction.atomic
     def add_tags_from_group(self, tag_group: TagGroup):
-        tag_group_tag_ids = tag_group.tags.values_list('tag_id', flat=True)
-        current_tag_ids = self.tags.values_list('tag_id', flat=True)
+        tag_group_tag_ids = tag_group.tags.values_list('id', flat=True)
+        current_tag_ids = self.tags.values_list('id', flat=True)
         input_tag_ids = list(current_tag_ids) + list(tag_group_tag_ids)
         self.update_tags(input_tag_ids)
 
