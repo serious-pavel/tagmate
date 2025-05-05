@@ -214,7 +214,7 @@ class TagGroupModelTests(TestCase):
         """Test that adding a tag group to an empty post works"""
         self.assertEqual(self.post.tags.count(), 0)
         self.tag_group1.tags.add(self.tag1)
-        self.tag_group1.save()
+
         self.post.add_tags_from_group(self.tag_group1)
         self.assertEqual(self.post.tags.count(), 1)
         self.assertEqual(self.post.tags.first(), self.tag1)
@@ -226,7 +226,6 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(self.post.tags.count(), 2)
 
         self.tag_group1.tags.add(self.tag3)
-        self.tag_group1.save()
 
         self.post.add_tags_from_group(self.tag_group1)
 
@@ -241,7 +240,6 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(self.post.tags.count(), 2)
 
         self.tag_group1.tags.add(self.tag3)
-        self.tag_group1.save()
         self.post.add_tags_from_group(self.tag_group1)
 
         self.assertEqual(self.post.tags.count(), 3)
