@@ -210,3 +210,12 @@ class TagGroupModelTests(TestCase):
 
     def test_str_representation(self):
         self.assertEqual(str(self.tag_group1), "Tag Group")
+
+    def test_add_group_to_empty_post(self):
+        """Test that adding a tag group to an empty post works"""
+        self.assertEqual(self.post.tags.count(), 0)
+        self.tag_group1.tags.add(self.tag1)
+        self.tag_group1.save()
+        self.post.add_tags_from_group(self.tag_group1)
+        self.assertEqual(self.post.tags.count(), 1)
+        self.assertEqual(self.post.tags.first(), self.tag1)
