@@ -219,3 +219,18 @@ class TagGroupModelTests(TestCase):
         self.post.add_tags_from_group(self.tag_group1)
         self.assertEqual(self.post.tags.count(), 1)
         self.assertEqual(self.post.tags.first(), self.tag1)
+
+    def test_add_group_to_post_with_tags(self):
+        """Test that adding a tag group to a post with tags works"""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
+        self.assertEqual(self.post.tags.count(), 2)
+
+        self.tag_group1.tags.add(self.tag3)
+        self.tag_group1.save()
+
+        self.post.add_tags_from_group(self.tag_group1)
+
+        self.assertEqual(self.post.tags.count(), 3)
+        self.assertEqual(self.post.tags.first(), self.tag1)
+        self.assertEqual(self.post.tags.last(), self.tag3)
