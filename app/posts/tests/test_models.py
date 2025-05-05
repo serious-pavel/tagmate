@@ -165,15 +165,6 @@ class TagModelTests(TestCase):
         tags = list(Tag.objects.all().values_list('name', flat=True))
         self.assertEqual(tags, ["tag1", "tag2", "tag3"])
 
-        user = User.objects.create_user(email='u@example.com', password='pw')
-        tg1 = TagGroup.objects.create(name="group1", user=user)
-        tg1.tags.add(Tag.objects.get(name="tag3"))
-        tg1.tags.add(Tag.objects.get(name="tag2"))
-
-        grouped_tags = list(tg1.tags.all().values_list('name', flat=True))
-
-        self.assertEqual(grouped_tags, ["tag2", "tag3"])
-
     def test_tag_name_validation(self):
         """Test that tag names are validated"""
         from django.core.exceptions import ValidationError
@@ -210,6 +201,14 @@ class TagGroupModelTests(TestCase):
 
     def test_str_representation(self):
         self.assertEqual(str(self.tag_group1), "Tag Group")
+
+    def test_ordering_tags_by_name(self):
+        self.tag_group1.tags.add(self.tag3)
+        self.tag_group1.tags.add(self.tag2)
+
+        grouped_tags = list(self.tag_group1.tags.all().values_list('name', flat=True))
+
+        self.assertEqual(grouped_tags, ["tag2", "tag3"])
 
     def test_add_group_to_empty_post(self):
         """Test that adding a tag group to an empty post works"""
