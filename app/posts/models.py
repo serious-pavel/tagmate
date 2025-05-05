@@ -123,6 +123,9 @@ class Post(models.Model):
 
     @transaction.atomic
     def add_tags_from_group(self, tag_group: TagGroup):
+        if tag_group.user_id != self.user_id:
+            raise PermissionError("Cannot use another user's tag group.")
+
         tag_group_tag_ids = tag_group.tags.values_list('id', flat=True)
         current_tag_ids = self.tags.values_list('id', flat=True)
         input_tag_ids = list(current_tag_ids) + list(tag_group_tag_ids)
