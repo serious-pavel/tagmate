@@ -292,4 +292,3 @@ class TagGroupModelTests(TestCase):
         with self.assertRaises(PermissionError):
             self.post.add_tags_from_group(tag_group2)
         self.assertEqual(self.post.tags.count(), 0)
-
