@@ -258,3 +258,19 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(self.post.tags.count(), 3)
         self.assertEqual(self.post.tags.first(), self.tag1)
         self.assertEqual(self.post.tags.last(), self.tag3)
+
+    def test_add_empty_tag_group_to_post(self):
+        """Test that adding an empty tag group to a post does not change anything"""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
+        self.assertEqual(self.post.tags.count(), 2)
+
+        self.tag_group1.tags.clear()
+
+        self.assertEqual(self.tag_group1.tags.count(), 0)
+
+        self.post.add_tags_from_group(self.tag_group1)
+
+        self.assertEqual(self.post.tags.count(), 2)
+        self.assertEqual(self.post.tags.first(), self.tag1)
+        self.assertEqual(self.post.tags.last(), self.tag2)
