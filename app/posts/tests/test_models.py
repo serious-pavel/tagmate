@@ -197,3 +197,16 @@ class TagModelTests(TestCase):
         tag5 = Tag.objects.create(name="😁")
         self.assertEqual(tag5.name, "😁")
         tag5.full_clean()
+
+
+class TagGroupModelTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(email='user@example.com', password='pw')
+        self.post = Post.objects.create(user=self.user, title="Test Post")
+        self.tag1 = Tag.objects.create(name="tag1")
+        self.tag2 = Tag.objects.create(name="tag2")
+        self.tag3 = Tag.objects.create(name="tag3")
+        self.tag_group1 = TagGroup.objects.create(user=self.user, name="Tag Group")
+
+    def test_str_representation(self):
+        self.assertEqual(str(self.tag_group1), "Tag Group")
