@@ -210,6 +210,13 @@ class TagGroupModelTests(TestCase):
 
         self.assertEqual(grouped_tags, ["tag2", "tag3"])
 
+    def test_idempotent_add_tag_to_group(self):
+        """Test that adding a tag to a group twice does not change anything"""
+        self.tag_group1.tags.add(self.tag3)
+        self.assertEqual(self.tag_group1.tags.count(), 1)
+        self.tag_group1.tags.add(self.tag3)
+        self.assertEqual(self.tag_group1.tags.count(), 1)
+
     def test_add_group_to_empty_post(self):
         """Test that adding a tag group to an empty post works"""
         self.assertEqual(self.post.tags.count(), 0)
