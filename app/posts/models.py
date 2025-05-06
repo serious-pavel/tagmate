@@ -71,6 +71,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_tag_ids(self):
+        """Return ordered list of tag IDs in Post"""
+        return list(PostTag.objects.filter(post=self).values_list('tag_id', flat=True))
+
     @transaction.atomic
     def update_tags(self, ordered_tag_ids: list):
         """Rearrange, add and remove tags in Post if needed"""
