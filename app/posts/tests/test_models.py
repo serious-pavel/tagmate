@@ -40,7 +40,20 @@ class PostTagModelTests(TestCase):
         )
         self.assertEqual(positions, [0, 1, 2])
 
-    # Tests for method get_tag_ids
+    # Tests for method get_tag_id
+    def test_get_tag_ids_sorts_as_post_tag_model(self):
+        """Test that get_tag_id returns the correct tag id"""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=1)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=2)
+        PostTag.objects.create(post=self.post, tag=self.tag3, position=0)
+
+        post_tag_ids = list(
+            PostTag.objects.filter(
+                post=self.post
+            ).order_by('position').values_list('tag_id', flat=True)
+        )
+        self.assertEqual(self.post.get_tag_ids(), post_tag_ids)
+
     def test_get_tag_ids_returns_correct_list(self):
         """Test that get_tag_ids returns a properly ordered list of tag ids"""
         pt1 = PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
