@@ -51,6 +51,9 @@ class TagGroup(models.Model):
     name = models.CharField(max_length=64)
     tags = models.ManyToManyField(Tag, related_name='tag_groups')
 
+    class Meta:
+        unique_together = ('user', 'name')
+
     def __str__(self):
         return self.name
 
