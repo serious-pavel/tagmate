@@ -275,6 +275,12 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(self.post.tags.first(), self.tag1)
         self.assertEqual(self.post.tags.last(), self.tag2)
 
+    def test_remove_tag_not_in_group_from_group(self):
+        """Test that removing a tag not in the group does not change anything"""
+        self.assertEqual(self.tag_group1.tags.count(), 0)
+        self.tag_group1.tags.remove(self.tag1)
+        self.assertEqual(self.tag_group1.tags.count(), 0)
+
     def test_adding_another_users_tag_group_to_post(self):
         """Test that adding a tag group from another user does not change anything"""
         self.assertEqual(self.post.tags.count(), 0)
