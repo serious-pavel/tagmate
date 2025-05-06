@@ -424,7 +424,7 @@ class TagGroupModelTests(TestCase):
         )
 
         another_user = User.objects.create_user(
-            email="another@example.com",password="pw"
+            email="another@example.com", password="pw"
         )
 
         TagGroup.objects.create(user=another_user, name="Tag Group")
