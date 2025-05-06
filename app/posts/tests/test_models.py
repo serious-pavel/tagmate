@@ -189,6 +189,12 @@ class TagModelTests(TestCase):
         self.assertEqual(tag5.name, "😁")
         tag5.full_clean()
 
+    def test_tag_uniqueness_case_insensitive(self):
+        """Test that tag names are case insensitive"""
+        Tag.objects.create(name="Example")
+        with self.assertRaises(IntegrityError):
+            Tag.objects.create(name="example")
+
 
 class TagGroupModelTests(TestCase):
     def setUp(self):
