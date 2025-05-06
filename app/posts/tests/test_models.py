@@ -104,6 +104,21 @@ class PostTagModelTests(TestCase):
         )
         self.assertEqual([tag.position for tag in post_tags], [0, 1])
 
+    def test_update_tags_corrects_position_gap(self):
+        """Test that update_tags corrects position gaps."""
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag2, position=2)
+        positions_before = list(
+            PostTag.objects.filter(post=self.post).values_list('position', flat=True)
+        )
+        self.assertEqual(positions_before, [0, 2])
+
+        self.post.update_tags([self.tag2.id, self.tag1.id])
+        positions_after = list(
+            PostTag.objects.filter(post=self.post).values_list('position', flat=True)
+        )
+        self.assertEqual(positions_after, [0, 1])
+
     def test_update_tags_removes_unlisted_tags(self):
         """Test that update_tags removes tags not in the given list."""
         PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
