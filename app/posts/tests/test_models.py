@@ -195,6 +195,14 @@ class TagModelTests(TestCase):
         with self.assertRaises(IntegrityError):
             Tag.objects.create(name="example")
 
+    def test_tag_name_max_length(self):
+        """Test that tag names are limited to 64 characters"""
+        from django.core.exceptions import ValidationError
+        long_name = "a" * 65
+        tag = Tag(name=long_name)
+        with self.assertRaises(ValidationError):
+            tag.full_clean()
+
 
 class TagGroupModelTests(TestCase):
     def setUp(self):
