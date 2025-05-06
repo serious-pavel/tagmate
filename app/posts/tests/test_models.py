@@ -416,3 +416,19 @@ class TagGroupModelTests(TestCase):
         """Test that tag group names are unique per user"""
         with self.assertRaises(IntegrityError):
             TagGroup.objects.create(user=self.user, name="Tag Group")
+
+    def test_tag_group_name_can_repeat_for_different_users(self):
+        """Test that two different users can use the same tag group name"""
+        self.assertTrue(
+            TagGroup.objects.filter(user=self.user, name="Tag Group").exists()
+        )
+
+        another_user = User.objects.create_user(
+            email="another@example.com",password="pw"
+        )
+
+        TagGroup.objects.create(user=another_user, name="Tag Group")
+
+        self.assertEqual(TagGroup.objects.filter(name="Tag Group").count(), 2)
+        self.assertEqual(TagGroup.objects.filter(user=self.user).count(), 1)
+        self.assertEqual(TagGroup.objects.filter(user=another_user).count(), 1)
