@@ -40,6 +40,46 @@ class PostTagModelTests(TestCase):
         )
         self.assertEqual(positions, [0, 1, 2])
 
+    # Tests for method get_tag_ids
+    def test_get_tag_ids_returns_correct_list(self):
+        """Test that get_tag_ids returns a properly ordered list of tag ids"""
+        pt1 = PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
+        pt2 = PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
+        pt3 = PostTag.objects.create(post=self.post, tag=self.tag3, position=2)
+        self.assertEqual(
+            self.post.get_tag_ids(),
+            [self.tag1.id, self.tag2.id, self.tag3.id]
+        )
+
+        pt1.position = 1
+        pt1.save()
+        pt2.position = 0
+        pt2.save()
+
+        self.assertEqual(
+            self.post.get_tag_ids(),
+            [self.tag2.id, self.tag1.id, self.tag3.id]
+        )
+
+        self.post.tags.remove(self.tag2)
+
+        # Mind the gap in tag positions if sorted manually (1, 2)
+        self.assertEqual(
+            self.post.get_tag_ids(),
+            [self.tag1.id, self.tag3.id]
+        )
+
+        pt3.position = 0
+        pt3.save()
+
+        self.assertEqual(
+            self.post.get_tag_ids(),
+            [self.tag3.id, self.tag1.id]
+        )
+
+        self.post.tags.clear()
+        self.assertEqual(self.post.get_tag_ids(), [])
+
     # Tests for method update_tags
     def test_update_tags_adds_tags_and_orders_them(self):
         """Test that update_tags correctly adds and orders tags."""
