@@ -203,6 +203,22 @@ class PostTagModelTests(TestCase):
         with self.assertRaises(ValueError):
             self.post.update_tags(tag_ids_input)
 
+    def test_update_tags_transaction_rollback_on_error(self):
+        from unittest.mock import patch
+        from django.db import transaction
+
+        self.post.update_tags([self.tag1.id])
+        original_tag_ids = self.post.get_tag_ids()
+
+        # Patch bulk_create to raise error on second call
+        with patch('posts.models.PostTag.objects.bulk_create',
+                   side_effect=Exception("DB error")):
+            with self.assertRaises(Exception):
+                self.post.update_tags([self.tag1.id, self.tag2.id])
+
+        self.post.refresh_from_db()
+        self.assertEqual(self.post.get_tag_ids(), original_tag_ids)
+
 
 class TagModelTests(TestCase):
     """Test cases for Tag model"""
