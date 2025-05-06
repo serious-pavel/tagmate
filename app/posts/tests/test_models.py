@@ -220,7 +220,6 @@ class PostTagModelTests(TestCase):
 
     def test_update_tags_transaction_rollback_on_error(self):
         from unittest.mock import patch
-        from django.db import transaction
 
         self.post.update_tags([self.tag1.id])
         original_tag_ids = self.post.get_tag_ids()
