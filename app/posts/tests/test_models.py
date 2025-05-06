@@ -411,3 +411,9 @@ class TagGroupModelTests(TestCase):
         with self.assertRaises(PermissionError):
             self.post.add_tags_from_group(tag_group2)
         self.assertEqual(self.post.tags.count(), 0)
+
+    def test_tag_group_name_uniqueness(self):
+        """Test that tag group names are unique per user"""
+        TagGroup.objects.create(user=self.user, name="Tag Group")
+        with self.assertRaises(IntegrityError):
+            TagGroup.objects.create(user=self.user, name="Tag Group")
