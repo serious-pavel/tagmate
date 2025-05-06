@@ -414,6 +414,5 @@ class TagGroupModelTests(TestCase):
 
     def test_tag_group_name_uniqueness(self):
         """Test that tag group names are unique per user"""
-        TagGroup.objects.create(user=self.user, name="Tag Group")
         with self.assertRaises(IntegrityError):
             TagGroup.objects.create(user=self.user, name="Tag Group")
