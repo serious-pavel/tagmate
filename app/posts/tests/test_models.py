@@ -442,3 +442,13 @@ class TagGroupModelTests(TestCase):
         self.tag_group1.tags.set([self.tag1, self.tag2])
 
         self.assertEqual(self.tag_group1.tags.count(), 2)
+
+
+class PostModelTests(TestCase):
+    """Tests for Post model"""
+    def setUp(self):
+        self.user = User.objects.create_user(email='test@example.com', password='pw')
+        self.post = Post.objects.create(user=self.user, title="Test Post")
+
+    def test_str_representation(self):
+        self.assertEqual(str(self.post), "Test Post")
