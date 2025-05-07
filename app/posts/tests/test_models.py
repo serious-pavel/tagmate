@@ -432,3 +432,13 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(TagGroup.objects.filter(name="Tag Group").count(), 2)
         self.assertEqual(TagGroup.objects.filter(user=self.user).count(), 1)
         self.assertEqual(TagGroup.objects.filter(user=another_user).count(), 1)
+
+    def test_supply_tags_at_creation_time(self):
+        """Test that tags can be supplied at creation time"""
+        # Technically, we can't provide tags at creation time,
+        #   so we test bulk tag addition instead
+        self.assertEqual(self.tag_group1.tags.count(), 0)
+
+        self.tag_group1.tags.set([self.tag1, self.tag2])
+
+        self.assertEqual(self.tag_group1.tags.count(), 2)
