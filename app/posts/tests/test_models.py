@@ -452,3 +452,13 @@ class PostModelTests(TestCase):
 
     def test_str_representation(self):
         self.assertEqual(str(self.post), "Test Post")
+
+    def test_created_at_and_updated_at_on_creation(self):
+        self.assertIsNotNone(self.post.created_at)
+        self.assertIsNotNone(self.post.updated_at)
+        # Should be very close
+        self.assertAlmostEqual(
+            self.post.created_at.timestamp(),
+            self.post.updated_at.timestamp(),
+            delta=0.1
+        )
