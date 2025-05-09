@@ -480,3 +480,15 @@ class PostModelTests(TestCase):
 
         self.assertEqual(self.post.created_at, old_created_at)
         self.assertNotEqual(self.post.updated_at, old_updated_at)
+
+    def test_updating_tags_updates_updated_at(self):
+        old_updated_at = self.post.updated_at
+        time.sleep(0.2)
+        tag = Tag.objects.create(name="tag1")
+        self.post.update_tags([tag.id])
+
+        self.assertNotAlmostEqual(
+            self.post.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=0.1
+        )
