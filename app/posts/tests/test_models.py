@@ -451,6 +451,8 @@ class PostModelTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(email='test@example.com', password='pw')
         self.post = Post.objects.create(user=self.user, title="Test Post")
+        self.time_delta = 0.1
+        self.longer_time_delta = 2 * self.time_delta
 
     def test_str_representation(self):
         self.assertEqual(str(self.post), "Test Post")
@@ -462,20 +464,20 @@ class PostModelTests(TestCase):
         self.assertAlmostEqual(
             self.post.created_at.timestamp(),
             self.post.updated_at.timestamp(),
-            delta=0.1
+            delta=self.time_delta
         )
 
     def test_created_at_and_updated_at_on_update(self):
         old_updated_at = self.post.updated_at
         old_created_at = self.post.created_at
-        time.sleep(0.2)
+        time.sleep(self.longer_time_delta)
         self.post.title = "New Title"
         self.post.save()
 
         self.assertNotAlmostEqual(
             self.post.created_at.timestamp(),
             self.post.updated_at.timestamp(),
-            delta=0.1
+            delta=self.time_delta
         )
 
         self.assertEqual(self.post.created_at, old_created_at)
@@ -483,14 +485,14 @@ class PostModelTests(TestCase):
 
     def test_updating_tags_updates_updated_at(self):
         old_updated_at = self.post.updated_at
-        time.sleep(0.2)
+        time.sleep(self.longer_time_delta)
         tag = Tag.objects.create(name="tag1")
         self.post.update_tags([tag.id])
 
         self.assertNotAlmostEqual(
             self.post.updated_at.timestamp(),
             old_updated_at.timestamp(),
-            delta=0.1
+            delta=self.time_delta
         )
 
     def test_updating_tag_without_changes_does_not_update_updated_at(self):
@@ -498,11 +500,11 @@ class PostModelTests(TestCase):
         self.post.update_tags([tag.id])
 
         old_updated_at = self.post.updated_at
-        time.sleep(0.2)
+        time.sleep(self.longer_time_delta)
 
         self.post.update_tags([tag.id])
         self.assertAlmostEqual(
             self.post.updated_at.timestamp(),
             old_updated_at.timestamp(),
-            delta=0.1
+            delta=self.time_delta
         )
