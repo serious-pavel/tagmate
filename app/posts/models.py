@@ -131,6 +131,9 @@ class Post(models.Model):
         if to_create:
             PostTag.objects.bulk_create(to_create)
 
+        if to_update or to_create or tag_ids_to_attach or tag_ids_to_detach:
+            self.save()
+
     @transaction.atomic
     def add_tags_from_group(self, tag_group: TagGroup):
         if tag_group.user_id != self.user_id:
