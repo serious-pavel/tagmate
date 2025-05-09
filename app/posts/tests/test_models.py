@@ -492,3 +492,17 @@ class PostModelTests(TestCase):
             old_updated_at.timestamp(),
             delta=0.1
         )
+
+    def test_updating_tag_without_changes_does_not_update_updated_at(self):
+        tag = Tag.objects.create(name="tag1")
+        self.post.update_tags([tag.id])
+
+        old_updated_at = self.post.updated_at
+        time.sleep(0.2)
+
+        self.post.update_tags([tag.id])
+        self.assertAlmostEqual(
+            self.post.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=0.1
+        )
