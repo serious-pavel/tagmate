@@ -1,3 +1,5 @@
+import time
+
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
@@ -462,3 +464,19 @@ class PostModelTests(TestCase):
             self.post.updated_at.timestamp(),
             delta=0.1
         )
+
+    def test_created_at_and_updated_at_on_update(self):
+        old_updated_at = self.post.updated_at
+        old_created_at = self.post.created_at
+        time.sleep(0.2)
+        self.post.title = "New Title"
+        self.post.save()
+
+        self.assertNotAlmostEqual(
+            self.post.created_at.timestamp(),
+            self.post.updated_at.timestamp(),
+            delta=0.1
+        )
+
+        self.assertEqual(self.post.created_at, old_created_at)
+        self.assertNotEqual(self.post.updated_at, old_updated_at)
