@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.apps import apps
 from django.core.validators import RegexValidator
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 
 
 User = get_user_model()
@@ -160,3 +162,8 @@ class PostTag(models.Model):
 
     def __str__(self):
         return f"{self.tag} in {self.post} at {self.position}"
+
+
+@receiver(m2m_changed, sender=TagGroup.tags.through)
+def tag_group_tags_changed(sender, instance, **kwargs):
+    instance.save()
