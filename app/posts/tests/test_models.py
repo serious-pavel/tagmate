@@ -491,6 +491,18 @@ class TagGroupSignalTests(TestCase):
             delta=self.time_delta
         )
 
+    def test_updated_at_on_repeated_operation(self):
+        """Test that updated_at is not updated when operation didn't cause changes"""
+        self.tag_group1.tags.add(self.tag1)
+        old_updated_at = self.tag_group1.updated_at
+        time.sleep(self.longer_time_delta)
+        self.tag_group1.tags.add(self.tag1)
+        self.assertAlmostEqual(
+            self.tag_group1.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=self.time_delta
+        )
+
 
 class PostModelTests(TestCase):
     """Tests for Post model"""
