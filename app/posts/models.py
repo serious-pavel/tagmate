@@ -166,5 +166,13 @@ class PostTag(models.Model):
 
 @receiver(m2m_changed, sender=TagGroup.tags.through)
 def tag_group_tags_changed(sender, instance, action, pk_set, **kwargs):
+    """
+    Update TagGroup.updated_at when tags are modified.
+
+    Handles "post_add" and "post_remove" if pk_set is not empty (actual changes),
+    and always on "post_clear" (all tags removed).
+    Ensures updated_at only changes on real relation updates.
+    See: https://docs.djangoproject.com/en/stable/ref/signals/#m2m-changed
+    """
     if (action in ("post_add", "post_remove") and pk_set) or action == "post_clear":
         instance.save()
