@@ -513,6 +513,20 @@ class TagGroupSignalTests(TestCase):
             delta=self.time_delta
         )
 
+    def test_updated_at_on_add_group_to_post(self):
+        """Test that updated_at is not updated when adding a tag group to a post"""
+        post = Post.objects.create(user=self.user, title="Test Post")
+        self.tag_group1.tags.add(self.tag1)
+        self.tag_group1.tags.add(self.tag2)
+        old_updated_at = self.tag_group1.updated_at
+        time.sleep(self.longer_time_delta)
+        post.add_tags_from_group(self.tag_group1)
+        self.assertAlmostEqual(
+            self.tag_group1.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=self.time_delta
+        )
+
 
 class PostModelTests(TestCase):
     """Tests for Post model"""
