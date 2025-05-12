@@ -453,9 +453,22 @@ class TagGroupSignalTests(TestCase):
         self.tag_group1 = TagGroup.objects.create(user=self.user, name="Tag Group")
         self.tag1 = Tag.objects.create(name="tag1")
         self.tag2 = Tag.objects.create(name="tag2")
+        self.time_delta = 0.1
+        self.longer_time_delta = 2 * self.time_delta
 
     def test_updated_at_on_creation(self):
         self.assertIsNotNone(self.tag_group1.updated_at)
+
+    def test_updated_at_on_update(self):
+        old_updated_at = self.tag_group1.updated_at
+        time.sleep(self.longer_time_delta)
+        self.tag_group1.name = "New Name"
+        self.tag_group1.save()
+        self.assertNotAlmostEqual(
+            self.tag_group1.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=self.time_delta
+        )
 
 
 class PostModelTests(TestCase):
