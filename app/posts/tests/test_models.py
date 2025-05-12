@@ -503,6 +503,16 @@ class TagGroupSignalTests(TestCase):
             delta=self.time_delta
         )
 
+    def test_updated_at_on_bulk_add(self):
+        old_updated_at = self.tag_group1.updated_at
+        time.sleep(self.longer_time_delta)
+        self.tag_group1.tags.set([self.tag1, self.tag2])
+        self.assertNotAlmostEqual(
+            self.tag_group1.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=self.time_delta
+        )
+
 
 class PostModelTests(TestCase):
     """Tests for Post model"""
