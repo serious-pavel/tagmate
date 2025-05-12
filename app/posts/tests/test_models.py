@@ -11,10 +11,10 @@ User = get_user_model()
 class PostTagModelTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(email='u@example.com', password='pw')
-        self.post = Post.objects.create(user=self.user, title="Test", description="desc")
-        self.tag1 = Tag.objects.create(name="tag1")
-        self.tag2 = Tag.objects.create(name="tag2")
-        self.tag3 = Tag.objects.create(name="tag3")
+        self.post = Post.objects.create(user=self.user, title='Test', description='desc')
+        self.tag1 = Tag.objects.create(name='tag1')
+        self.tag2 = Tag.objects.create(name='tag2')
+        self.tag3 = Tag.objects.create(name='tag3')
 
     def test_unique_together_constraint(self):
         """Test attempt to create duplicates raises IntegrityError"""
@@ -30,7 +30,7 @@ class PostTagModelTests(TestCase):
 
     def test_str_representation(self):
         pt = PostTag.objects.create(post=self.post, tag=self.tag2, position=2)
-        expected = f"{pt.tag} in {pt.post} at {pt.position}"
+        expected = f'{pt.tag} in {pt.post} at {pt.position}'
         self.assertEqual(str(pt), expected)
 
     def test_ordering_by_position(self):
@@ -165,7 +165,7 @@ class PostTagModelTests(TestCase):
         PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
         PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
 
-        self.tag4 = Tag.objects.create(name="tag4")
+        self.tag4 = Tag.objects.create(name='tag4')
         tag_ids_input = [self.tag3.id, self.tag1.id, self.tag4.id]
 
         self.post.update_tags(tag_ids_input)
@@ -228,7 +228,7 @@ class PostTagModelTests(TestCase):
 
         # Patch bulk_create to raise error on second call
         with patch('posts.models.PostTag.objects.bulk_create',
-                   side_effect=Exception("DB error")):
+                   side_effect=Exception('DB error')):
             with self.assertRaises(Exception):
                 self.post.update_tags([self.tag1.id, self.tag2.id])
 
@@ -239,51 +239,51 @@ class PostTagModelTests(TestCase):
 class TagModelTests(TestCase):
     """Test cases for a Tag model"""
     def test_str_representation(self):
-        tag = Tag.objects.create(name="tag1")
-        expected = f"#{tag.name}"
+        tag = Tag.objects.create(name='tag1')
+        expected = f'#{tag.name}'
         self.assertEqual(str(tag), expected)
 
     def test_ordering_by_name(self):
-        Tag.objects.create(name="tag1")
-        Tag.objects.create(name="tag3")
-        Tag.objects.create(name="tag2")
+        Tag.objects.create(name='tag1')
+        Tag.objects.create(name='tag3')
+        Tag.objects.create(name='tag2')
         tags = list(Tag.objects.all().values_list('name', flat=True))
-        self.assertEqual(tags, ["tag1", "tag2", "tag3"])
+        self.assertEqual(tags, ['tag1', 'tag2', 'tag3'])
 
     def test_tag_name_validation(self):
         """Test that tag names are validated"""
         from django.core.exceptions import ValidationError
 
-        tag1 = Tag.objects.create(name="tag1")
-        self.assertEqual(tag1.name, "tag1")
+        tag1 = Tag.objects.create(name='tag1')
+        self.assertEqual(tag1.name, 'tag1')
         tag1.full_clean()
 
-        tag2 = Tag.objects.create(name="tag2- ")
+        tag2 = Tag.objects.create(name='tag2- ')
         with self.assertRaises(ValidationError):
             tag2.full_clean()
 
-        tag3 = Tag.objects.create(name="")
+        tag3 = Tag.objects.create(name='')
         with self.assertRaises(ValidationError):
             tag3.full_clean()
 
-        tag4 = Tag.objects.create(name="t.ag")
+        tag4 = Tag.objects.create(name='t.ag')
         with self.assertRaises(ValidationError):
             tag4.full_clean()
 
-        tag5 = Tag.objects.create(name="😁")
-        self.assertEqual(tag5.name, "😁")
+        tag5 = Tag.objects.create(name='😁')
+        self.assertEqual(tag5.name, '😁')
         tag5.full_clean()
 
     def test_tag_uniqueness_case_insensitive(self):
         """Test that tag names are case-insensitive"""
-        Tag.objects.create(name="Example")
+        Tag.objects.create(name='Example')
         with self.assertRaises(IntegrityError):
-            Tag.objects.create(name="example")
+            Tag.objects.create(name='example')
 
     def test_tag_name_max_length(self):
         """Test that tag names are limited to 64 characters"""
         from django.core.exceptions import ValidationError
-        long_name = "a" * 65
+        long_name = 'a' * 65
         tag = Tag(name=long_name)
         with self.assertRaises(ValidationError):
             tag.full_clean()
@@ -292,14 +292,14 @@ class TagModelTests(TestCase):
 class TagGroupModelTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(email='user@example.com', password='pw')
-        self.post = Post.objects.create(user=self.user, title="Test Post")
-        self.tag1 = Tag.objects.create(name="tag1")
-        self.tag2 = Tag.objects.create(name="tag2")
-        self.tag3 = Tag.objects.create(name="tag3")
-        self.tag_group1 = TagGroup.objects.create(user=self.user, name="Tag Group")
+        self.post = Post.objects.create(user=self.user, title='Test Post')
+        self.tag1 = Tag.objects.create(name='tag1')
+        self.tag2 = Tag.objects.create(name='tag2')
+        self.tag3 = Tag.objects.create(name='tag3')
+        self.tag_group1 = TagGroup.objects.create(user=self.user, name='Tag Group')
 
     def test_str_representation(self):
-        self.assertEqual(str(self.tag_group1), "Tag Group")
+        self.assertEqual(str(self.tag_group1), 'Tag Group')
 
     def test_ordering_tags_by_name(self):
         self.tag_group1.tags.add(self.tag3)
@@ -307,7 +307,7 @@ class TagGroupModelTests(TestCase):
 
         grouped_tags = list(self.tag_group1.tags.all().values_list('name', flat=True))
 
-        self.assertEqual(grouped_tags, ["tag2", "tag3"])
+        self.assertEqual(grouped_tags, ['tag2', 'tag3'])
 
     def test_idempotent_add_tag_to_group(self):
         """Test that adding a tag to a group twice does not change anything"""
@@ -381,7 +381,7 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(self.tag_group1.tags.count(), 0)
 
     def test_delete_tag_group_does_not_delete_tags(self):
-        self.assertTrue(TagGroup.objects.filter(name="Tag Group").exists())
+        self.assertTrue(TagGroup.objects.filter(name='Tag Group').exists())
 
         self.tag_group1.tags.add(self.tag1)
         self.tag_group1.tags.add(self.tag2)
@@ -391,10 +391,10 @@ class TagGroupModelTests(TestCase):
         tag_ids = list(self.tag_group1.tags.values_list('id', flat=True))
         self.tag_group1.delete()
 
-        self.assertFalse(TagGroup.objects.filter(name="Tag Group").exists())
+        self.assertFalse(TagGroup.objects.filter(name='Tag Group').exists())
         self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 2)
-        self.assertTrue(Tag.objects.filter(name="tag1").exists())
-        self.assertTrue(Tag.objects.filter(name="tag2").exists())
+        self.assertTrue(Tag.objects.filter(name='tag1').exists())
+        self.assertTrue(Tag.objects.filter(name='tag2').exists())
 
     def test_adding_another_users_tag_group_to_post(self):
         """Test that adding a tag group from another user does not change anything"""
@@ -405,7 +405,7 @@ class TagGroupModelTests(TestCase):
             password='pw'
         )
 
-        tag_group2 = TagGroup.objects.create(user=another_user, name="Tag Group 2")
+        tag_group2 = TagGroup.objects.create(user=another_user, name='Tag Group 2')
         tag_group2.tags.add(self.tag3)
 
         self.assertEqual(tag_group2.tags.count(), 1)
@@ -417,21 +417,21 @@ class TagGroupModelTests(TestCase):
     def test_tag_group_name_uniqueness(self):
         """Test that tag group names are unique per user"""
         with self.assertRaises(IntegrityError):
-            TagGroup.objects.create(user=self.user, name="Tag Group")
+            TagGroup.objects.create(user=self.user, name='Tag Group')
 
     def test_tag_group_name_can_repeat_for_different_users(self):
         """Test that two different users can use the same tag group name"""
         self.assertTrue(
-            TagGroup.objects.filter(user=self.user, name="Tag Group").exists()
+            TagGroup.objects.filter(user=self.user, name='Tag Group').exists()
         )
 
         another_user = User.objects.create_user(
-            email="another@example.com", password="pw"
+            email='another@example.com', password='pw'
         )
 
-        TagGroup.objects.create(user=another_user, name="Tag Group")
+        TagGroup.objects.create(user=another_user, name='Tag Group')
 
-        self.assertEqual(TagGroup.objects.filter(name="Tag Group").count(), 2)
+        self.assertEqual(TagGroup.objects.filter(name='Tag Group').count(), 2)
         self.assertEqual(TagGroup.objects.filter(user=self.user).count(), 1)
         self.assertEqual(TagGroup.objects.filter(user=another_user).count(), 1)
 
@@ -450,9 +450,9 @@ class TagGroupSignalTests(TestCase):
     """Tests for field updated_at and M2M signal"""
     def setUp(self):
         self.user = User.objects.create_user(email='test@example.com', password='pw')
-        self.tag_group1 = TagGroup.objects.create(user=self.user, name="Tag Group")
-        self.tag1 = Tag.objects.create(name="tag1")
-        self.tag2 = Tag.objects.create(name="tag2")
+        self.tag_group1 = TagGroup.objects.create(user=self.user, name='Tag Group')
+        self.tag1 = Tag.objects.create(name='tag1')
+        self.tag2 = Tag.objects.create(name='tag2')
         self.time_delta = 0.1
         self.longer_time_delta = 2 * self.time_delta
 
@@ -462,7 +462,7 @@ class TagGroupSignalTests(TestCase):
     def test_updated_at_on_update(self):
         old_updated_at = self.tag_group1.updated_at
         time.sleep(self.longer_time_delta)
-        self.tag_group1.name = "New Name"
+        self.tag_group1.name = 'New Name'
         self.tag_group1.save()
         self.assertNotAlmostEqual(
             self.tag_group1.updated_at.timestamp(),
@@ -515,7 +515,7 @@ class TagGroupSignalTests(TestCase):
 
     def test_updated_at_on_add_group_to_post(self):
         """Test that updated_at is not updated when adding a tag group to a post"""
-        post = Post.objects.create(user=self.user, title="Test Post")
+        post = Post.objects.create(user=self.user, title='Test Post')
         self.tag_group1.tags.add(self.tag1)
         self.tag_group1.tags.add(self.tag2)
         old_updated_at = self.tag_group1.updated_at
@@ -545,12 +545,12 @@ class PostModelTests(TestCase):
     """Tests for a Post model"""
     def setUp(self):
         self.user = User.objects.create_user(email='test@example.com', password='pw')
-        self.post = Post.objects.create(user=self.user, title="Test Post")
+        self.post = Post.objects.create(user=self.user, title='Test Post')
         self.time_delta = 0.1
         self.longer_time_delta = 2 * self.time_delta
 
     def test_str_representation(self):
-        self.assertEqual(str(self.post), "Test Post")
+        self.assertEqual(str(self.post), 'Test Post')
 
     def test_created_at_and_updated_at_on_creation(self):
         self.assertIsNotNone(self.post.created_at)
@@ -566,7 +566,7 @@ class PostModelTests(TestCase):
         old_updated_at = self.post.updated_at
         old_created_at = self.post.created_at
         time.sleep(self.longer_time_delta)
-        self.post.title = "New Title"
+        self.post.title = 'New Title'
         self.post.save()
 
         self.assertNotAlmostEqual(
@@ -581,7 +581,7 @@ class PostModelTests(TestCase):
     def test_updating_tags_updates_updated_at(self):
         old_updated_at = self.post.updated_at
         time.sleep(self.longer_time_delta)
-        tag = Tag.objects.create(name="tag1")
+        tag = Tag.objects.create(name='tag1')
         self.post.update_tags([tag.id])
 
         self.assertNotAlmostEqual(
@@ -591,7 +591,7 @@ class PostModelTests(TestCase):
         )
 
     def test_updating_tag_without_changes_does_not_update_updated_at(self):
-        tag = Tag.objects.create(name="tag1")
+        tag = Tag.objects.create(name='tag1')
         self.post.update_tags([tag.id])
 
         old_updated_at = self.post.updated_at
