@@ -454,6 +454,9 @@ class TagGroupSignalTests(TestCase):
         self.tag1 = Tag.objects.create(name="tag1")
         self.tag2 = Tag.objects.create(name="tag2")
 
+    def test_updated_at_on_creation(self):
+        self.assertIsNotNone(self.tag_group1.updated_at)
+
 
 class PostModelTests(TestCase):
     """Tests for Post model"""
