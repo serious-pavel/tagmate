@@ -237,7 +237,7 @@ class PostTagModelTests(TestCase):
 
 
 class TagModelTests(TestCase):
-    """Test cases for Tag model"""
+    """Test cases for a Tag model"""
     def test_str_representation(self):
         tag = Tag.objects.create(name="tag1")
         expected = f"#{tag.name}"
@@ -275,7 +275,7 @@ class TagModelTests(TestCase):
         tag5.full_clean()
 
     def test_tag_uniqueness_case_insensitive(self):
-        """Test that tag names are case insensitive"""
+        """Test that tag names are case-insensitive"""
         Tag.objects.create(name="Example")
         with self.assertRaises(IntegrityError):
             Tag.objects.create(name="example")
@@ -540,8 +540,9 @@ class TagGroupSignalTests(TestCase):
             delta=self.time_delta
         )
 
+
 class PostModelTests(TestCase):
-    """Tests for Post model"""
+    """Tests for a Post model"""
     def setUp(self):
         self.user = User.objects.create_user(email='test@example.com', password='pw')
         self.post = Post.objects.create(user=self.user, title="Test Post")
