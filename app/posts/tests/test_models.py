@@ -446,6 +446,15 @@ class TagGroupModelTests(TestCase):
         self.assertEqual(self.tag_group1.tags.count(), 2)
 
 
+class TagGroupSignalTests(TestCase):
+    """Tests for field updated_at and M2M signal"""
+    def setUp(self):
+        self.user = User.objects.create_user(email='test@example.com', password='pw')
+        self.tag_group1 = TagGroup.objects.create(user=self.user, name="Tag Group")
+        self.tag1 = Tag.objects.create(name="tag1")
+        self.tag2 = Tag.objects.create(name="tag2")
+
+
 class PostModelTests(TestCase):
     """Tests for Post model"""
     def setUp(self):
