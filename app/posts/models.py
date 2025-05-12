@@ -165,5 +165,6 @@ class PostTag(models.Model):
 
 
 @receiver(m2m_changed, sender=TagGroup.tags.through)
-def tag_group_tags_changed(sender, instance, **kwargs):
-    instance.save()
+def tag_group_tags_changed(sender, instance, action, pk_set, **kwargs):
+    if action in ("post_add", "post_remove") and pk_set:
+        instance.save()
