@@ -47,4 +47,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include(account_urlpatterns)),
     path('', core_views.index, name='index'),
+    path('profile/', core_views.profile, name='profile'),
 ]
