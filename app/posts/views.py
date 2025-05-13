@@ -1,3 +1,5 @@
 from django.shortcuts import render  # noqa
 
-# Create your views here.
+
+def post_editor(request):
+    return render(request, template_name='posts/post_editor.html')
