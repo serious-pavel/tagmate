@@ -19,13 +19,11 @@ from django.urls import path, include
 
 from allauth.account.decorators import secure_admin_login
 
-from core import views as core_views
-
 admin.autodiscover()
 admin.site.login = secure_admin_login(admin.site.login)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('core.urls')),
-    path('', core_views.index, name='index'),
+    path('', include('posts.urls')),
 ]
