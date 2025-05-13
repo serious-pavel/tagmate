@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
     {% block links %}
     {% endblock links %}
-    <title>{% block title %}{% endblock title%}</title>
+    <title>TagMate - {% block title %}{% endblock title%}</title>
 </head>
 <body>
     <div class="header">
         <div class="header-left">
             <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt="" loading="lazy"></a>
-            <a href="{% url 'index' %}">Index</a>
-            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'index' %}">Post Editor</a>
+            {% if user.is_authenticated %}<a href="{% url 'profile' %}">Profile</a>{% endif %}
         </div>
         TagMate
         <div class="header-right">
