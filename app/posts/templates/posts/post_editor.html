@@ -4,14 +4,7 @@
 
 {% block content %}
 <p>Post Editor</p>
-{% if user.is_authenticated %}
-    <img src="{{ user.profile_picture }}" alt="" class="rounded">
-    <p>You're logged in as {{ user.full_name }} ({{ user.email }})</p>
-    <a href="{% url 'account_logout' %}">Logout</a>
-    {% if user.is_staff and user.is_superuser %}
-        <a href="{% url 'admin:index' %}">Admin</a>
-    {% endif %}
-{% else %}
+{% if not user.is_authenticated %}
     <p>You are not logged in</p>
     <a href="{% url 'google_login' %}">Login</a>
 {% endif %}
