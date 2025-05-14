@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'posts/css/post_editor_style.css' %}">
+{% endblock links %}
 
 {% block title %}Post Editor{% endblock title%}
 
@@ -8,15 +13,15 @@
     <p>You are not logged in</p>
     <a href="{% url 'google_login' %}">Login</a>
 {% else %}
-    <div id="recent-posts block-L">
+    <div class="recent-posts block-L">
         Posts:
         <button>Add Post</button>
         {% for post in user.posts.all %}
             <p>{{ post.title }} ({{ post.created_at }})</p>
         {% endfor %}
     </div>
-    <div id="block-M">
-        <div id="post-editor">
+    <div class="block-M">
+        <div class="post-editor">
             Tags:
             <button>Add Tag</button>
             <button>Add Tags from TagGroup</button>
@@ -24,7 +29,7 @@
                 <p>{{ tag.name }}</p>
             {% endfor %}
         </div>
-        <div id="tag-groups">
+        <div class="tg-editor">
             TagGroups:
             <button>Add TagGroup</button>
             {% for tg in user.tag_groups.all %}
@@ -33,7 +38,7 @@
         </div>
     </div>
 
-    <div id="post-preview block-R">
+    <div class="post-preview block-R">
         Post preview:
         <p>{{ current_post.title }}</p>
         <p>{{ current_post.description }}</p>
