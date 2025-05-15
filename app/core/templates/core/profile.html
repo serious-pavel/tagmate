@@ -3,7 +3,7 @@
 {% block title %}Profile{% endblock title%}
 
 {% block content %}
-<p>Your Profile</p>
+<div class="page-header">Your Profile</div>
 {% if user.is_authenticated %}
     <img src="{{ user.profile_picture }}" alt="" class="rounded">
     <p>You're logged in as {{ user.full_name }} ({{ user.email }})</p>
