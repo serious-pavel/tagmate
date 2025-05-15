@@ -37,6 +37,13 @@ body {
   min-width: 240px;
 }
 
+.content-nested > .page-header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
 .header {
   color: whitesmoke;
   background-color: black;
