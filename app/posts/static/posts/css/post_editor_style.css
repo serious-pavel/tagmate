@@ -1,5 +1,22 @@
+#main {
+    display: flex;
+    min-width: 100%;
+    box-shadow: 0 0 15px 0 firebrick;
+}
+
+#main > div {
+    margin-right: 10px;
+    padding: 10px;
+}
+
+#main > div:last-child {
+    margin-right: 0;
+}
+
 .block-L {
     background-color: #ff9a9a;
+    min-width: 100px;
+    width: 15%;
 }
 
 .recent-posts {
@@ -8,6 +25,8 @@
 
 .block-M {
     background-color: #ffdd86;
+    min-width: 600px;
+    width: 60%;
 }
 
 .post-editor {
@@ -20,6 +39,9 @@
 
 .block-R {
     background-color: #9ce885;
+    min-width: 300px;
+    max-width: 600px;
+    width: 25%;
 }
 
 .post-preview {
