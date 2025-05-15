@@ -13,37 +13,38 @@
     <p>You are not logged in</p>
     <a href="{% url 'google_login' %}">Login</a>
 {% else %}
-    <div class="recent-posts block-L">
-        Posts:
-        <button>Add Post</button>
-        {% for post in user.posts.all %}
-            <p>{{ post.title }} ({{ post.created_at }})</p>
-        {% endfor %}
-    </div>
-    <div class="block-M">
-        <div class="post-editor">
-            Tags:
-            <button>Add Tag</button>
-            <button>Add Tags from TagGroup</button>
-            {% for tag in current_post.tags.all %}
-                <p>{{ tag.name }}</p>
+    <div id="main">
+        <div class="recent-posts block-L">
+            Posts:
+            <button>Add Post</button>
+            {% for post in user.posts.all %}
+                <p>{{ post.title }} ({{ post.created_at }})</p>
             {% endfor %}
         </div>
-        <div class="tg-editor">
-            TagGroups:
-            <button>Add TagGroup</button>
-            {% for tg in user.tag_groups.all %}
-                <p>{{ tg.name }}</p>
-            {% endfor %}
+        <div class="block-M">
+            <div class="post-editor">
+                Tags:
+                <button>Add Tag</button>
+                <button>Add Tags from TagGroup</button>
+                {% for tag in current_post.tags.all %}
+                    <p>{{ tag.name }}</p>
+                {% endfor %}
+            </div>
+            <div class="tg-editor">
+                TagGroups:
+                <button>Add TagGroup</button>
+                {% for tg in user.tag_groups.all %}
+                    <p>{{ tg.name }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="post-preview block-R">
+            Post preview:
+            <p>{{ current_post.title }}</p>
+            <p>{{ current_post.description }}</p>
+            <p>{{ current_post.tags.all }}</p>
         </div>
     </div>
-
-    <div class="post-preview block-R">
-        Post preview:
-        <p>{{ current_post.title }}</p>
-        <p>{{ current_post.description }}</p>
-        <p>{{ current_post.tags.all }}</p>
-    </div>
-
 {% endif %}
 {% endblock content %}
