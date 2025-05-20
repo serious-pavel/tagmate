@@ -24,6 +24,10 @@
         <div class="block-M">
             <div class="post-editor">
                 Tags:
+                {% if error_message %}
+                  <div style="color:red;">{{ error_message }}</div>
+                {% endif %}
+
                 <form method="post" >
                     {% csrf_token %}
                     <label>
