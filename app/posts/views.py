@@ -27,7 +27,7 @@ def post_editor(request):
                 tag, created = Tag.objects.get_or_create(name=tag_name)
                 tag_ids.append(tag.id)
             if tag_ids:
-                input_tag_ids = latest_post.get_tag_ids() + tag_ids
+                input_tag_ids = latest_post.ordered_tag_ids + tag_ids
                 latest_post.update_tags(input_tag_ids)
         return redirect('index')  # assuming 'index' points to this page
 
