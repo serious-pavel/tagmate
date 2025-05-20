@@ -82,6 +82,11 @@ class Post(models.Model):
         return self.title
 
     @property
+    def ordered_tags(self):
+        """Return ordered list of tags in Post"""
+        return Tag.objects.filter(posttag__post=self).order_by('posttag__position')
+
+    @property
     def ordered_tag_ids(self):
         """Return ordered list of tag IDs in Post"""
         return list(PostTag.objects.filter(post=self).values_list('tag_id', flat=True))
