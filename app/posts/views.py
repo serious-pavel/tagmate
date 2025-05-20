@@ -11,6 +11,9 @@ def post_editor(request):
             tag_ids = []
             for tag_name in tag_names_str.replace(",", " ").replace("#", " ").split():
                 tag, created = Tag.objects.get_or_create(name=tag_name)
+                if created:
+                    tag.full_clean()
+                    tag.save()
                 tag_ids.append(tag.id)
             if tag_ids:
                 input_tag_ids = latest_post.get_tag_ids() + tag_ids
