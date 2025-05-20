@@ -27,7 +27,10 @@
                 <form method="post" >
                     {% csrf_token %}
                     <label>
-                        <input type="text" name="tag_names" placeholder="Add tags (comma, hashtag or space separated)" required>
+                        <input type="text" name="tag_names"
+                               placeholder="Add tags (comma, hashtag or space separated)"
+                               value="{{ tag_names }}"
+                               required>
                     </label>
                     <button type="submit">Add Tag</button>
                 </form>
