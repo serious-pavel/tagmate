@@ -43,7 +43,7 @@ class PostTagModelTests(TestCase):
         self.assertEqual(positions, [0, 1, 2])
 
     # Tests for method get_tag_id
-    def test_get_tag_ids_sorts_as_post_tag_model(self):
+    def test_ordered_tag_ids_sorts_as_post_tag_model(self):
         """Test that get_tag_id returns the correct tag id"""
         PostTag.objects.create(post=self.post, tag=self.tag1, position=1)
         PostTag.objects.create(post=self.post, tag=self.tag2, position=2)
@@ -54,15 +54,15 @@ class PostTagModelTests(TestCase):
                 post=self.post
             ).order_by('position').values_list('tag_id', flat=True)
         )
-        self.assertEqual(self.post.get_tag_ids(), post_tag_ids)
+        self.assertEqual(self.post.ordered_tag_ids, post_tag_ids)
 
-    def test_get_tag_ids_returns_correct_list(self):
-        """Test that get_tag_ids returns a properly ordered list of tag ids"""
+    def test_ordered_tag_ids_returns_correct_list(self):
+        """Test that ordered_tag_ids returns a properly ordered list of tag ids"""
         pt1 = PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
         pt2 = PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
         pt3 = PostTag.objects.create(post=self.post, tag=self.tag3, position=2)
         self.assertEqual(
-            self.post.get_tag_ids(),
+            self.post.ordered_tag_ids,
             [self.tag1.id, self.tag2.id, self.tag3.id]
         )
 
@@ -72,7 +72,7 @@ class PostTagModelTests(TestCase):
         pt2.save()
 
         self.assertEqual(
-            self.post.get_tag_ids(),
+            self.post.ordered_tag_ids,
             [self.tag2.id, self.tag1.id, self.tag3.id]
         )
 
@@ -80,7 +80,7 @@ class PostTagModelTests(TestCase):
 
         # Mind the gap in tag positions if sorted manually (1, 2)
         self.assertEqual(
-            self.post.get_tag_ids(),
+            self.post.ordered_tag_ids,
             [self.tag1.id, self.tag3.id]
         )
 
@@ -88,12 +88,12 @@ class PostTagModelTests(TestCase):
         pt3.save()
 
         self.assertEqual(
-            self.post.get_tag_ids(),
+            self.post.ordered_tag_ids,
             [self.tag3.id, self.tag1.id]
         )
 
         self.post.tags.clear()
-        self.assertEqual(self.post.get_tag_ids(), [])
+        self.assertEqual(self.post.ordered_tag_ids, [])
 
     # Tests for method update_tags
     def test_update_tags_adds_tags_and_orders_them(self):
@@ -224,7 +224,7 @@ class PostTagModelTests(TestCase):
         from unittest.mock import patch
 
         self.post.update_tags([self.tag1.id])
-        original_tag_ids = self.post.get_tag_ids()
+        original_tag_ids = self.post.ordered_tag_ids
 
         # Patch bulk_create to raise error on second call
         with patch('posts.models.PostTag.objects.bulk_create',
@@ -233,7 +233,7 @@ class PostTagModelTests(TestCase):
                 self.post.update_tags([self.tag1.id, self.tag2.id])
 
         self.post.refresh_from_db()
-        self.assertEqual(self.post.get_tag_ids(), original_tag_ids)
+        self.assertEqual(self.post.ordered_tag_ids, original_tag_ids)
 
 
 class TagModelTests(TestCase):
