@@ -42,7 +42,7 @@ class PostTagModelTests(TestCase):
         )
         self.assertEqual(positions, [0, 1, 2])
 
-    # Tests for method get_tag_id
+    # Tests for properties ordered_tag_ids and ordered_tags
     def test_ordered_tag_ids_sorts_as_post_tag_model(self):
         """Test that get_tag_id returns the correct tag id"""
         PostTag.objects.create(post=self.post, tag=self.tag1, position=1)
