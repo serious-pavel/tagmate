@@ -95,6 +95,16 @@ class PostTagModelTests(TestCase):
         self.post.tags.clear()
         self.assertEqual(self.post.ordered_tag_ids, [])
 
+    def test_ordered_tags_returns_same_tags_as_ordered_tag_ids(self):
+        PostTag.objects.create(post=self.post, tag=self.tag3, position=0)
+        PostTag.objects.create(post=self.post, tag=self.tag1, position=1)
+
+        ids_by_ordered_tags = list(self.post.ordered_tags.values_list('id', flat=True))
+        self.assertEqual(
+            self.post.ordered_tag_ids,
+            ids_by_ordered_tags
+        )
+
     # Tests for method update_tags
     def test_update_tags_adds_tags_and_orders_them(self):
         """Test that update_tags correctly adds and orders tags."""
