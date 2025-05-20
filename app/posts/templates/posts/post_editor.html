@@ -24,7 +24,14 @@
         <div class="block-M">
             <div class="post-editor">
                 Tags:
-                <button>Add Tag</button>
+                <form method="post" >
+                    {% csrf_token %}
+                    <label>
+                        <input type="text" name="tag_names" placeholder="Add tags (comma, hashtag or space separated)" required>
+                    </label>
+                    <button type="submit">Add Tag</button>
+                </form>
+
                 <button>Add Tags from TagGroup</button>
                 {% for tag in current_post.tags.all %}
                     <p>{{ tag.name }}</p>
