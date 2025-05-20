@@ -40,7 +40,7 @@
                 </form>
 
                 <button>Add Tags from TagGroup</button>
-                {% for tag in current_post.tags.all %}
+                {% for tag in current_post.ordered_tags %}
                     <p>{{ tag.name }}</p>
                 {% endfor %}
             </div>
