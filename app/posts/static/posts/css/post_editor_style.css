@@ -63,6 +63,7 @@
 }
 
 .tag {
+    position: relative; /* Make this the reference for absolute children */
     box-shadow: inset 0 0 30px 2px blue;
     display: flex;
     align-items: center;
@@ -77,6 +78,9 @@
 }
 
 .tag button {
+    position: absolute;
+    top: -2px;
+    right: -2px;
     display: none;
     width: 15px;
     height: 15px;
