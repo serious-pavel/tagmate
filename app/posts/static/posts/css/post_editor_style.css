@@ -50,6 +50,8 @@
 
 .tag-list {
     display: flex;
+    align-content: flex-start;
+    justify-content: space-between;
     flex-wrap: wrap;
     box-shadow: inset 0 0 30px 2px white;
     background-color: #7b2222;
@@ -57,19 +59,19 @@
     max-width: 100%;
     min-height: 200px;
     padding: 7px;
+
 }
 
 .tag {
     box-shadow: inset 0 0 30px 2px blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #20c3c3;
     min-width: 70px;
     height: 25px;
     border-radius: 5px;
     color: white;
     margin: 7px;
-    /*padding: 5px;*/
     font-size: 12px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
 }
