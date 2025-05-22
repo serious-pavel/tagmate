@@ -14,7 +14,7 @@ def post_editor(request):
             tag_ids = []
             for tag_name in tag_names_str.replace(",", " ").replace("#", " ").split():
                 try:
-                    tag, created = Tag.objects.get_or_create(name=tag_name)
+                    tag, _ = Tag.objects.get_or_create(name=tag_name)
                 except ValidationError as e:
                     error_message = e.message_dict.get('name', ['Invalid tag'])[0]
                     context['error_message'] = error_message
