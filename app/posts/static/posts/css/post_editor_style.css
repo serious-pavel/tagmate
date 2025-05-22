@@ -84,7 +84,7 @@
     border: none;
     color: white;
     background: linear-gradient(to bottom, #2332a9 40%, #cdf5f8 40% 60%, #2332a9 60%);
-    box-shadow: inset 0 0 3px 1px #2332a9;
+    box-shadow: inset 0 0 3px 2px #2332a9, 0 0 2px 0 #cdf5f8;
 }
 
 .tag:hover button {
