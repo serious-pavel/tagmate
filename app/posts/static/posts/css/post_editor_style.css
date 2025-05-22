@@ -74,7 +74,8 @@
     border-radius: 5px;
     color: white;
     margin: 7px;
-    font-size: 12px;
+    font-size: 14px;
+    padding: 5px 7px;
 }
 
 .tag button {
