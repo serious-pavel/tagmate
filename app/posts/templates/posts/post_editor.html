@@ -16,9 +16,21 @@
     <div id="main">
         <div class="recent-posts block-L">
             Posts:
-            <button>Add Post</button>
+            <form method="post" action="{{ request.path }}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="create_post">
+                <label>
+                    <input type="text" name="new_post_title" value="{{ new_post_title }}" placeholder="New post title">
+                </label>
+                <button>Add Post</button>
+            </form>
             {% for post in user.posts.all %}
-                <p>{{ post.title }} ({{ post.created_at|date:"d M'y" }})</p>
+                <form method="get" action="{{ request.path }}">
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <button {% if post.id == current_post.id %}class="highlighted"{% endif %}>
+                        {{ post.title }} ({{ post.created_at|date:"d M'y" }})
+                    </button>
+                </form>
             {% endfor %}
         </div>
         <div class="block-M">
@@ -30,6 +42,7 @@
 
                 <form method="post" >
                     {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{ current_post.id }}">
                     <label>
                         <input type="text" name="tag_names"
                                placeholder="Add tags (comma, hashtag or space separated)"
@@ -45,6 +58,7 @@
                         <div class="tag">{{ tag.name|truncatechars:15 }}
                             <form method="post" action="{{ request.path }}">
                                 {% csrf_token %}
+                                <input type="hidden" name="post_id" value="{{ current_post.id }}">
                                 <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
                                 <button></button>
                             </form>
