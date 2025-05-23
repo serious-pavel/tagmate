@@ -95,3 +95,8 @@
 .tag:hover button {
     display:block;
 }
+
+.highlighted {
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 3px 2px red ;
+}
