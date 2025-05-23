@@ -5,10 +5,20 @@ from posts.models import Post, Tag
 
 def post_editor(request):
     context = dict()
-    latest_post = Post.objects.filter(user=request.user).order_by('-updated_at').first()
-    context['current_post'] = latest_post
+    if request.method == 'GET':
+        post_id = request.GET.get('post_id')
+        current_post = Post.objects.filter(user=request.user, id=post_id).first()
+        context['current_post'] = current_post
 
-    if request.method == 'POST' and latest_post:
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        post_id = request.POST.get('post_id')
+        current_post = Post.objects.filter(user=request.user, id=post_id).first()
+        context['current_post'] = current_post
+
+        if action == 'create_post':
+            current_post = request.POST.get('current_post')
+
         tag_names_str = request.POST.get('tag_names')
         if tag_names_str:
             tag_ids = []
@@ -23,17 +33,17 @@ def post_editor(request):
                 tag_ids.append(tag.id)
 
             if tag_ids:
-                input_tag_ids = latest_post.ordered_tag_ids + tag_ids
-                latest_post.update_tags(input_tag_ids)
+                input_tag_ids = current_post.ordered_tag_ids + tag_ids
+                current_post.update_tags(input_tag_ids)
 
         tag_to_detach = request.POST.get('tag_to_detach')
         if tag_to_detach:
-            tagset = latest_post.ordered_tag_ids
+            tagset = current_post.ordered_tag_ids
             tagset.remove(int(tag_to_detach))
-            latest_post.update_tags(tagset)
-            return render(request, 'posts/post_editor.html', context)
+            current_post.update_tags(tagset)
+        return render(request, 'posts/post_editor.html', context)
 
-        return redirect('index')  # assuming 'index' points to this page
+        # return redirect('index')  # assuming 'index' points to this page
 
     return render(
         request,
