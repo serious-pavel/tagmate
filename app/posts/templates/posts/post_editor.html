@@ -18,7 +18,7 @@
             Posts:
             <button>Add Post</button>
             {% for post in user.posts.all %}
-                <p>{{ post.title }} ({{ post.created_at }})</p>
+                <p>{{ post.title }} ({{ post.created_at|date:"d M'y" }})</p>
             {% endfor %}
         </div>
         <div class="block-M">
