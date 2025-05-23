@@ -17,7 +17,11 @@ def post_editor(request):
         context['current_post'] = current_post
 
         if action == 'create_post':
-            current_post = request.POST.get('current_post')
+            post_title = request.POST.get('post_title') or 'Untitled Post'
+            current_post = Post(user=request.user, title=post_title)
+            current_post.save()
+            context['current_post'] = current_post
+            return render(request, 'posts/post_editor.html', context)
 
         tag_names_str = request.POST.get('tag_names')
         if tag_names_str:
