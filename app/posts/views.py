@@ -45,6 +45,8 @@ def post_editor(request, pk=None):
 
 
 def create_post(request):
+    if request.method != 'POST':
+        return redirect('index')
     new_post_title = request.POST.get('new_post_title') or 'Untitled Post'
     new_post = Post(user=request.user, title=new_post_title)
     new_post.save()
