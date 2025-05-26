@@ -16,7 +16,7 @@
     <div id="main">
         <div class="recent-posts block-L">
             Posts:
-            <form method="post" action="{{ request.path }}">
+            <form method="post" action="{% url 'create_post' %}">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="create_post">
                 <label>
