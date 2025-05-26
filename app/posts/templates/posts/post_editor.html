@@ -25,11 +25,11 @@
                 <button>Add Post</button>
             </form>
             {% for post in user.posts.all %}
-                <form method="get" action="{{ request.path }}">
+                <a href="{% url 'post_editor' pk=post.id %}">
                     <button {% if post.id == current_post.id %}class="highlighted"{% endif %}>
                         {{ post.title }} ({{ post.created_at|date:"d M'y" }})
                     </button>
-                </form>
+                </a>
             {% endfor %}
         </div>
         <div class="block-M">
