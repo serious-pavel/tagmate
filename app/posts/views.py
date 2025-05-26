@@ -1,26 +1,21 @@
 from django.core.exceptions import ValidationError
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from posts.models import Post, Tag
 
 
-def post_editor(request):
+def post_editor(request, pk=None):
+    if pk is None:
+        return render(request, 'posts/post_editor.html')
+    current_post = get_object_or_404(Post, pk=pk)
     context = dict()
-    if request.method == 'GET':
-        post_id = request.GET.get('post_id')
-        current_post = Post.objects.filter(user=request.user, id=post_id).first()
-        context['current_post'] = current_post
+    context['current_post'] = current_post
 
     if request.method == 'POST':
         action = request.POST.get('action')
-        post_id = request.POST.get('post_id')
-        current_post = Post.objects.filter(user=request.user, id=post_id).first()
-        context['current_post'] = current_post
-
         if action == 'create_post':
             new_post_title = request.POST.get('new_post_title') or 'Untitled Post'
             current_post = Post(user=request.user, title=new_post_title)
             current_post.save()
-            context['current_post'] = current_post
             return render(request, 'posts/post_editor.html', context)
 
         tag_names_str = request.POST.get('tag_names')
