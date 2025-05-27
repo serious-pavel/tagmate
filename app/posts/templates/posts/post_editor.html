@@ -53,7 +53,7 @@
                 <button>Add Tags from TagGroup</button>
                 <div class="tag-list">
                     {% for tag in current_post.ordered_tags %}
-                        <div class="tag">{{ tag.name|truncatechars:15 }}
+                        <div class="tag">{{ tag.name|truncatechars:25 }}
                             <form method="post" action="{{ request.path }}">
                                 {% csrf_token %}
                                 <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
