@@ -24,7 +24,7 @@
                 </label>
                 <button>Add Post</button>
             </form>
-            {% for post in user.posts.all %}
+            {% for post in user.posts.all|dictsortreversed:"updated_at" %}
                 <a href="{% url 'post_editor' pk=post.id %}">
                     <button {% if post.id == current_post.id %}class="highlighted"{% endif %}>
                         {{ post.title }} ({{ post.created_at|date:"d M'y" }})
