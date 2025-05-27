@@ -33,6 +33,15 @@
             {% endfor %}
         </div>
         <div class="block-M">
+            <div class="post-editor">
+                {% if current_post %}
+                    <form method="post" action="{% url 'delete_post' pk=current_post.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="delete_post">
+                        <button class="highlighted">Delete Post</button>
+                    </form>
+                {% endif %}
+            </div>
             <div class="tags-editor">
                 Tags:
                 {% if error_message %}
