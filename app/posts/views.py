@@ -1,4 +1,3 @@
-from django.contrib.admin import action
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
 from posts.models import Post, Tag
