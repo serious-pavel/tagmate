@@ -22,7 +22,7 @@
                 <label>
                     <input type="text" name="new_post_title" value="{{ new_post_title }}" placeholder="New post title">
                 </label>
-                <button>Add Post</button>
+                <button>New Post</button>
             </form>
             {% for post in user.posts.all|dictsortreversed:"updated_at" %}
                 <a href="{% url 'post_editor' pk=post.id %}">
@@ -47,7 +47,7 @@
                                value="{{ tag_names }}"
                                required>
                     </label>
-                    <button type="submit">Add Tag</button>
+                    <button type="submit">Add Tag(s) to Post</button>
                 </form>
 
                 <div class="tag-list">
@@ -66,7 +66,7 @@
                 TagGroups:
                 <button>Create TagGroup from Post</button>
                 <button>Add Tags from TagGroup to Post</button>
-                <button>Add TagGroup</button>
+                <button>New TagGroup</button>
                 {% for tg in user.tag_groups.all %}
                     <p>{{ tg.name }}</p>
                 {% endfor %}
