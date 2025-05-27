@@ -1,3 +1,4 @@
+from django.contrib.admin import action
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
 from posts.models import Post, Tag
@@ -51,3 +52,15 @@ def create_post(request):
     new_post = Post(user=request.user, title=new_post_title)
     new_post.save()
     return redirect('post_editor', pk=new_post.id)
+
+
+def delete_post(request, pk):
+    if request.method != 'POST':
+        return redirect('index')
+    action = request.POST.get('action')
+    if action != 'delete_post':
+        return redirect('index')
+
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('index')
