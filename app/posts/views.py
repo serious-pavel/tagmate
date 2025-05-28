@@ -15,13 +15,17 @@ def post_editor(request, pk=None):
         if tag_names_str:
             tag_ids = []
             for tag_name in tag_names_str.replace(",", " ").replace("#", " ").split():
-                try:
-                    tag, _ = Tag.objects.get_or_create(name=tag_name)
-                except ValidationError as e:
-                    error_message = e.message_dict.get('name', ['Invalid tag'])[0]
-                    context['error_message'] = error_message
-                    context['tag_names'] = tag_names_str
-                    return render(request, 'posts/post_editor.html', context)
+                tag = Tag.objects.filter(name=tag_name).first()
+                if tag is None:
+                    tag = Tag(name=tag_name)
+                    try:
+                        tag.full_clean()
+                        tag.save()
+                    except ValidationError as e:
+                        error_message = e.message_dict.get('name', ['Invalid tag'])[0]
+                        context['error_message'] = error_message
+                        context['tag_names'] = tag_names_str
+                        return render(request, 'posts/post_editor.html', context)
                 tag_ids.append(tag.id)
 
             if tag_ids:
