@@ -1,0 +1,34 @@
+from django.test import TestCase
+from django.urls import reverse
+from django.contrib.auth import get_user_model
+
+from posts.models import Post, Tag
+
+User = get_user_model()
+
+
+class TagFormWithSocialAuthTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(email='form_tester@example.com')
+        # Login a user with social auth
+        self.client.force_login(self.user)
+
+        self.post = Post.objects.create(
+            user=self.user,
+            title="Test forms post",
+            description="Post for testing forms"
+        )
+
+    def test_add_valid_tag(self):
+        url = reverse('post_editor', args=[self.post.pk])
+        response = self.client.post(url, {'tag_names': 'sometag'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(Tag.objects.filter(name='sometag').exists())
+        self.assertContains(response, "sometag")
+
+    def test_invalid_tag_shows_error(self):
+        url = reverse('post_editor', args=[self.post.pk])
+        response = self.client.post(url, {'tag_names': '!!invalidtag!!'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Hashtags may only contain ")
+        self.assertFalse(Tag.objects.filter(name='!!invalidtag!!').exists())
