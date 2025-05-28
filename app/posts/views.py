@@ -27,13 +27,14 @@ def post_editor(request, pk=None):
             if tag_ids:
                 input_tag_ids = current_post.ordered_tag_ids + tag_ids
                 current_post.update_tags(input_tag_ids)
+                return redirect('post_editor', pk=current_post.id)
 
         tag_to_detach = request.POST.get('tag_to_detach')
         if tag_to_detach:
             tagset = current_post.ordered_tag_ids
             tagset.remove(int(tag_to_detach))
             current_post.update_tags(tagset)
-        return render(request, 'posts/post_editor.html', context)
+        return redirect('post_editor', pk=current_post.id)
 
         # return redirect('index')  # assuming 'index' points to this page
 
