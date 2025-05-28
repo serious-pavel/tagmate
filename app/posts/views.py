@@ -6,7 +6,7 @@ from posts.models import Post, Tag
 def post_editor(request, pk=None):
     if pk is None:
         return render(request, 'posts/post_editor.html')
-    current_post = get_object_or_404(Post, pk=pk)
+    current_post = get_object_or_404(Post, pk=pk, user=request.user)
     context = dict()
     context['current_post'] = current_post
 
