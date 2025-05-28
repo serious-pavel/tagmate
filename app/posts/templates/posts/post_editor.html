@@ -9,6 +9,12 @@
 
 {% block content %}
 <div class="page-header">Post Editor</div>
+{% if messages %}
+    {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
 {% if not user.is_authenticated %}
     <p>You are not logged in</p>
     <a href="{% url 'google_login' %}">Login</a>
