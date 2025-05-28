@@ -1,10 +1,12 @@
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from posts.models import Post, Tag
 
 
 def post_editor(request, pk=None):
     if pk is None:
+        messages.info(request, '')
         return render(request, 'posts/post_editor.html')
     current_post = get_object_or_404(Post, pk=pk, user=request.user)
     context = dict()
@@ -55,6 +57,7 @@ def create_post(request):
     new_post_title = request.POST.get('new_post_title') or 'Untitled Post'
     new_post = Post(user=request.user, title=new_post_title)
     new_post.save()
+    messages.success(request, f'New post {new_post.title} created')
     return redirect('post_editor', pk=new_post.id)
 
 
@@ -67,4 +70,5 @@ def delete_post(request, pk):
 
     post = get_object_or_404(Post, pk=pk)
     post.delete()
+    messages.success(request, f'Post {post.title} deleted')
     return redirect('index')
