@@ -25,7 +25,7 @@ def post_editor(request, pk=None):
                         tag.save()
                     except ValidationError as e:
                         error_message = e.message_dict.get('name', ['Invalid tag'])[0]
-                        context['error_message'] = error_message
+                        messages.error(request, error_message)
                         context['tag_names'] = tag_names_str
                         return render(request, 'posts/post_editor.html', context)
                 tag_ids.append(tag.id)
