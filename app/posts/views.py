@@ -42,8 +42,6 @@ def post_editor(request, pk=None):
             current_post.update_tags(tagset)
         return redirect('post_editor', pk=current_post.id)
 
-        # return redirect('index')  # assuming 'index' points to this page
-
     return render(
         request,
         template_name='posts/post_editor.html',
