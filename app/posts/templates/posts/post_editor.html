@@ -50,9 +50,6 @@
             </div>
             <div class="tags-editor">
                 Tags:
-                {% if error_message %}
-                  <div style="color:red;">{{ error_message }}</div>
-                {% endif %}
 
                 <form method="post" >
                     {% csrf_token %}
