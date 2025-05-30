@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from posts.models import Post, Tag
@@ -67,6 +68,13 @@ def delete_post(request, pk):
         return redirect('index')
 
     post = get_object_or_404(Post, pk=pk)
+
+    # Fetching and deleting the Tags that are not used in any other post
+    # TODO seems inefficient, fetches all the PostTag before Counter
+    # TODO add counter for TagGroups (should be 0)
+    counted_tags = Tag.objects.annotate(pt_count=Count('posttag'))
+    counted_tags.filter(posttag__post=post, pt_count__lte=1).delete()
+
     post.delete()
     messages.success(request, f'Post {post.title} deleted')
     return redirect('index')
