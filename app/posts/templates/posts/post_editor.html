@@ -41,6 +41,15 @@
         <div class="block-M">
             <div class="post-editor">
                 {% if current_post %}
+                    <form method="post" action="{% url 'update_post' pk=current_post.id %}">
+                        {% csrf_token %}
+                        <label>
+                            <input type="text" name="post_title" placeholder="" value="{{ current_post.title }}" required>
+                            <input type="text" name="post_desc" placeholder="" value="{{ current_post.description }}">
+                        </label>
+                        <button>Update Post</button>
+
+                    </form>
                     <form method="post" action="{% url 'delete_post' pk=current_post.id %}">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="delete_post">
