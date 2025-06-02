@@ -5,6 +5,12 @@ from django.contrib import messages
 from posts.models import Post, Tag, TagGroup
 
 
+def redirect_post_editor(request, post_pk, tg_pk):
+    if tg_pk is not None:
+        return redirect('post_editor_tg', post_pk=post_pk, tg_pk=tg_pk)
+    return redirect('post_editor', post_pk=post_pk)
+
+
 def post_editor(request, post_pk=None, tg_pk=None):
     if post_pk is None:
         messages.info(request, '')
@@ -36,14 +42,14 @@ def post_editor(request, post_pk=None, tg_pk=None):
             if tag_ids:
                 input_tag_ids = current_post.ordered_tag_ids + tag_ids
                 current_post.update_tags(input_tag_ids)
-                return redirect('post_editor', post_pk=current_post.id)
+                return redirect_post_editor(request, current_post.id, tg_pk)
 
         tag_to_detach = request.POST.get('tag_to_detach')
         if tag_to_detach:
             tagset = current_post.ordered_tag_ids
             tagset.remove(int(tag_to_detach))
             current_post.update_tags(tagset)
-        return redirect('post_editor', post_pk=current_post.id)
+        return redirect_post_editor(request, current_post.id, tg_pk)
 
     return render(
         request,
