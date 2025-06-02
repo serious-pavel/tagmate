@@ -5,11 +5,11 @@ from django.contrib import messages
 from posts.models import Post, Tag
 
 
-def post_editor(request, pk=None):
-    if pk is None:
+def post_editor(request, post_pk=None):
+    if post_pk is None:
         messages.info(request, '')
         return render(request, 'posts/post_editor.html')
-    current_post = get_object_or_404(Post, pk=pk, user=request.user)
+    current_post = get_object_or_404(Post, pk=post_pk, user=request.user)
     context = dict()
     context['current_post'] = current_post
 
@@ -34,14 +34,14 @@ def post_editor(request, pk=None):
             if tag_ids:
                 input_tag_ids = current_post.ordered_tag_ids + tag_ids
                 current_post.update_tags(input_tag_ids)
-                return redirect('post_editor', pk=current_post.id)
+                return redirect('post_editor', post_pk=current_post.id)
 
         tag_to_detach = request.POST.get('tag_to_detach')
         if tag_to_detach:
             tagset = current_post.ordered_tag_ids
             tagset.remove(int(tag_to_detach))
             current_post.update_tags(tagset)
-        return redirect('post_editor', pk=current_post.id)
+        return redirect('post_editor', post_pk=current_post.id)
 
     return render(
         request,
@@ -57,17 +57,17 @@ def create_post(request):
     new_post = Post(user=request.user, title=new_post_title)
     new_post.save()
     messages.success(request, f'New post {new_post.title} created')
-    return redirect('post_editor', pk=new_post.id)
+    return redirect('post_editor', post_pk=new_post.id)
 
 
-def delete_post(request, pk):
+def delete_post(request, post_pk):
     if request.method != 'POST':
         return redirect('index')
     action = request.POST.get('action')
     if action != 'delete_post':
         return redirect('index')
 
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, pk=post_pk)
 
     # Fetching and deleting the Tags that are not used in any other post
     # TODO seems inefficient, fetches all the PostTag before Counter
@@ -80,16 +80,16 @@ def delete_post(request, pk):
     return redirect('index')
 
 
-def update_post(request, pk):
+def update_post(request, post_pk):
     if request.method != 'POST':
         return redirect('index')
     post_title = request.POST.get('post_title')
     post_desc = request.POST.get('post_desc')
 
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, pk=post_pk)
     post.title = post_title
     post.description = post_desc
     post.save()
 
     messages.success(request, f'Post {post.title} updated')
-    return redirect('post_editor', pk=post.id)
+    return redirect('post_editor', post_pk=post.id)
