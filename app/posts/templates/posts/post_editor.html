@@ -95,7 +95,11 @@
 
                 {% for tg in user.tag_groups.all %}
                     <p>
-                        <a href="{% url 'post_editor_tg' post_pk=current_post.id tg_pk=tg.id%}">
+                        {% if current_post %}
+                            <a href="{% url 'post_editor_tg' post_pk=current_post.id tg_pk=tg.id %}">
+                        {% else %}
+                            <a href="{% url 'tg_editor' tg_pk=tg.id %}">
+                        {% endif %}
                             <button {% if tg.id == current_tg.id %}class="highlighted"{% endif %}>
                                 {{ tg.name }}
                             </button>
