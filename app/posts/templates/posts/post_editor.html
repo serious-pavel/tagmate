@@ -88,9 +88,17 @@
                 <button>Create TagGroup from Post</button>
                 <button>Add Tags from TagGroup to Post</button>
                 <button>New TagGroup</button>
+
                 {% for tg in user.tag_groups.all %}
-                    <p>{{ tg.name }}</p>
+                    <p>
+                        <a href="{% url 'post_editor_tg' post_pk=current_post.id tg_pk=tg.id%}">
+                            <button {% if tg.id == current_tg.id %}class="highlighted"{% endif %}>
+                                {{ tg.name }}
+                            </button>
+                        </a>
+                    </p>
                 {% endfor %}
+
             </div>
         </div>
 
