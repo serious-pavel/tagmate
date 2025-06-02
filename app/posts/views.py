@@ -29,7 +29,8 @@ def post_editor(request, post_pk=None, tg_pk=None):
             tag_names_str = request.POST.get('tag_names')
             if tag_names_str:
                 tag_ids = []
-                for tag_name in tag_names_str.replace(",", " ").replace("#", " ").split():
+                tag_names_lst = tag_names_str.replace(",", " ").replace("#", " ").split()
+                for tag_name in tag_names_lst:
                     tag = Tag.objects.filter(name=tag_name).first()
                     if tag is None:
                         tag = Tag(name=tag_name)
@@ -37,8 +38,8 @@ def post_editor(request, post_pk=None, tg_pk=None):
                             tag.full_clean()
                             tag.save()
                         except ValidationError as e:
-                            error_message = e.message_dict.get('name', ['Invalid tag'])[0]
-                            messages.error(request, error_message)
+                            error_msg = e.message_dict.get('name', ['Invalid tag'])[0]
+                            messages.error(request, error_msg)
                             context['tag_names'] = tag_names_str
                             return render(request, 'posts/post_editor.html', context)
                     tag_ids.append(tag.id)
