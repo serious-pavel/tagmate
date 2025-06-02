@@ -14,6 +14,8 @@ def redirect_post_editor(request, post_pk, tg_pk):
 def post_editor(request, post_pk=None, tg_pk=None):
     messages.info(request, '')
     context = dict()
+    current_post, current_tg = None, None
+
     if post_pk is not None:
         current_post = get_object_or_404(Post, pk=post_pk, user=request.user)
         context['current_post'] = current_post
@@ -23,34 +25,35 @@ def post_editor(request, post_pk=None, tg_pk=None):
         context['current_tg'] = current_tg
 
     if request.method == 'POST':
-        tag_names_str = request.POST.get('tag_names')
-        if tag_names_str:
-            tag_ids = []
-            for tag_name in tag_names_str.replace(",", " ").replace("#", " ").split():
-                tag = Tag.objects.filter(name=tag_name).first()
-                if tag is None:
-                    tag = Tag(name=tag_name)
-                    try:
-                        tag.full_clean()
-                        tag.save()
-                    except ValidationError as e:
-                        error_message = e.message_dict.get('name', ['Invalid tag'])[0]
-                        messages.error(request, error_message)
-                        context['tag_names'] = tag_names_str
-                        return render(request, 'posts/post_editor.html', context)
-                tag_ids.append(tag.id)
+        if current_post:
+            tag_names_str = request.POST.get('tag_names')
+            if tag_names_str:
+                tag_ids = []
+                for tag_name in tag_names_str.replace(",", " ").replace("#", " ").split():
+                    tag = Tag.objects.filter(name=tag_name).first()
+                    if tag is None:
+                        tag = Tag(name=tag_name)
+                        try:
+                            tag.full_clean()
+                            tag.save()
+                        except ValidationError as e:
+                            error_message = e.message_dict.get('name', ['Invalid tag'])[0]
+                            messages.error(request, error_message)
+                            context['tag_names'] = tag_names_str
+                            return render(request, 'posts/post_editor.html', context)
+                    tag_ids.append(tag.id)
 
-            if tag_ids:
-                input_tag_ids = current_post.ordered_tag_ids + tag_ids
-                current_post.update_tags(input_tag_ids)
-                return redirect_post_editor(request, current_post.id, tg_pk)
+                if tag_ids:
+                    input_tag_ids = current_post.ordered_tag_ids + tag_ids
+                    current_post.update_tags(input_tag_ids)
+                    return redirect_post_editor(request, current_post.id, tg_pk)
 
-        tag_to_detach = request.POST.get('tag_to_detach')
-        if tag_to_detach:
-            tagset = current_post.ordered_tag_ids
-            tagset.remove(int(tag_to_detach))
-            current_post.update_tags(tagset)
-        return redirect_post_editor(request, current_post.id, tg_pk)
+            tag_to_detach = request.POST.get('tag_to_detach')
+            if tag_to_detach:
+                tagset = current_post.ordered_tag_ids
+                tagset.remove(int(tag_to_detach))
+                current_post.update_tags(tagset)
+            return redirect_post_editor(request, current_post.id, tg_pk)
 
     return render(
         request,
