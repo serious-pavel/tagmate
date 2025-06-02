@@ -99,6 +99,10 @@
                     </p>
                 {% endfor %}
 
+                {% for tg_tag in current_tg.tags.all %}
+                    {{ tg_tag.name }}
+                {% endfor %}
+
             </div>
         </div>
 
