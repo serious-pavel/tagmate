@@ -16,10 +16,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
         messages.info(request, '')
         return render(request, 'posts/post_editor.html')
     current_post = get_object_or_404(Post, pk=post_pk, user=request.user)
-    if tg_pk is not None:
-        current_tg = TagGroup.objects.filter(pk=tg_pk).first()
     context = dict()
     context['current_post'] = current_post
+    if tg_pk is not None:
+        current_tg = TagGroup.objects.filter(pk=tg_pk).first()
+        context['current_tg'] = current_tg
 
     if request.method == 'POST':
         tag_names_str = request.POST.get('tag_names')
