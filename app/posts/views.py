@@ -2,14 +2,16 @@ from django.core.exceptions import ValidationError
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from posts.models import Post, Tag
+from posts.models import Post, Tag, TagGroup
 
 
-def post_editor(request, post_pk=None):
+def post_editor(request, post_pk=None, tg_pk=None):
     if post_pk is None:
         messages.info(request, '')
         return render(request, 'posts/post_editor.html')
     current_post = get_object_or_404(Post, pk=post_pk, user=request.user)
+    if tg_pk is not None:
+        current_tg = TagGroup.objects.filter(pk=tg_pk).first()
     context = dict()
     context['current_post'] = current_post
 
