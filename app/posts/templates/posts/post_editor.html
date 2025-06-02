@@ -31,7 +31,7 @@
                 <button>New Post</button>
             </form>
             {% for post in user.posts.all|dictsortreversed:"updated_at" %}
-                <a href="{% url 'post_editor' pk=post.id %}">
+                <a href="{% url 'post_editor' post_pk=post.id %}">
                     <button {% if post.id == current_post.id %}class="highlighted"{% endif %}>
                         {{ post.title }} ({{ post.created_at|date:"d M'y" }})
                     </button>
@@ -41,7 +41,7 @@
         <div class="block-M">
             <div class="post-editor">
                 {% if current_post %}
-                    <form method="post" action="{% url 'update_post' pk=current_post.id %}">
+                    <form method="post" action="{% url 'update_post' post_pk=current_post.id %}">
                         {% csrf_token %}
                         <label>
                             <input type="text" name="post_title" placeholder="" value="{{ current_post.title }}" required>
@@ -50,7 +50,7 @@
                         <button>Update Post</button>
 
                     </form>
-                    <form method="post" action="{% url 'delete_post' pk=current_post.id %}">
+                    <form method="post" action="{% url 'delete_post' post_pk=current_post.id %}">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="delete_post">
                         <button class="highlighted">Delete Post</button>
