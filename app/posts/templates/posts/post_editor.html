@@ -31,7 +31,11 @@
                 <button>New Post</button>
             </form>
             {% for post in user.posts.all|dictsortreversed:"updated_at" %}
-                <a href="{% url 'post_editor' post_pk=post.id %}">
+                {% if current_tg %}
+                    <a href="{% url 'post_editor_tg' post_pk=post.id tg_pk=current_tg.id%}">
+                {% else %}
+                    <a href="{% url 'post_editor' post_pk=post.id %}">
+                {% endif %}
                     <button {% if post.id == current_post.id %}class="highlighted"{% endif %}>
                         {{ post.title }} ({{ post.created_at|date:"d M'y" }})
                     </button>
