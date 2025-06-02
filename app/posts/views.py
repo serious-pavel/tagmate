@@ -12,12 +12,12 @@ def redirect_post_editor(request, post_pk, tg_pk):
 
 
 def post_editor(request, post_pk=None, tg_pk=None):
-    if post_pk is None:
-        messages.info(request, '')
-        return render(request, 'posts/post_editor.html')
-    current_post = get_object_or_404(Post, pk=post_pk, user=request.user)
+    messages.info(request, '')
     context = dict()
-    context['current_post'] = current_post
+    if post_pk is not None:
+        current_post = get_object_or_404(Post, pk=post_pk, user=request.user)
+        context['current_post'] = current_post
+
     if tg_pk is not None:
         current_tg = TagGroup.objects.filter(pk=tg_pk).first()
         context['current_tg'] = current_tg
