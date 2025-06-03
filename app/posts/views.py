@@ -105,18 +105,3 @@ def delete_post(request, post_pk):
     post.delete()
     messages.success(request, f'Post {post.title} deleted')
     return redirect('index')
-
-
-def update_post(request, post_pk):
-    if request.method != 'POST':
-        return redirect('index')
-    post_title = request.POST.get('post_title')
-    post_desc = request.POST.get('post_desc')
-
-    post = get_object_or_404(Post, pk=post_pk)
-    post.title = post_title
-    post.description = post_desc
-    post.save()
-
-    messages.success(request, f'Post {post.title} updated')
-    return redirect('post_editor', post_pk=post.id)
