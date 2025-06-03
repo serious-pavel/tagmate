@@ -54,6 +54,20 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 tagset = current_post.ordered_tag_ids
                 tagset.remove(int(tag_to_detach))
                 current_post.update_tags(tagset)
+                return redirect_post_editor(request, current_post.id, tg_pk)
+
+            action = request.POST.get('action')
+            if action == 'update_post':
+                post_title = request.POST.get('post_title')
+                post_desc = request.POST.get('post_desc')
+
+                current_post.title = post_title
+                current_post.description = post_desc
+                current_post.save()
+
+                messages.success(request, f'Post {current_post.title} updated')
+                return redirect_post_editor(request, current_post.id, tg_pk)
+
             return redirect_post_editor(request, current_post.id, tg_pk)
 
     return render(
