@@ -55,7 +55,7 @@
                         <button>Update Post</button>
 
                     </form>
-                    <form method="post" action="{% url 'delete_post' post_pk=current_post.id %}">
+                    <form method="post">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="delete_post">
                         <button class="highlighted">Delete Post</button>

@@ -80,6 +80,17 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 messages.success(request, f'Post {current_post.title} updated')
                 return redirect_post_editor(request, current_post.id, tg_pk)
 
+            if action == 'delete_post':
+                # Fetching and deleting the Tags that are not used in any other post
+                # TODO seems inefficient, fetches all the PostTag before Counter
+                # TODO add counter for TagGroups (should be 0)
+                counted_tags = Tag.objects.annotate(pt_count=Count('posttag'))
+                counted_tags.filter(posttag__post=current_post, pt_count__lte=1).delete()
+
+                current_post.delete()
+                messages.success(request, f'Post {current_post.title} deleted')
+                return redirect_post_editor(request, None, tg_pk)
+
             return redirect_post_editor(request, current_post.id, tg_pk)
 
     return render(
