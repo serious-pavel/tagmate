@@ -5,10 +5,14 @@ from django.contrib import messages
 from posts.models import Post, Tag, TagGroup
 
 
-def redirect_post_editor(request, post_pk, tg_pk):
-    if tg_pk is not None:
+def redirect_post_editor(request, post_pk=None, tg_pk=None):
+    if tg_pk is not None and post_pk is not None:
         return redirect('post_editor_tg', post_pk=post_pk, tg_pk=tg_pk)
-    return redirect('post_editor', post_pk=post_pk)
+    if tg_pk is not None:
+        return redirect('tg_editor', tg_pk=tg_pk)
+    if post_pk is not None:
+        return redirect('post_editor', post_pk=post_pk)
+    return redirect('index')
 
 
 def post_editor(request, post_pk=None, tg_pk=None):
