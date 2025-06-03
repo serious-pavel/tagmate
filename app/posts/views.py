@@ -99,22 +99,3 @@ def post_editor(request, post_pk=None, tg_pk=None):
         context=context
     )
 
-
-def delete_post(request, post_pk):
-    if request.method != 'POST':
-        return redirect('index')
-    action = request.POST.get('action')
-    if action != 'delete_post':
-        return redirect('index')
-
-    post = get_object_or_404(Post, pk=post_pk)
-
-    # Fetching and deleting the Tags that are not used in any other post
-    # TODO seems inefficient, fetches all the PostTag before Counter
-    # TODO add counter for TagGroups (should be 0)
-    counted_tags = Tag.objects.annotate(pt_count=Count('posttag'))
-    counted_tags.filter(posttag__post=post, pt_count__lte=1).delete()
-
-    post.delete()
-    messages.success(request, f'Post {post.title} deleted')
-    return redirect('index')
