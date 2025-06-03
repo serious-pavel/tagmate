@@ -98,4 +98,3 @@ def post_editor(request, post_pk=None, tg_pk=None):
         template_name='posts/post_editor.html',
         context=context
     )
-
