@@ -85,16 +85,6 @@ def post_editor(request, post_pk=None, tg_pk=None):
     )
 
 
-def create_post(request):
-    if request.method != 'POST':
-        return redirect('index')
-    new_post_title = request.POST.get('new_post_title') or 'Untitled Post'
-    new_post = Post(user=request.user, title=new_post_title)
-    new_post.save()
-    messages.success(request, f'New post {new_post.title} created')
-    return redirect('post_editor', post_pk=new_post.id)
-
-
 def delete_post(request, post_pk):
     if request.method != 'POST':
         return redirect('index')
