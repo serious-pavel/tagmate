@@ -118,7 +118,11 @@
             Post preview:
             <p>{{ current_post.title }}</p>
             <p>{{ current_post.description }}</p>
-            <p>{{ current_post.tags.all }}</p>
+            <div class="post-preview-tags">
+                {% for tag in current_post.ordered_tags %}
+                    {{ tag }}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endif %}
