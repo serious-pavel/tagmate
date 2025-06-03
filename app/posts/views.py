@@ -25,6 +25,15 @@ def post_editor(request, post_pk=None, tg_pk=None):
         context['current_tg'] = current_tg
 
     if request.method == 'POST':
+        action = request.POST.get('action')
+
+        if action == 'create_post':
+            new_post_title = request.POST.get('new_post_title') or 'Untitled Post'
+            new_post = Post(user=request.user, title=new_post_title)
+            new_post.save()
+            messages.success(request, f'New post {new_post.title} created')
+            return redirect_post_editor(request, new_post.id, tg_pk)
+
         if current_post:
             tag_names_str = request.POST.get('tag_names')
             if tag_names_str:
@@ -56,7 +65,6 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 current_post.update_tags(tagset)
                 return redirect_post_editor(request, current_post.id, tg_pk)
 
-            action = request.POST.get('action')
             if action == 'update_post':
                 post_title = request.POST.get('post_title')
                 post_desc = request.POST.get('post_desc')
