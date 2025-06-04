@@ -4,7 +4,6 @@
 {% block links %}
     <link rel="stylesheet" href="{% static 'posts/css/post_editor_style.css' %}">
 {% endblock links %}
-
 {% block title %}Post Editor{% endblock title%}
 
 {% block content %}
@@ -20,27 +19,44 @@
     <a href="{% url 'google_login' %}">Login</a>
 {% else %}
     <div id="main">
-        <div class="recent-posts block-L">
-            Posts:
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="create_post">
-                <label>
-                    <input type="text" name="new_post_title" value="{{ new_post_title }}" placeholder="New post title">
-                </label>
-                <button>New Post</button>
-            </form>
-            {% for post in user.posts.all|dictsortreversed:"updated_at" %}
-                {% if current_tg %}
-                    <a href="{% url 'post_tg_editor' post_pk=post.id tg_pk=current_tg.id%}">
-                {% else %}
-                    <a href="{% url 'post_editor' post_pk=post.id %}">
-                {% endif %}
-                    <button {% if post.id == current_post.id %}class="highlighted"{% endif %}>
-                        {{ post.title }} ({{ post.created_at|date:"d M'y" }})
-                    </button>
-                </a>
-            {% endfor %}
+        <div class="block-L">
+            <div id="recent-posts">
+                Posts:
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="create_post">
+                    <label>
+                        <input type="text" name="new_post_title" value="{{ new_post_title }}" placeholder="New post title">
+                    </label>
+                    <button>New Post</button>
+                </form>
+                {% for post in user.posts.all|dictsortreversed:"updated_at" %}
+                    {% if current_tg %}
+                        <a href="{% url 'post_tg_editor' post_pk=post.id tg_pk=current_tg.id%}">
+                    {% else %}
+                        <a href="{% url 'post_editor' post_pk=post.id %}">
+                    {% endif %}
+                        <button {% if post.id == current_post.id %}class="highlighted"{% endif %}>
+                            {{ post.title }} ({{ post.created_at|date:"d M'y" }})
+                        </button>
+                    </a>
+                {% endfor %}
+            </div>
+            <div id="recent-tgs">
+                {% for tg in user.tag_groups.all %}
+                    <p>
+                        {% if current_post %}
+                            <a href="{% url 'post_tg_editor' post_pk=current_post.id tg_pk=tg.id %}">
+                        {% else %}
+                            <a href="{% url 'tg_editor' tg_pk=tg.id %}">
+                        {% endif %}
+                            <button {% if tg.id == current_tg.id %}class="highlighted"{% endif %}>
+                                {{ tg.name }}
+                            </button>
+                        </a>
+                    </p>
+                {% endfor %}
+            </div>
         </div>
         <div class="block-M">
             <div class="post-editor">
@@ -97,20 +113,6 @@
                 <button>Create TagGroup from Post</button>
                 <button>Update TagGroup</button>
                 <button>Delete TagGroup</button>
-
-                {% for tg in user.tag_groups.all %}
-                    <p>
-                        {% if current_post %}
-                            <a href="{% url 'post_tg_editor' post_pk=current_post.id tg_pk=tg.id %}">
-                        {% else %}
-                            <a href="{% url 'tg_editor' tg_pk=tg.id %}">
-                        {% endif %}
-                            <button {% if tg.id == current_tg.id %}class="highlighted"{% endif %}>
-                                {{ tg.name }}
-                            </button>
-                        </a>
-                    </p>
-                {% endfor %}
 
                 {% for tg_tag in current_tg.tags.all %}
                     {{ tg_tag.name }}
