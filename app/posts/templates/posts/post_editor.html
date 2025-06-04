@@ -90,9 +90,13 @@
             </div>
             <div class="tg-editor">
                 TagGroups:
-                <button>Create TagGroup from Post</button>
+
+                <button>Add Tag(s)</button>
                 <button>Add Tags from TagGroup to Post</button>
-                <button>New TagGroup</button>
+                <button>Create TagGroup</button>
+                <button>Create TagGroup from Post</button>
+                <button>Update TagGroup</button>
+                <button>Delete TagGroup</button>
 
                 {% for tg in user.tag_groups.all %}
                     <p>
