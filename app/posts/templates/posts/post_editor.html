@@ -24,7 +24,7 @@
 {% else %}
     <div id="main">
         <div class="block-L">
-            <div id="recent-posts">
+            <div id="recent-posts" class="list">
                 Posts:
                 <form method="post">
                     {% csrf_token %}
@@ -35,18 +35,22 @@
                     <button>New Post</button>
                 </form>
                 {% for post in user.posts.all|dictsortreversed:"updated_at" %}
+                    <a class="list-item{% if post.id == current_post.id %} highlighted{% endif %}" href=
                     {% if current_tg %}
-                        <a href="{% url 'post_tg_editor' post_pk=post.id tg_pk=current_tg.id%}">
+                        "{% url 'post_tg_editor' post_pk=post.id tg_pk=current_tg.id%}">
                     {% else %}
-                        <a href="{% url 'post_editor' post_pk=post.id %}">
+                        "{% url 'post_editor' post_pk=post.id %}">
                     {% endif %}
-                        <button {% if post.id == current_post.id %}class="highlighted"{% endif %}>
-                            {{ post.title }} ({{ post.created_at|date:"d M'y" }})
-                        </button>
+                        <div >
+                            {{ post.title }}
+                            <div>
+                                {{ post.created_at|date:"d M'y" }}
+                            </div>
+                        </div>
                     </a>
                 {% endfor %}
             </div>
-            <div id="recent-tgs">
+            <div id="recent-tgs" class="list">
                 {% for tg in user.tag_groups.all %}
                     <p>
                         {% if current_post %}
