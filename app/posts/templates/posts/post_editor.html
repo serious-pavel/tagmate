@@ -51,18 +51,21 @@
                 {% endfor %}
             </div>
             <div id="recent-tgs" class="list">
+                Recent TagGroups:
                 {% for tg in user.tag_groups.all %}
-                    <p>
+                    <a class="list-item{% if tg.id == current_tg.id %} highlighted{% endif %}" href=
                         {% if current_post %}
-                            <a href="{% url 'post_tg_editor' post_pk=current_post.id tg_pk=tg.id %}">
+                            "{% url 'post_tg_editor' post_pk=current_post.id tg_pk=tg.id %}">
                         {% else %}
-                            <a href="{% url 'tg_editor' tg_pk=tg.id %}">
+                            "{% url 'tg_editor' tg_pk=tg.id %}">
                         {% endif %}
-                            <button {% if tg.id == current_tg.id %}class="highlighted"{% endif %}>
+                            <div >
                                 {{ tg.name }}
-                            </button>
+                                <div>
+                                    {{ tg.updated_at|date:"d M'y" }}
+                                </div>
+                            </div>
                         </a>
-                    </p>
                 {% endfor %}
             </div>
         </div>
