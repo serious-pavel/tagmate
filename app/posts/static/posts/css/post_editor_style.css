@@ -36,6 +36,10 @@
     gap: 3px;
 }
 
+.list:nth-child(1n+2):not(:first-child) {
+    margin-top: 7px;
+}
+
 .list-item {
     text-decoration: none;
     color: black;
