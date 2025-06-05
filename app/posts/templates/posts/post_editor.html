@@ -52,6 +52,7 @@
             </div>
             <div id="recent-tgs" class="list">
                 Recent TagGroups:
+                <button>New TagGroup</button>
                 {% for tg in user.tag_groups.all %}
                     <a class="list-item{% if tg.id == current_tg.id %} highlighted{% endif %}" href=
                         {% if current_post %}
@@ -115,15 +116,14 @@
                     {% endfor %}
                 </div>
             </div>
+                <button>Copy Tags to Post</button>
+                <button>Copy Tags to TagGroup</button>
             <div class="tg-editor">
                 TagGroups:
 
-                <button>Add Tag(s)</button>
-                <button>Add Tags from TagGroup to Post</button>
-                <button>Create TagGroup</button>
-                <button>Create TagGroup from Post</button>
+                <button>Add Tag(s) to TagGroup</button>
                 <button>Update TagGroup</button>
-                <button>Delete TagGroup</button>
+                <button class="highlighted">Delete TagGroup</button>
 
                 {% for tg_tag in current_tg.tags.all %}
                     {{ tg_tag.name }}
