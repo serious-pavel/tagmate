@@ -125,9 +125,17 @@
                 <button>Update TagGroup</button>
                 <button class="highlighted">Delete TagGroup</button>
 
-                {% for tg_tag in current_tg.tags.all %}
-                    {{ tg_tag.name }}
-                {% endfor %}
+                <div class="tag-list">
+                    {% for tg_tag in current_tg.tags.all %}
+                        <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="tg_tag_to_detach" value="{{ tg_tag.id }}">
+                                <button></button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
 
             </div>
         </div>
