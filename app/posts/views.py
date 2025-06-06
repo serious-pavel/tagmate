@@ -98,6 +98,9 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
         if current_tg:
             if action == 'delete_tg':
+                # Deleting the Tags that are not used in any other TagGroup or ANY Post
+                current_tg.clear_tags()
+
                 current_tg.delete()
                 messages.success(request, f'TagGroup {current_tg.name} deleted')
                 return redirect_post_editor(request, post_pk, None)
