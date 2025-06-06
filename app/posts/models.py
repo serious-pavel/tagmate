@@ -156,6 +156,8 @@ class Post(models.Model):
         self.update_tags(input_tag_ids)
 
     def clear_tags(self):
+        """ Deleting the Tags that are not used in any other Post or ANY TagGroup"""
+        # TODO seems inefficient, fetches all the PostTag before Counter
         Tag.objects.annotate(
             pt_count=Count('posttag')
         ).annotate(
