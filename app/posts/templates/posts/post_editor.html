@@ -149,7 +149,12 @@ function showItemCreate(item)
 
                 <button>Add Tag(s) to TagGroup</button>
                 <button>Update TagGroup</button>
-                <button class="highlighted">Delete TagGroup</button>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_tg">
+                    <button class="highlighted">Delete TagGroup</button>
+                </form>
 
                 <div class="tag-list">
                     {% for tg_tag in current_tg.tags.all %}
