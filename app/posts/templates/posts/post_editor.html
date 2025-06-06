@@ -34,15 +34,19 @@ function showItemCreate(item)
     <div id="main">
         <div class="block-L">
             <div id="recent-posts" class="list">
-                Posts:
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="create_post">
-                    <label>
-                        <input type="text" name="new_post_title" value="{{ new_post_title }}" placeholder="New post title">
-                    </label>
-                    <button>New Post</button>
-                </form>
+                Recent Posts:
+                <div class="list-item">
+                    <button id="post-fake-btn" class="fake-btn" onclick="showItemCreate('post')">+</button>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="create_post">
+                            <label>
+                                <input type="text" name="new_post_title" value="{{ new_post_title }}" placeholder="New post title">
+                            </label>
+                            <button class="real-btn">New Post</button>
+                        </form>
+                    <button class="close-btn" onclick="showItemCreate('post')">x</button>
+                </div>
                 {% for post in user.posts.all|dictsortreversed:"updated_at" %}
                     <a class="list-item{% if post.id == current_post.id %} highlighted{% endif %}" href=
                     {% if current_tg %}
