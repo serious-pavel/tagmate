@@ -38,6 +38,13 @@ def post_editor(request, post_pk=None, tg_pk=None):
             messages.success(request, f'New post {new_post.title} created')
             return redirect_post_editor(request, new_post.id, tg_pk)
 
+        if action == 'create_tg':
+            new_tg_name = request.POST.get('new_tg_name') or 'Untitled TagGroup'
+            new_tg = TagGroup(user=request.user, name=new_tg_name)
+            new_tg.save()
+            messages.success(request, f'New post {new_tg.name} created')
+            return redirect_post_editor(request, post_pk, new_tg.id)
+
         if current_post:
             tag_names_str = request.POST.get('tag_names')
             if tag_names_str:
