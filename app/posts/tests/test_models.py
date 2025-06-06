@@ -618,18 +618,18 @@ class PostModelTests(TestCase):
 class PostClearTagsTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(email='test@example.com', password='pw')
-        self.this_post = Post.objects.create(user=self.user, title="this_post")
-        self.other_post = Post.objects.create(user=self.user, title="other_post")
+        self.this_post = Post.objects.create(user=self.user, title='this_post')
+        self.other_post = Post.objects.create(user=self.user, title='other_post')
 
-        self.other_tg = TagGroup.objects.create(user=self.user, name="other_tg")
+        self.other_tg = TagGroup.objects.create(user=self.user, name='other_tg')
 
         # Tags
-        self.tag_this_post = Tag.objects.create(name="this_post_only")
-        self.tag_other_post = Tag.objects.create(name="other_post_only")
-        self.tag_both_posts = Tag.objects.create(name="this_and_other_posts")
-        self.tag_this_post_other_tg = Tag.objects.create(name="this_post_and_tg")
-        self.tag_other_tg = Tag.objects.create(name="tg_only")
-        self.tag_unrelated = Tag.objects.create(name="unrelated")
+        self.tag_this_post = Tag.objects.create(name='this_post_only')
+        self.tag_other_post = Tag.objects.create(name='other_post_only')
+        self.tag_both_posts = Tag.objects.create(name='this_and_other_posts')
+        self.tag_this_post_other_tg = Tag.objects.create(name='this_post_and_tg')
+        self.tag_other_tg = Tag.objects.create(name='tg_only')
+        self.tag_unrelated = Tag.objects.create(name='unrelated')
 
         # Attach tags to this_post
         self.this_post.update_tags(
@@ -692,18 +692,18 @@ class PostClearTagsTests(TestCase):
 class TagGroupClearTagsTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(email='test2@example.com', password='pw')
-        self.other_post = Post.objects.create(user=self.user, title="Test Post")
+        self.other_post = Post.objects.create(user=self.user, title='Test Post')
 
-        self.this_tg = TagGroup.objects.create(user=self.user, name="this_tg")
-        self.other_tg = TagGroup.objects.create(user=self.user, name="other_tg")
+        self.this_tg = TagGroup.objects.create(user=self.user, name='this_tg')
+        self.other_tg = TagGroup.objects.create(user=self.user, name='other_tg')
 
         # Tags
-        self.tag_this_tg_only = Tag.objects.create(name="this_tg_only")
-        self.tag_other_tg_only = Tag.objects.create(name="other_tg_only")
-        self.tag_both_tgs = Tag.objects.create(name="this_and_other_tgs")
-        self.tag_this_tg_other_post = Tag.objects.create(name="this_tg_and_post")
-        self.tag_other_post = Tag.objects.create(name="post_only")
-        self.tag_unrelated = Tag.objects.create(name="unrelated")
+        self.tag_this_tg_only = Tag.objects.create(name='this_tg_only')
+        self.tag_other_tg_only = Tag.objects.create(name='other_tg_only')
+        self.tag_both_tgs = Tag.objects.create(name='this_and_other_tgs')
+        self.tag_this_tg_other_post = Tag.objects.create(name='this_tg_and_post')
+        self.tag_other_post = Tag.objects.create(name='post_only')
+        self.tag_unrelated = Tag.objects.create(name='unrelated')
 
         # Attach tags to this_tg
         self.this_tg.tags.add(self.tag_this_tg_only)
