@@ -6,13 +6,13 @@
 {% endblock links %}
 
 {% block script %}
-function showTgCreate()
+function showItemCreate(item)
 {
-    var tg_btn = document.getElementById("tg-fake-btn");
-    if (tg_btn.style.display === "none") {
-        tg_btn.style.display = "block";
+    var btn = document.getElementById(item + "-fake-btn");
+    if (btn.style.display === "none") {
+        btn.style.display = "block";
     } else {
-        tg_btn.style.display = "none";
+        btn.style.display = "none";
     }
 }
 {% endblock script %}
@@ -63,7 +63,7 @@ function showTgCreate()
                 Recent TagGroups:
             <div class="list-item">
                 <div class="list-item-create">
-                    <button id="tg-fake-btn" class="fake-btn" onclick="showTgCreate()">+</button>
+                    <button id="tg-fake-btn" class="fake-btn" onclick="showItemCreate('tg')">+</button>
                         <form method="post">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="create_tg">
@@ -72,7 +72,7 @@ function showTgCreate()
                             </label>
                             <button class="real-btn">New TagGroup</button>
                         </form>
-                    <button class="close-btn" onclick="showTgCreate()">x</button>
+                    <button class="close-btn" onclick="showItemCreate('tg')">x</button>
                 </div>
 
             </div>
