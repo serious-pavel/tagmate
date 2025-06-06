@@ -65,21 +65,20 @@ function showItemCreate(item)
             </div>
             <div id="recent-tgs" class="list">
                 Recent TagGroups:
-            <div class="list-item">
-                <div class="list-item-create">
-                    <button id="tg-fake-btn" class="fake-btn" onclick="showItemCreate('tg')">+</button>
-                        <form method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="create_tg">
-                            <label>
-                                <input type="text" name="new_tg_name" value="{{ new_tg_name }}" placeholder="Name (optional)">
-                            </label>
-                            <button class="real-btn">New TagGroup</button>
-                        </form>
-                    <button class="close-btn" onclick="showItemCreate('tg')">x</button>
+                <div class="list-item">
+                    <div class="list-item-create">
+                        <button id="tg-fake-btn" class="fake-btn" onclick="showItemCreate('tg')">+</button>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="create_tg">
+                                <label>
+                                    <input type="text" name="new_tg_name" value="{{ new_tg_name }}" placeholder="Name (optional)">
+                                </label>
+                                <button class="real-btn">New TagGroup</button>
+                            </form>
+                        <button class="close-btn" onclick="showItemCreate('tg')">x</button>
+                    </div>
                 </div>
-
-            </div>
                 {% for tg in user.tag_groups.all %}
                     <a class="list-item{% if tg.id == current_tg.id %} highlighted{% endif %}" href=
                         {% if current_post %}
