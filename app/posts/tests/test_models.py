@@ -712,3 +712,18 @@ class TagGroupClearTagsTests(TestCase):
         self.other_post.update_tags(
             [self.tag_other_post, self.tag_this_tg_other_post]
         )
+
+    def test_clear_tags_deletes_exclusive_tag(self):
+        self.this_tg.clear_tags()
+        self.assertFalse(Tag.objects.filter(id=self.tag_this_tg_only.id).exists(),
+                         "Tag used only by this tg should be deleted")
+
+    def test_clear_tags_does_not_delete_shared_tag(self):
+        self.this_tg.clear_tags()
+        self.assertTrue(Tag.objects.filter(id=self.tag_both_tgs.id).exists(),
+                        "Tag used by multiple tgs should NOT be deleted")
+
+    def test_clear_tags_does_not_delete_tag_used_by_a_tag_group(self):
+        self.this_tg.clear_tags()
+        self.assertTrue(Tag.objects.filter(id=self.tag_this_tg_other_post.id).exists(),
+                        "Tag used by post should NOT be deleted")
