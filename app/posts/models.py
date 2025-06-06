@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.apps import apps
 from django.core.validators import RegexValidator
+from django.db.models import Count
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 
@@ -153,6 +154,18 @@ class Post(models.Model):
         current_tag_ids = self.tags.values_list('id', flat=True)
         input_tag_ids = list(current_tag_ids) + list(tag_group_tag_ids)
         self.update_tags(input_tag_ids)
+
+    def clear_tags(self):
+        Tag.objects.annotate(
+            pt_count=Count('posttag')
+        ).annotate(
+            tg_count=Count('tag_groups')
+        ).filter(
+            posttag__post=self,
+            pt_count__lte=1
+        ).filter(
+            tg_count__lte=0
+        ).delete()
 
 
 class PostTag(models.Model):
