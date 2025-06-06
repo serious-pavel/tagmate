@@ -60,9 +60,9 @@
                         {% else %}
                             "{% url 'tg_editor' tg_pk=tg.id %}">
                         {% endif %}
-                            <div >
+                            <div class="list-item-title">
                                 {{ tg.name }}
-                                <div>
+                                <div class="list-item-date">
                                     {{ tg.updated_at|date:"d M'y" }}
                                 </div>
                             </div>

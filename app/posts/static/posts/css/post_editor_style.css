@@ -60,6 +60,8 @@
 
 .list-item-title {
     font-size: 15px;
+    overflow: hidden;
+    overflow-wrap: break-word;
 }
 
 .block-M {
