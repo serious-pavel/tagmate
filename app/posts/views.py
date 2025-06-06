@@ -100,6 +100,12 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
             return redirect_post_editor(request, current_post.id, tg_pk)
 
+        if current_tg:
+            if action == 'delete_tg':
+                current_tg.delete()
+                messages.success(request, f'TagGroup {current_tg.name} deleted')
+                return redirect_post_editor(request, post_pk, None)
+
     return render(
         request,
         template_name='posts/post_editor.html',
