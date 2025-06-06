@@ -613,3 +613,33 @@ class PostModelTests(TestCase):
             old_updated_at.timestamp(),
             delta=self.time_delta
         )
+
+
+class PostClearTagsTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(email='test@example.com', password='pw')
+        self.this_post = Post.objects.create(user=self.user, title="this_post")
+        self.other_post = Post.objects.create(user=self.user, title="other_post")
+
+        self.other_tg = TagGroup.objects.create(user=self.user, name="other_tg")
+
+        # Tags
+        self.tag_this_post = Tag.objects.create(name="this_post_only")
+        self.tag_both_posts = Tag.objects.create(name="this_and_other_posts")
+        self.tag_this_post_other_tg = Tag.objects.create(name="this_post_and_tg")
+        self.tag_other_tg = Tag.objects.create(name="tg_only")
+        self.tag_unrelated = Tag.objects.create(name="unrelated")
+
+        # Attach tags to this post
+        self.this_post.update_tags(
+            [self.tag_this_post.id,
+             self.tag_both_posts.id,
+             self.tag_this_post_other_tg.id]
+        )
+
+        # Attach tag_in_both to another post
+        self.other_post.update_tags([self.tag_both_posts.id])
+
+        # Attach tags to TagGroup
+        self.other_tg.tags.add(self.tag_other_tg)
+        self.other_tg.tags.add(self.tag_this_post_other_tg)
