@@ -631,17 +631,17 @@ class PostClearTagsTests(TestCase):
         self.tag_other_tg = Tag.objects.create(name="tg_only")
         self.tag_unrelated = Tag.objects.create(name="unrelated")
 
-        # Attach tags to this post
+        # Attach tags to this_post
         self.this_post.update_tags(
             [self.tag_this_post.id,
              self.tag_both_posts.id,
              self.tag_this_post_other_tg.id]
         )
 
-        # Attach tag_in_both to another post
+        # Attach tags to other_post
         self.other_post.update_tags([self.tag_both_posts.id, self.tag_other_post.id])
 
-        # Attach tags to TagGroup
+        # Attach tags to other_tg
         self.other_tg.tags.add(self.tag_other_tg)
         self.other_tg.tags.add(self.tag_this_post_other_tg)
 
@@ -676,7 +676,7 @@ class PostClearTagsTests(TestCase):
 
     def test_no_tags_deleted_if_none_match_criteria(self):
         tags_before_clear = Tag.objects.count()
-        # Detach all tags from self.this_post
+        # Detach all tags from this_post
         self.this_post.update_tags([])
         self.this_post.clear_tags()
         # All tags still there
@@ -705,7 +705,7 @@ class TagGroupClearTagsTests(TestCase):
         self.tag_other_post = Tag.objects.create(name="post_only")
         self.tag_unrelated = Tag.objects.create(name="unrelated")
 
-        # Attach tags to this tg
+        # Attach tags to this_tg
         self.this_tg.tags.add(self.tag_this_tg_only)
         self.this_tg.tags.add(self.tag_both_tgs)
         self.this_tg.tags.add(self.tag_this_tg_other_post)
@@ -714,7 +714,7 @@ class TagGroupClearTagsTests(TestCase):
         self.other_tg.tags.add(self.tag_both_tgs)
         self.other_tg.tags.add(self.tag_other_tg_only)
 
-        # Attach tags to Post
+        # Attach tags to other_post
         self.other_post.update_tags(
             [self.tag_other_post.id, self.tag_this_tg_other_post.id]
         )
@@ -750,7 +750,7 @@ class TagGroupClearTagsTests(TestCase):
 
     def test_no_tags_deleted_if_none_match_criteria(self):
         tags_before_clear = Tag.objects.count()
-        # Detach all tags from self.this_post
+        # Detach all tags from this_tg
         self.this_tg.tags.clear()
         self.this_tg.clear_tags()
         # All tags still there
