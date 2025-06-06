@@ -643,3 +643,18 @@ class PostClearTagsTests(TestCase):
         # Attach tags to TagGroup
         self.other_tg.tags.add(self.tag_other_tg)
         self.other_tg.tags.add(self.tag_this_post_other_tg)
+
+    def test_clear_tags_deletes_exclusive_tag(self):
+        self.this_post.clear_tags()
+        self.assertFalse(Tag.objects.filter(id=self.tag_this_post.id).exists(),
+                         "Tag used only by this post should be deleted")
+
+    def test_clear_tags_does_not_delete_shared_tag(self):
+        self.this_post.clear_tags()
+        self.assertTrue(Tag.objects.filter(id=self.tag_both_posts.id).exists(),
+                        "Tag used by multiple posts should NOT be deleted")
+
+    def test_clear_tags_does_not_delete_tag_used_by_a_tag_group(self):
+        self.this_post.clear_tags()
+        self.assertTrue(Tag.objects.filter(id=self.tag_this_post_other_tg.id).exists(),
+                        "Tag used by group should NOT be deleted")
