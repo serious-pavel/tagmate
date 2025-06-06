@@ -710,7 +710,7 @@ class TagGroupClearTagsTests(TestCase):
 
         # Attach tags to Post
         self.other_post.update_tags(
-            [self.tag_other_post, self.tag_this_tg_other_post]
+            [self.tag_other_post.id, self.tag_this_tg_other_post.id]
         )
 
     def test_clear_tags_deletes_exclusive_tag(self):
