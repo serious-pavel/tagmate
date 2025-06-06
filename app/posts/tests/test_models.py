@@ -625,6 +625,7 @@ class PostClearTagsTests(TestCase):
 
         # Tags
         self.tag_this_post = Tag.objects.create(name="this_post_only")
+        self.tag_other_post = Tag.objects.create(name="other_post_only")
         self.tag_both_posts = Tag.objects.create(name="this_and_other_posts")
         self.tag_this_post_other_tg = Tag.objects.create(name="this_post_and_tg")
         self.tag_other_tg = Tag.objects.create(name="tg_only")
@@ -638,7 +639,7 @@ class PostClearTagsTests(TestCase):
         )
 
         # Attach tag_in_both to another post
-        self.other_post.update_tags([self.tag_both_posts.id])
+        self.other_post.update_tags([self.tag_both_posts.id, self.tag_other_post.id])
 
         # Attach tags to TagGroup
         self.other_tg.tags.add(self.tag_other_tg)
@@ -663,6 +664,7 @@ class PostClearTagsTests(TestCase):
         self.this_post.clear_tags()
         self.assertTrue(Tag.objects.filter(id=self.tag_unrelated.id).exists())
         self.assertTrue(Tag.objects.filter(id=self.tag_other_tg.id).exists())
+        self.assertTrue(Tag.objects.filter(id=self.tag_other_post.id).exists())
 
     def test_clear_tags_idempotency(self):
         self.this_post.clear_tags()
@@ -681,6 +683,7 @@ class PostClearTagsTests(TestCase):
         self.assertTrue(Tag.objects.filter(id=self.tag_both_posts.id).exists())
         self.assertTrue(Tag.objects.filter(id=self.tag_other_tg.id).exists())
         self.assertTrue(Tag.objects.filter(id=self.tag_unrelated.id).exists())
+        self.assertTrue(Tag.objects.filter(id=self.tag_other_post.id).exists())
 
 
 class TagGroupClearTagsTests(TestCase):
