@@ -675,6 +675,7 @@ class PostClearTagsTests(TestCase):
                          )
 
     def test_no_tags_deleted_if_none_match_criteria(self):
+        tags_before_clear = Tag.objects.count()
         # Detach all tags from self.this_post
         self.this_post.update_tags([])
         self.this_post.clear_tags()
@@ -684,6 +685,8 @@ class PostClearTagsTests(TestCase):
         self.assertTrue(Tag.objects.filter(id=self.tag_other_tg.id).exists())
         self.assertTrue(Tag.objects.filter(id=self.tag_unrelated.id).exists())
         self.assertTrue(Tag.objects.filter(id=self.tag_other_post.id).exists())
+
+        self.assertEqual(Tag.objects.count(), tags_before_clear)
 
 
 class TagGroupClearTagsTests(TestCase):
