@@ -658,3 +658,26 @@ class PostClearTagsTests(TestCase):
         self.this_post.clear_tags()
         self.assertTrue(Tag.objects.filter(id=self.tag_this_post_other_tg.id).exists(),
                         "Tag used by group should NOT be deleted")
+
+    def test_unrelated_tags_survive(self):
+        self.this_post.clear_tags()
+        self.assertTrue(Tag.objects.filter(id=self.tag_unrelated.id).exists())
+        self.assertTrue(Tag.objects.filter(id=self.tag_other_tg.id).exists())
+
+    def test_clear_tags_idempotency(self):
+        self.this_post.clear_tags()
+        tags_before_clear = Tag.objects.count()
+        self.this_post.clear_tags()  # Should not error, and no extra tags are deleted
+        self.assertEqual(Tag.objects.count(), tags_before_clear,
+                         "Extra Tags should not be deleted on second call"
+                         )
+
+    def test_no_tags_deleted_if_none_match_criteria(self):
+        # Detach all tags from self.post
+        self.this_post.update_tags([])
+        self.this_post.clear_tags()
+        # All tags still there
+        self.assertTrue(Tag.objects.filter(id=self.tag_this_post_other_tg.id).exists())
+        self.assertTrue(Tag.objects.filter(id=self.tag_both_posts.id).exists())
+        self.assertTrue(Tag.objects.filter(id=self.tag_other_tg.id).exists())
+        self.assertTrue(Tag.objects.filter(id=self.tag_unrelated.id).exists())
