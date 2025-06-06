@@ -6,6 +6,15 @@
 {% endblock links %}
 
 {% block script %}
+function showTgCreate()
+{
+    var tg_btn = document.getElementById("tg-fake-btn");
+    if (tg_btn.style.display === "none") {
+        tg_btn.style.display = "block";
+    } else {
+        tg_btn.style.display = "none";
+    }
+}
 {% endblock script %}
 
 {% block title %}Post Editor{% endblock title%}
@@ -52,7 +61,21 @@
             </div>
             <div id="recent-tgs" class="list">
                 Recent TagGroups:
-                <button>New TagGroup</button>
+            <div class="list-item">
+                <div class="list-item-create">
+                    <button id="tg-fake-btn" class="fake-btn" onclick="showTgCreate()">+</button>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="create_tg">
+                            <label>
+                                <input type="text" name="new_tg_name" value="{{ new_tg_name }}" placeholder="Name (optional)">
+                            </label>
+                            <button class="real-btn">New TagGroup</button>
+                        </form>
+                    <button class="close-btn" onclick="showTgCreate()">x</button>
+                </div>
+
+            </div>
                 {% for tg in user.tag_groups.all %}
                     <a class="list-item{% if tg.id == current_tg.id %} highlighted{% endif %}" href=
                         {% if current_post %}
