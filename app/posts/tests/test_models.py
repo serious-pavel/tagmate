@@ -667,13 +667,13 @@ class PostClearTagsTests(TestCase):
     def test_clear_tags_idempotency(self):
         self.this_post.clear_tags()
         tags_before_clear = Tag.objects.count()
-        self.this_post.clear_tags()  # Should not error, and no extra tags are deleted
+        self.this_post.clear_tags()
         self.assertEqual(Tag.objects.count(), tags_before_clear,
                          "Extra Tags should not be deleted on second call"
                          )
 
     def test_no_tags_deleted_if_none_match_criteria(self):
-        # Detach all tags from self.post
+        # Detach all tags from self.this_post
         self.this_post.update_tags([])
         self.this_post.clear_tags()
         # All tags still there
