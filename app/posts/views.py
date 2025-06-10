@@ -97,6 +97,14 @@ def post_editor(request, post_pk=None, tg_pk=None):
             return redirect_post_editor(request, current_post.id, tg_pk)
 
         if current_tg:
+            if action == 'update_tg':
+                tg_name = request.POST.get('tg_name')
+                current_tg.name = tg_name
+
+                current_tg.save()
+                messages.success(request, f'TagGroup {current_tg.name} updated')
+                return redirect_post_editor(request, post_pk, current_tg.id)
+
             if action == 'delete_tg':
                 # Deleting the Tags that are not used in any other TagGroup or ANY Post
                 current_tg.clear_tags()
