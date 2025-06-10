@@ -148,16 +148,25 @@ function showItemCreate(item)
             </div>
             <div class="tg-editor">
                 TagGroups:
+                {% if current_tg %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <label>
+                            <input type="hidden" name="action" value="update_tg">
+                            <input type="text" name="tg_name" placeholder="" value="{{ current_tg.name }}" required>
+                        </label>
+                        <button>Update TagGroup</button>
+                    </form>
 
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="delete_tg">
+                        <button class="highlighted">Delete TagGroup</button>
+                    </form>
+                {% endif %}
+            </div>
+            <div class="tags-editor">
                 <button>Add Tag(s) to TagGroup</button>
-                <button>Update TagGroup</button>
-
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="delete_tg">
-                    <button class="highlighted">Delete TagGroup</button>
-                </form>
-
                 <div class="tag-list">
                     {% for tg_tag in current_tg.tags.all %}
                         <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
@@ -169,7 +178,6 @@ function showItemCreate(item)
                         </div>
                     {% endfor %}
                 </div>
-
             </div>
         </div>
 
