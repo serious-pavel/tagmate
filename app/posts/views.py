@@ -94,8 +94,6 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 messages.success(request, f'Post {current_post.title} deleted')
                 return redirect_post_editor(request, None, tg_pk)
 
-            return redirect_post_editor(request, current_post.id, tg_pk)
-
         if current_tg:
             if action == 'update_tg':
                 tg_name = request.POST.get('tg_name')
