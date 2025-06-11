@@ -136,6 +136,7 @@ function showItemCreate(item)
                         <div class="tag" title="{{ tag.name }}">{{ tag.name|truncatechars:25 }}
                             <form method="post" action="{{ request.path }}">
                                 {% csrf_token %}
+                                <input type="hidden" name="action" value="post_detach_tag">
                                 <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
                                 <button></button>
                             </form>
