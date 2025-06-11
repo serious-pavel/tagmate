@@ -73,10 +73,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
         tag_to_detach = request.POST.get('tag_to_detach')
         if tag_to_detach:
-            tagset = current_post.ordered_tag_ids
-            tagset.remove(int(tag_to_detach))
-            current_post.update_tags(tagset)
-            return redirect_post_editor(request, current_post.id, tg_pk)
+            if action == 'post_detach_tag' and current_post is not None:
+                tagset = current_post.ordered_tag_ids
+                tagset.remove(int(tag_to_detach))
+                current_post.update_tags(tagset)
+                return redirect_post_editor(request, current_post.id, tg_pk)
 
         if current_post:
             if action == 'update_post':
