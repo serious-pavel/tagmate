@@ -21,14 +21,16 @@ class TagFormWithSocialAuthTests(TestCase):
 
     def test_add_valid_tag(self):
         url = reverse('post_editor', args=[self.post.pk])
-        response = self.client.post(url, {'tag_names': 'sometag'}, follow=True)
+        data = {'tags_to_attach': 'sometag', 'action': 'post_attach_tags'}
+        response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Tag.objects.filter(name='sometag').exists())
         self.assertContains(response, "sometag")
 
     def test_invalid_tag_shows_error(self):
         url = reverse('post_editor', args=[self.post.pk])
-        response = self.client.post(url, {'tag_names': '!!invalidtag!!'})
+        data = {'tags_to_attach': '!!invalidtag!!', 'action': 'post_attach_tags'}
+        response = self.client.post(url, data)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Hashtags may only contain ")
         self.assertFalse(Tag.objects.filter(name='!!invalidtag!!').exists())
