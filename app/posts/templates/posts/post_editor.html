@@ -167,7 +167,19 @@ function showItemCreate(item)
                 {% endif %}
             </div>
             <div class="tags-editor">
-                <button>Add Tag(s) to TagGroup</button>
+
+                <form method="post" >
+                    {% csrf_token %}
+                    <label>
+                        <input type="hidden" name="action" value="tg_attach_tags">
+                        <input type="text" name="tag_names"
+                               placeholder="Add tags (comma, hashtag or space separated)"
+                               value="{{ tag_names }}"
+                               required>
+                    </label>
+                    <button type="submit">Add Tag(s) to TagGroup</button>
+                </form>
+
                 <div class="tag-list">
                     {% for tg_tag in current_tg.tags.all %}
                         <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
