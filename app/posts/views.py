@@ -58,7 +58,10 @@ def post_editor(request, post_pk=None, tg_pk=None):
                     except ValidationError as e:
                         error_msg = e.message_dict.get('name', ['Invalid tag'])[0]
                         messages.error(request, error_msg)
-                        context['tag_names'] = tag_names_str
+                        if action == 'post_attach_tags':
+                            context['post_tags_to_attach'] = tag_names_str
+                        elif action == 'tg_attach_tags':
+                            context['tg_tags_to_attach'] = tag_names_str
                         return render(request, 'posts/post_editor.html', context)
                 tag_ids.append(tag.id)
 
