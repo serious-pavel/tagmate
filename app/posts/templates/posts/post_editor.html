@@ -125,7 +125,7 @@ function showItemCreate(item)
                         <input type="hidden" name="action" value="post_attach_tags">
                         <input type="text" name="tag_names"
                                placeholder="Add tags (comma, hashtag or space separated)"
-                               value="{{ tag_names }}"
+                               value="{{ post_tags_to_attach }}"
                                required>
                     </label>
                     <button type="submit">Add Tag(s) to Post</button>
@@ -175,7 +175,7 @@ function showItemCreate(item)
                         <input type="hidden" name="action" value="tg_attach_tags">
                         <input type="text" name="tag_names"
                                placeholder="Add tags (comma, hashtag or space separated)"
-                               value="{{ tag_names }}"
+                               value="{{ tg_tags_to_attach }}"
                                required>
                     </label>
                     <button type="submit">Add Tag(s) to TagGroup</button>
