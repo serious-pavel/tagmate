@@ -44,10 +44,10 @@ def post_editor(request, post_pk=None, tg_pk=None):
             messages.success(request, f'New post {new_tg.name} created')
             return redirect_post_editor(request, post_pk, new_tg.id)
 
-        tag_names_str = request.POST.get('tag_names')
-        if tag_names_str:
+        tags_to_attach = request.POST.get('tags_to_attach')
+        if tags_to_attach:
             tag_ids = []
-            tag_names_lst = tag_names_str.replace(",", " ").replace("#", " ").split()
+            tag_names_lst = tags_to_attach.replace(",", " ").replace("#", " ").split()
             for tag_name in tag_names_lst:
                 tag = Tag.objects.filter(name=tag_name).first()
                 if tag is None:
@@ -59,9 +59,9 @@ def post_editor(request, post_pk=None, tg_pk=None):
                         error_msg = e.message_dict.get('name', ['Invalid tag'])[0]
                         messages.error(request, error_msg)
                         if action == 'post_attach_tags':
-                            context['post_tags_to_attach'] = tag_names_str
+                            context['post_tags_to_attach'] = tags_to_attach
                         elif action == 'tg_attach_tags':
-                            context['tg_tags_to_attach'] = tag_names_str
+                            context['tg_tags_to_attach'] = tags_to_attach
                         return render(request, 'posts/post_editor.html', context)
                 tag_ids.append(tag.id)
 

@@ -123,7 +123,7 @@ function showItemCreate(item)
                     {% csrf_token %}
                     <label>
                         <input type="hidden" name="action" value="post_attach_tags">
-                        <input type="text" name="tag_names"
+                        <input type="text" name="tags_to_attach"
                                placeholder="Add tags (comma, hashtag or space separated)"
                                value="{{ post_tags_to_attach }}"
                                required>
@@ -173,7 +173,7 @@ function showItemCreate(item)
                     {% csrf_token %}
                     <label>
                         <input type="hidden" name="action" value="tg_attach_tags">
-                        <input type="text" name="tag_names"
+                        <input type="text" name="tags_to_attach"
                                placeholder="Add tags (comma, hashtag or space separated)"
                                value="{{ tg_tags_to_attach }}"
                                required>
