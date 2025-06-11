@@ -122,6 +122,7 @@ function showItemCreate(item)
                 <form method="post" >
                     {% csrf_token %}
                     <label>
+                        <input type="hidden" name="action" value="post_attach_tags">
                         <input type="text" name="tag_names"
                                placeholder="Add tags (comma, hashtag or space separated)"
                                value="{{ tag_names }}"
