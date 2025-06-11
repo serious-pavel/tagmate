@@ -44,37 +44,38 @@ def post_editor(request, post_pk=None, tg_pk=None):
             messages.success(request, f'New post {new_tg.name} created')
             return redirect_post_editor(request, post_pk, new_tg.id)
 
-        if current_post:
-            tag_names_str = request.POST.get('tag_names')
-            if tag_names_str:
-                tag_ids = []
-                tag_names_lst = tag_names_str.replace(",", " ").replace("#", " ").split()
-                for tag_name in tag_names_lst:
-                    tag = Tag.objects.filter(name=tag_name).first()
-                    if tag is None:
-                        tag = Tag(name=tag_name)
-                        try:
-                            tag.full_clean()
-                            tag.save()
-                        except ValidationError as e:
-                            error_msg = e.message_dict.get('name', ['Invalid tag'])[0]
-                            messages.error(request, error_msg)
-                            context['tag_names'] = tag_names_str
-                            return render(request, 'posts/post_editor.html', context)
-                    tag_ids.append(tag.id)
+        tag_names_str = request.POST.get('tag_names')
+        if tag_names_str:
+            tag_ids = []
+            tag_names_lst = tag_names_str.replace(",", " ").replace("#", " ").split()
+            for tag_name in tag_names_lst:
+                tag = Tag.objects.filter(name=tag_name).first()
+                if tag is None:
+                    tag = Tag(name=tag_name)
+                    try:
+                        tag.full_clean()
+                        tag.save()
+                    except ValidationError as e:
+                        error_msg = e.message_dict.get('name', ['Invalid tag'])[0]
+                        messages.error(request, error_msg)
+                        context['tag_names'] = tag_names_str
+                        return render(request, 'posts/post_editor.html', context)
+                tag_ids.append(tag.id)
 
-                if tag_ids:
+            if tag_ids:
+                if action == 'post_attach_tags' and current_post is not None:
                     input_tag_ids = current_post.ordered_tag_ids + tag_ids
                     current_post.update_tags(input_tag_ids)
                     return redirect_post_editor(request, current_post.id, tg_pk)
 
-            tag_to_detach = request.POST.get('tag_to_detach')
-            if tag_to_detach:
-                tagset = current_post.ordered_tag_ids
-                tagset.remove(int(tag_to_detach))
-                current_post.update_tags(tagset)
-                return redirect_post_editor(request, current_post.id, tg_pk)
+        tag_to_detach = request.POST.get('tag_to_detach')
+        if tag_to_detach:
+            tagset = current_post.ordered_tag_ids
+            tagset.remove(int(tag_to_detach))
+            current_post.update_tags(tagset)
+            return redirect_post_editor(request, current_post.id, tg_pk)
 
+        if current_post:
             if action == 'update_post':
                 post_title = request.POST.get('post_title')
                 post_desc = request.POST.get('post_desc')
