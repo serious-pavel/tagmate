@@ -149,9 +149,12 @@ function showItemCreate(item)
                     {% csrf_token %}
                     <input type="hidden" name="action" value="copy_tags_to_tg">
                     <button>Copy Tags to TagGroup ⬇</button>
-
                 </form>
-                <button>⬆ Copy Tags to Post</button>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="copy_tags_to_post">
+                    <button>⬆ Copy Tags to Post</button>
+                </form>
             </div>
             <div class="tg-editor">
                 TagGroups:
