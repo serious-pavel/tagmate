@@ -85,6 +85,9 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 current_tg.tags.remove(int(tag_to_detach))
                 return redirect_post_editor(request, post_pk, current_tg.id)
 
+        if action == 'copy_tags_to_tg' and current_post and current_tg:
+            current_tg.tags.add(*current_post.ordered_tag_ids)
+
         if current_post:
             if action == 'update_post':
                 post_title = request.POST.get('post_title')
