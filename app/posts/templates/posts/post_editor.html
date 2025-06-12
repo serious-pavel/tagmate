@@ -15,6 +15,17 @@ function showItemCreate(item)
         btn.style.display = "none";
     }
 }
+
+function copyPreviewText() {
+const el = document.querySelector('.post-preview-text');
+if (!el) return;
+const plainText = el.innerText; // strips html, gets plain text only
+navigator.clipboard.writeText(plainText)
+    .catch(err => {
+        alert('Error copying text: ' + err);
+    });
+}
+
 {% endblock script %}
 
 {% block title %}Post Editor{% endblock title%}
@@ -207,12 +218,15 @@ function showItemCreate(item)
         <div class="post-preview block-R">
             Post preview:
             <p>{{ current_post.title }}</p>
-            <p>{{ current_post.description }}</p>
-            <div class="post-preview-tags">
-                {% for tag in current_post.ordered_tags %}
-                    {{ tag }}
-                {% endfor %}
+            <div class="post-preview-text">
+                <p>{{ current_post.description }}</p>
+                <div class="post-preview-tags">
+                    {% for tag in current_post.ordered_tags %}
+                        {{ tag }}
+                    {% endfor %}
+                </div>
             </div>
+            <button type="button" onclick="copyPreviewText()">Copy as Plain Text</button>
         </div>
     </div>
 {% endif %}
