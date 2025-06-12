@@ -145,7 +145,12 @@ function showItemCreate(item)
                 </div>
             </div>
             <div class="post-tg-intermediate">
-                <button>Copy Tags to TagGroup ⬇</button>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="copy_tags_to_tg">
+                    <button>Copy Tags to TagGroup ⬇</button>
+
+                </form>
                 <button>⬆ Copy Tags to Post</button>
             </div>
             <div class="tg-editor">
