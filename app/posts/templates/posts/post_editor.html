@@ -219,7 +219,7 @@ navigator.clipboard.writeText(plainText)
             Post preview:
             <p>{{ current_post.title }}</p>
             <div class="post-preview-text">
-                <p>{{ current_post.description }}</p>
+                <p>{{ current_post.description|linebreaksbr }}</p>
                 <div class="post-preview-tags">
                     {% for tag in current_post.ordered_tags %}
                         {{ tag }}
