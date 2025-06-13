@@ -6,27 +6,12 @@
 {% endblock links %}
 
 {% block script %}
-function showItemCreate(item)
-{
-    var btn = document.getElementById(item + "-fake-btn");
-    if (btn.style.display === "none") {
-        btn.style.display = "block";
-    } else {
-        btn.style.display = "none";
-    }
-}
-
-function copyPreviewText() {
-const el = document.querySelector('.post-preview-text');
-if (!el) return;
-const plainText = el.innerText; // strips html, gets plain text only
-navigator.clipboard.writeText(plainText)
-    .catch(err => {
-        alert('Error copying text: ' + err);
-    });
-}
-
 {% endblock script %}
+
+{% block scripts %}
+    <script src="{% static 'js/copy_preview_text.js' %}"></script>
+    <script src="{% static 'js/show_hide_items.js' %}"></script>
+{% endblock scripts %}
 
 {% block title %}Post Editor{% endblock title%}
 
