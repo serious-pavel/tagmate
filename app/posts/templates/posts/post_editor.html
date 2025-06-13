@@ -115,7 +115,7 @@ navigator.clipboard.writeText(plainText)
                         <label>
                             <input type="hidden" name="action" value="update_post">
                             <input type="text" name="post_title" placeholder="" value="{{ current_post.title }}" required>
-                            <input type="text" name="post_desc" placeholder="" value="{{ current_post.description }}">
+                            <textarea type="text" name="post_desc" placeholder="">{{ current_post.description }}</textarea>
                         </label>
                         <button>Update Post</button>
 
