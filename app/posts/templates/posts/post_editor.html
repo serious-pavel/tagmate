@@ -129,7 +129,7 @@
                     <button type="submit">Add Tag(s) to Post</button>
                 </form>
 
-                <div id="dnd-list-post" class="tag-list">
+                <div id="dnd-list-post" class="tag-list" data-post-id="{{ current_post.id }}">
                     {% for tag in current_post.ordered_tags %}
                         <div class="tag" title="{{ tag.name }}">{{ tag.name|truncatechars:25 }}
                             <form method="post" action="{{ request.path }}">
