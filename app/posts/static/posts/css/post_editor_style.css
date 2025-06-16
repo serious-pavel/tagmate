@@ -194,3 +194,29 @@ textarea {
     min-width: 56%;
     min-height: 115px;
 }
+
+.message-area {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1500;
+    width: max-content;
+    max-width: 90vw;
+    pointer-events: none;
+}
+.message {
+    background: #f7e1e3;
+    color: #b00020;
+    padding: 14px 24px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    pointer-events: auto;
+    font-size: 1rem;
+    transition: opacity 0.4s;
+}
+.message.success {
+    background: #e5ffe7;
+    color: #17652c;
+}
