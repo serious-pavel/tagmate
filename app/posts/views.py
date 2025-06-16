@@ -1,6 +1,10 @@
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+import json
+
 from posts.models import Post, Tag, TagGroup
 
 
@@ -135,3 +139,24 @@ def post_editor(request, post_pk=None, tg_pk=None):
         template_name='posts/post_editor.html',
         context=context
     )
+
+
+@require_POST
+def reorder_tags(request, post_pk):
+    if not request.user.is_authenticated:
+        return JsonResponse({"success": False, "error": "Not authenticated"})
+
+    data = json.loads(request.body)
+    tag_order = [int(tid) for tid in data.get("tag_order", [])]
+
+    try:
+        post = Post.objects.get(id=post_pk, user=request.user)
+    except Post.DoesNotExist:
+        return JsonResponse({"success": False, "error": "Post not found"})
+
+    try:
+        post.update_tags(tag_order)
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})
+
+    return JsonResponse({"success": True})
