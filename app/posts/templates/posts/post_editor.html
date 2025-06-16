@@ -9,8 +9,10 @@
 {% endblock script %}
 
 {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="{% static 'js/copy_preview_text.js' %}"></script>
     <script src="{% static 'js/show_hide_items.js' %}"></script>
+    <script src="{% static 'js/dnd_sortable.js' %}"></script>
 {% endblock scripts %}
 
 {% block title %}Post Editor{% endblock title%}
@@ -127,9 +129,9 @@
                     <button type="submit">Add Tag(s) to Post</button>
                 </form>
 
-                <div class="tag-list">
+                <div id="dnd-list-post" class="tag-list">
                     {% for tag in current_post.ordered_tags %}
-                        <div class="tag" title="{{ tag.name }}" draggable="true">{{ tag.name|truncatechars:25 }}
+                        <div class="tag" title="{{ tag.name }}">{{ tag.name|truncatechars:25 }}
                             <form method="post" action="{{ request.path }}">
                                 {% csrf_token %}
                                 <input type="hidden" name="action" value="post_detach_tag">
