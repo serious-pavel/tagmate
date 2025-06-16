@@ -1,3 +1,6 @@
+// ---- Message Timeout (shared) ----
+const MESSAGE_TIMEOUT = 2000;
+
 // ---- Show Message (Django-like) ----
 function showMessage(msg, type = "error") {
     // Try to find existing message area or create one
@@ -15,5 +18,14 @@ function showMessage(msg, type = "error") {
     // Auto-hide after 3s
     setTimeout(() => {
         msgDiv.remove();
-    }, 7000);
+    }, MESSAGE_TIMEOUT);
 }
+
+// On DOMContentLoaded: auto-hide Django-rendered messages too
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.message-area .message').forEach(function(msgDiv) {
+        setTimeout(function() {
+            msgDiv.remove();
+        }, MESSAGE_TIMEOUT); // Match your showMessage timeout
+    });
+});
