@@ -4,7 +4,7 @@ if (!el) return;
 const plainText = el.innerText; // strips html, gets plain text only
 navigator.clipboard.writeText(plainText)
     .then(() => {
-        showMessage('Copied to clipboard!', 'err');
+        showMessage('Copied to clipboard!', 'success');
     })
     .catch(err => {
         showMessage('Error copying text: ' + err, 'error');
