@@ -53,6 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     showMessage("Failed to update tag order: " + (data.error || ""));
                 } else {
                     showMessage("Tag order saved!", "success");
+                    const preview = document.getElementById("post-preview-tags");
+                    if (preview && data.tag_text) {
+                        preview.textContent = data.tag_text;
+                    }
                 }
             })
             .catch(error => {
