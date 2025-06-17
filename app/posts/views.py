@@ -159,4 +159,10 @@ def reorder_tags(request, post_pk):
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)})
 
-    return JsonResponse({"success": True})
+    # Get the current list of tag names as a single string (e.g., "#tag1 #tag2 ...")
+    tag_text = " ".join(f"#{tag.name}" for tag in post.ordered_tags)
+
+    return JsonResponse({
+        "success": True,
+        "tag_text": tag_text
+    })
