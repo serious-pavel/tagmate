@@ -62,11 +62,13 @@ def post_editor(request, post_pk=None, tg_pk=None):
                     except ValidationError as e:
                         error_msg = e.message_dict.get('name', ['Invalid tag'])[0]
                         messages.error(request, error_msg)
+                        # Save the value so the GET page can prefill it
                         if action == 'post_attach_tags':
-                            context['post_tags_to_attach'] = tags_to_attach
+                            request.session['post_tags_to_attach'] = tags_to_attach
                         elif action == 'tg_attach_tags':
-                            context['tg_tags_to_attach'] = tags_to_attach
-                        return render(request, 'posts/post_editor.html', context)
+                            request.session['tg_tags_to_attach'] = tags_to_attach
+                        # Redirect prevents re-POST on reload
+                        return redirect(request.path)
                 tag_ids.append(tag.id)
 
             if tag_ids:
@@ -133,6 +135,14 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 current_tg.delete()
                 messages.success(request, f'TagGroup {current_tg.name} deleted')
                 return redirect_post_editor(request, post_pk, None)
+
+    # GET (or after redirect)
+    context.update({
+            'post_tags_to_attach': request.session.pop('post_tags_to_attach', ''),
+            'tg_tags_to_attach': request.session.pop('tg_tags_to_attach', ''),
+        })
+    # context['post_tags_to_attach'] = request.session.pop('post_tags_to_attach', '')
+    # context['tg_tags_to_attach'] = request.session.pop('tg_tags_to_attach', '')
 
     return render(
         request,
