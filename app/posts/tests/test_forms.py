@@ -30,7 +30,7 @@ class TagFormWithSocialAuthTests(TestCase):
     def test_invalid_tag_shows_error(self):
         url = reverse('post_editor', args=[self.post.pk])
         data = {'tags_to_attach': '!!invalidtag!!', 'action': 'post_attach_tags'}
-        response = self.client.post(url, data)
+        response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Hashtags may only contain ")
         self.assertFalse(Tag.objects.filter(name='!!invalidtag!!').exists())
