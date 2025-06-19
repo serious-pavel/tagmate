@@ -35,6 +35,10 @@ class PostFormTests(TestCase):
         ).exists())
         self.assertContains(response, "sometag")
 
+        # Check client redirected to the same page
+        # redirect_chain contains tuples of (url, status_code)
+        self.assertIn((url, 302), response.redirect_chain)
+
     def test_invalid_tag_shows_error(self):
         url = reverse('post_editor', args=[self.post.pk])
         data = {'tags_to_attach': '!!invalidtag!!', 'action': 'post_attach_tags'}
