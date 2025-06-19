@@ -79,10 +79,10 @@ def post_editor(request, post_pk=None, tg_pk=None):
                     if action == 'post_attach_tags' and current_post is not None:
                         input_tag_ids = current_post.ordered_tag_ids + tag_ids
                         current_post.update_tags(input_tag_ids)
-                        return redirect_post_editor(request, current_post.id, tg_pk)
+                        return redirect(request.path)
                     if action == 'tg_attach_tags' and current_tg is not None:
                         current_tg.tags.add(*tag_ids)
-                        return redirect_post_editor(request, post_pk, current_tg.id)
+                        return redirect(request.path)
 
         tag_to_detach = request.POST.get('tag_to_detach')
         if tag_to_detach:
@@ -90,10 +90,10 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 tagset = current_post.ordered_tag_ids
                 tagset.remove(int(tag_to_detach))
                 current_post.update_tags(tagset)
-                return redirect_post_editor(request, current_post.id, tg_pk)
+                return redirect(request.path)
             if action == 'tg_detach_tag' and current_tg is not None:
                 current_tg.tags.remove(int(tag_to_detach))
-                return redirect_post_editor(request, post_pk, current_tg.id)
+                return redirect(request.path)
 
         if action == 'copy_tags_to_tg' and current_post and current_tg:
             current_tg.tags.add(*current_post.ordered_tag_ids)
@@ -113,7 +113,7 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 current_post.save()
 
                 messages.success(request, f'Post {current_post.title} updated')
-                return redirect_post_editor(request, current_post.id, tg_pk)
+                return redirect(request.path)
 
             if action == 'delete_post':
                 # Deleting the Tags that are not used in any other Post or ANY TagGroup
@@ -130,7 +130,7 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
                 current_tg.save()
                 messages.success(request, f'TagGroup {current_tg.name} updated')
-                return redirect_post_editor(request, post_pk, current_tg.id)
+                return redirect(request.path)
 
             if action == 'delete_tg':
                 # Deleting the Tags that are not used in any other TagGroup or ANY Post
