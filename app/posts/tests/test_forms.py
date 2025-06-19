@@ -59,3 +59,7 @@ class PostFormTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Hashtags may only contain ")
         self.assertFalse(Tag.objects.filter(name='!!invalidtag!!').exists())
+
+        self.assertFalse(PostTag.objects.filter(
+            post=self.post, tag=Tag.objects.filter(name='!!invalidtag!!').first()
+        ).exists())
