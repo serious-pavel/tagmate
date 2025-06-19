@@ -24,12 +24,15 @@ class PostFormTests(TestCase):
             name="Test forms TG",
         )
 
-    def test_add_valid_tag(self):
+    def test_add_valid_tag_only_post(self):
         url = reverse('post_editor', args=[self.post.pk])
         data = {'tags_to_attach': 'sometag', 'action': 'post_attach_tags'}
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Tag.objects.filter(name='sometag').exists())
+        self.assertTrue(PostTag.objects.filter(
+            post=self.post, tag=Tag.objects.get(name='sometag')
+        ).exists())
         self.assertContains(response, "sometag")
 
     def test_invalid_tag_shows_error(self):
