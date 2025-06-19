@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
-from posts.models import Post, Tag, TagGroup
+from posts.models import Post, Tag, TagGroup, PostTag
 
 User = get_user_model()
 
@@ -19,7 +19,10 @@ class PostFormTests(TestCase):
             description="Post for testing forms"
         )
 
-        self.tg = TagGroup.objects.create(name="Test forms TG")
+        self.tg = TagGroup.objects.create(
+            user=self.user,
+            name="Test forms TG",
+        )
 
     def test_add_valid_tag(self):
         url = reverse('post_editor', args=[self.post.pk])
