@@ -39,6 +39,19 @@ class PostFormTests(TestCase):
         # redirect_chain contains tuples of (url, status_code)
         self.assertIn((url, 302), response.redirect_chain)
 
+    def test_add_valid_tag_post_tg(self):
+        url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
+        data = {'tags_to_attach': 'sometag2', 'action': 'post_attach_tags'}
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(Tag.objects.filter(name='sometag2').exists())
+        self.assertTrue(PostTag.objects.filter(
+            post=self.post, tag=Tag.objects.get(name='sometag2')
+        ).exists())
+        self.assertContains(response, "sometag2")
+
+        self.assertIn((url, 302), response.redirect_chain)
+
     def test_invalid_tag_shows_error(self):
         url = reverse('post_editor', args=[self.post.pk])
         data = {'tags_to_attach': '!!invalidtag!!', 'action': 'post_attach_tags'}
