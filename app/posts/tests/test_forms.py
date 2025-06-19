@@ -2,12 +2,12 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
-from posts.models import Post, Tag
+from posts.models import Post, Tag, TagGroup
 
 User = get_user_model()
 
 
-class TagFormWithSocialAuthTests(TestCase):
+class PostFormTests(TestCase):
     def setUp(self):
         self.user = User.objects.create(email='form_tester@example.com')
         # Login a user with social auth
@@ -18,6 +18,8 @@ class TagFormWithSocialAuthTests(TestCase):
             title="Test forms post",
             description="Post for testing forms"
         )
+
+        self.tg = TagGroup.objects.create(name="Test forms TG")
 
     def test_add_valid_tag(self):
         url = reverse('post_editor', args=[self.post.pk])
