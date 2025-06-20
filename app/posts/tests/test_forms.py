@@ -2,9 +2,20 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
+from bs4 import BeautifulSoup
+
 from posts.models import Post, Tag, TagGroup, PostTag
 
 User = get_user_model()
+POST_TAG_LIST_ID = 'dnd-list-post'
+
+
+def assert_tag_in_list(response, tag_name, parent_id):
+    soup = BeautifulSoup(response.content, 'html.parser')
+    tag_list = soup.find('div', id=parent_id)
+    tag_divs = tag_list.find_all('div', class_="tag")
+    tag_names = [div.text.strip() for div in tag_divs]
+    return tag_name in tag_names
 
 
 class PostFormTests(TestCase):
@@ -49,7 +60,9 @@ class PostFormTests(TestCase):
             post=self.post, tag=Tag.objects.get(name='sometag2')
         ).exists())
         self.assertContains(response, "sometag2")
-
+        self.assertTrue(
+            assert_tag_in_list(response, 'sometag2', POST_TAG_LIST_ID)
+        )
         self.assertIn((url, 302), response.redirect_chain)
 
     def test_invalid_tag_shows_error(self):
@@ -63,3 +76,7 @@ class PostFormTests(TestCase):
         self.assertFalse(PostTag.objects.filter(
             post=self.post, tag=Tag.objects.filter(name='!!invalidtag!!').first()
         ).exists())
+
+        self.assertFalse(
+            assert_tag_in_list(response, '!!invalidtag!!', POST_TAG_LIST_ID)
+        )
