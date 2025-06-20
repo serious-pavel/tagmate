@@ -11,6 +11,11 @@ POST_TAG_LIST_ID = 'dnd-list-post'
 
 
 def tag_in_list(response, tag_name, parent_id):
+    """
+    Check if Tag is in the list of tags attached to the Post.
+    Tag is expected to be in the div with id = parent_id.
+    Tag is expected to be a <div class="tag"> with text = tag_name.
+    """
     soup = BeautifulSoup(response.content, 'html.parser')
     tag_list = soup.find('div', id=parent_id)
     if not tag_list:
