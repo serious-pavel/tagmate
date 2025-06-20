@@ -51,6 +51,10 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
         tags_to_attach = request.POST.get('tags_to_attach')
         if tags_to_attach:
+            if action == 'post_attach_tags':
+                request.session['submitted_input_id'] = 'post_tags_to_attach'
+            elif action == 'tg_attach_tags':
+                request.session['submitted_input_id'] = 'tg_tags_to_attach'
             tag_ids = []
             tag_names_lst = tags_to_attach.replace(",", " ").replace("#", " ").split()
             with transaction.atomic():
@@ -144,9 +148,8 @@ def post_editor(request, post_pk=None, tg_pk=None):
     context.update({
             'post_tags_to_attach': request.session.pop('post_tags_to_attach', ''),
             'tg_tags_to_attach': request.session.pop('tg_tags_to_attach', ''),
+            'submitted_input_id': request.session.pop('submitted_input_id', ''),
         })
-    # context['post_tags_to_attach'] = request.session.pop('post_tags_to_attach', '')
-    # context['tg_tags_to_attach'] = request.session.pop('tg_tags_to_attach', '')
 
     return render(
         request,
