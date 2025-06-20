@@ -8,6 +8,7 @@ from posts.models import Post, Tag, TagGroup, PostTag
 
 User = get_user_model()
 POST_TAG_LIST_ID = 'dnd-list-post'
+POST_ADD_INPUT_ID = 'post-tags-to-attach'
 
 
 def tag_in_list(response, tag_name, parent_id):
@@ -24,6 +25,15 @@ def tag_in_list(response, tag_name, parent_id):
         if div.text.strip() == tag_name:
             return True
     return False
+
+
+def input_is_prefilled(response, tag_name, input_id):
+    """
+    Returns True if the <input> with a given id is prefilled with tag_name as value.
+    """
+    soup = BeautifulSoup(response.content, 'html.parser')
+    input_field = soup.find("input", {"id": input_id})
+    return input_field is not None and input_field.get('value', '') == tag_name
 
 
 class PostFormTests(TestCase):
@@ -70,6 +80,7 @@ class PostFormTests(TestCase):
         self.assertContains(response, "sometag2")
         self.assertTrue(tag_in_list(response, 'sometag2', POST_TAG_LIST_ID))
         self.assertIn((url, 302), response.redirect_chain)
+        self.assertFalse(input_is_prefilled(response, 'sometag2', POST_ADD_INPUT_ID))
 
     def test_invalid_tag_shows_error(self):
         url = reverse('post_editor', args=[self.post.pk])
@@ -84,3 +95,7 @@ class PostFormTests(TestCase):
         ).exists())
 
         self.assertFalse(tag_in_list(response, '!!invalidtag!!', POST_TAG_LIST_ID))
+        self.assertTrue(
+            input_is_prefilled(response, '!!invalidtag!!', POST_ADD_INPUT_ID)
+        )
+
