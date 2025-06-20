@@ -98,4 +98,3 @@ class PostFormTests(TestCase):
         self.assertTrue(
             input_is_prefilled(response, '!!invalidtag!!', POST_ADD_INPUT_ID)
         )
-
