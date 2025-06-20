@@ -52,9 +52,9 @@ def post_editor(request, post_pk=None, tg_pk=None):
         tags_to_attach = request.POST.get('tags_to_attach')
         if tags_to_attach:
             if action == 'post_attach_tags':
-                request.session['submitted_input_id'] = 'post_tags_to_attach'
+                request.session['submitted_input_id'] = 'post-tags-to-attach'
             elif action == 'tg_attach_tags':
-                request.session['submitted_input_id'] = 'tg_tags_to_attach'
+                request.session['submitted_input_id'] = 'tg-tags-to-attach'
             tag_ids = []
             tag_names_lst = tags_to_attach.replace(",", " ").replace("#", " ").split()
             with transaction.atomic():

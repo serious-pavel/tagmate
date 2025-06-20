@@ -124,7 +124,7 @@
                     {% csrf_token %}
                     <label>
                         <input type="hidden" name="action" value="post_attach_tags">
-                        <input type="text" name="tags_to_attach" id="post_tags_to_attach"
+                        <input type="text" name="tags_to_attach" id="post-tags-to-attach"
                                placeholder="Add tags (comma, hashtag or space separated)"
                                value="{{ post_tags_to_attach }}"
                                {% if submitted_input_id == "post_tags_to_attach" %}autofocus{% endif %}
@@ -183,7 +183,7 @@
                     {% csrf_token %}
                     <label>
                         <input type="hidden" name="action" value="tg_attach_tags">
-                        <input type="text" name="tags_to_attach" id="tg_tags_to_attach"
+                        <input type="text" name="tags_to_attach" id="tg-tags-to-attach"
                                placeholder="Add tags (comma, hashtag or space separated)"
                                value="{{ tg_tags_to_attach }}"
                                {% if submitted_input_id == "tg_tags_to_attach" %}autofocus{% endif %}
