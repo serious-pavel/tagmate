@@ -62,9 +62,16 @@ class TagFormsTests(TestCase):
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Tag.objects.filter(name=tag_name).exists())
-        self.assertTrue(PostTag.objects.filter(
-            post=self.post, tag=Tag.objects.get(name=tag_name)
-        ).exists())
+
+        if action == 'post_attach_tags':
+            self.assertTrue(
+                Tag.objects.filter(name=tag_name, posts__title=self.post.title).exists()
+            )
+        elif action == 'tg_attach_tags':
+            self.assertTrue(
+                Tag.objects.filter(name=tag_name, tg__name=self.tg.name).exists()
+            )
+
         self.assertNotContains(response, "Hashtags may only contain ")
         self.assertTrue(tag_in_list(response, tag_name, tag_list_id))
         self.assertFalse(input_is_prefilled(response, tag_name, input_id))
@@ -82,9 +89,6 @@ class TagFormsTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Hashtags may only contain ")
         self.assertFalse(Tag.objects.filter(name=tag_name).exists())
-        self.assertFalse(PostTag.objects.filter(
-            post=self.post, tag=Tag.objects.filter(name=tag_name).first()
-        ).exists())
         self.assertFalse(tag_in_list(response, tag_name, tag_list_id))
 
         self.assertTrue(input_is_prefilled(response, tag_name, input_id))
