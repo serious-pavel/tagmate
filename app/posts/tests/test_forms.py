@@ -53,6 +53,21 @@ class PostFormTests(TestCase):
             name="Test forms TG",
         )
 
+    def assert_invalid_tag_add(self, url, tag_name, action, tag_list_id, input_id):
+        """
+        Helper for asserting invalid tag add scenario.
+        """
+        data = {'tags_to_attach': tag_name, 'action': action}
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Hashtags may only contain ")
+        self.assertFalse(Tag.objects.filter(name=tag_name).exists())
+        self.assertFalse(PostTag.objects.filter(
+            post=self.post, tag=Tag.objects.filter(name=tag_name).first()
+        ).exists())
+        self.assertFalse(tag_in_list(response, tag_name, tag_list_id))
+        self.assertTrue(input_is_prefilled(response, tag_name, input_id))
+
     def test_add_valid_tag_post(self):
         """
         Test adding a valid tag to a post on a page with only post chosen.
@@ -96,19 +111,10 @@ class PostFormTests(TestCase):
         Link: /post/<post_pk>
         """
         url = reverse('post_editor', args=[self.post.pk])
-        data = {'tags_to_attach': '!!invalidtag!!', 'action': 'post_attach_tags'}
-        response = self.client.post(url, data, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Hashtags may only contain ")
-        self.assertFalse(Tag.objects.filter(name='!!invalidtag!!').exists())
 
-        self.assertFalse(PostTag.objects.filter(
-            post=self.post, tag=Tag.objects.filter(name='!!invalidtag!!').first()
-        ).exists())
-
-        self.assertFalse(tag_in_list(response, '!!invalidtag!!', POST_TAG_LIST_ID))
-        self.assertTrue(
-            input_is_prefilled(response, '!!invalidtag!!', POST_ADD_INPUT_ID)
+        self.assert_invalid_tag_add(
+            url, '!!invalidtag!!', 'post_attach_tags',
+            POST_TAG_LIST_ID, POST_ADD_INPUT_ID
         )
 
     def test_add_invalid_tag_post_tg(self):
@@ -117,17 +123,8 @@ class PostFormTests(TestCase):
         Link: /post/<post_pk>/tg/<tg_pk>
         """
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
-        data = {'tags_to_attach': '!!invalidtag2!!', 'action': 'post_attach_tags'}
-        response = self.client.post(url, data, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Hashtags may only contain ")
-        self.assertFalse(Tag.objects.filter(name='!!invalidtag2!!').exists())
 
-        self.assertFalse(PostTag.objects.filter(
-            post=self.post, tag=Tag.objects.filter(name='!!invalidtag2!!').first()
-        ).exists())
-
-        self.assertFalse(tag_in_list(response, '!!invalidtag2!!', POST_TAG_LIST_ID))
-        self.assertTrue(
-            input_is_prefilled(response, '!!invalidtag2!!', POST_ADD_INPUT_ID)
+        self.assert_invalid_tag_add(
+            url, '!!invalidtag2!!', 'post_attach_tags',
+            POST_TAG_LIST_ID, POST_ADD_INPUT_ID
         )
