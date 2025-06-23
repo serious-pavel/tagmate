@@ -36,7 +36,7 @@ def input_is_prefilled(response, tag_name, input_id):
     return input_field is not None and input_field.get('value', '') == tag_name
 
 
-class PostFormTests(TestCase):
+class TagFormsTests(TestCase):
     def setUp(self):
         self.user = User.objects.create(email='form_tester@example.com')
         # Login a user with social auth
@@ -87,7 +87,7 @@ class PostFormTests(TestCase):
         self.assertFalse(tag_in_list(response, tag_name, tag_list_id))
         self.assertTrue(input_is_prefilled(response, tag_name, input_id))
 
-    def test_add_valid_tag_post(self):
+    def test_post_add_valid_tag_on_post_page(self):
         """
         Test adding a valid tag to a post on a page with only post chosen.
         Link: /post/<post_pk>
@@ -98,7 +98,7 @@ class PostFormTests(TestCase):
             url, 'sometag', 'post_attach_tags', POST_TAG_LIST_ID, POST_ADD_INPUT_ID
         )
 
-    def test_add_valid_tag_post_tg(self):
+    def test_post_add_valid_tag_on_post_tg_page(self):
         """
         Test adding a valid tag to a post on a page with post and TG chosen.
         Link: /post/<post_pk>/tg/<tg_pk>
@@ -109,7 +109,7 @@ class PostFormTests(TestCase):
             url, 'sometag2', 'post_attach_tags', POST_TAG_LIST_ID, POST_ADD_INPUT_ID
         )
 
-    def test_add_invalid_tag_post(self):
+    def test_post_add_invalid_tag_on_post_page(self):
         """
         Test adding an invalid tag to a post on a page with only post chosen.
         Link: /post/<post_pk>
@@ -121,7 +121,7 @@ class PostFormTests(TestCase):
             POST_TAG_LIST_ID, POST_ADD_INPUT_ID
         )
 
-    def test_add_invalid_tag_post_tg(self):
+    def test_post_add_invalid_tag_on_post_tg_page(self):
         """
         Test adding an invalid tag to a post on a page with post and TG chosen.
         Link: /post/<post_pk>/tg/<tg_pk>
