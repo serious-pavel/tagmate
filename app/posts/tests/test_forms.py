@@ -9,6 +9,7 @@ from posts.models import Post, Tag, TagGroup, PostTag
 User = get_user_model()
 POST_TAG_LIST_ID = 'dnd-list-post'
 POST_ADD_INPUT_ID = 'post-tags-to-attach'
+TG_ADD_INPUT_ID = 'tg-tags-to-attach'
 
 
 def tag_in_list(response, tag_name, parent_id):
@@ -85,7 +86,16 @@ class TagFormsTests(TestCase):
             post=self.post, tag=Tag.objects.filter(name=tag_name).first()
         ).exists())
         self.assertFalse(tag_in_list(response, tag_name, tag_list_id))
+
         self.assertTrue(input_is_prefilled(response, tag_name, input_id))
+
+        # Input for another "Add Tags" field shouldn't be prefilled
+        if input_id == POST_ADD_INPUT_ID:
+            opposite_input_id = TG_ADD_INPUT_ID
+        else:
+            opposite_input_id = POST_ADD_INPUT_ID
+
+        self.assertFalse(input_is_prefilled(response, tag_name, opposite_input_id))
 
     def test_post_add_valid_tag_on_post_page(self):
         """
