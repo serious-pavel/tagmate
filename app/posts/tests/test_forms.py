@@ -53,7 +53,11 @@ class PostFormTests(TestCase):
             name="Test forms TG",
         )
 
-    def test_add_valid_tag_only_post(self):
+    def test_add_valid_tag_post(self):
+        """
+        Test adding a valid tag to a post on a page with only post chosen.
+        Link: /post/<post_pk>
+        """
         url = reverse('post_editor', args=[self.post.pk])
         data = {'tags_to_attach': 'sometag', 'action': 'post_attach_tags'}
         response = self.client.post(url, data, follow=True)
@@ -69,6 +73,10 @@ class PostFormTests(TestCase):
         self.assertIn((url, 302), response.redirect_chain)
 
     def test_add_valid_tag_post_tg(self):
+        """
+        Test adding a valid tag to a post on a page with post and TG chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
+        """
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
         data = {'tags_to_attach': 'sometag2', 'action': 'post_attach_tags'}
         response = self.client.post(url, data, follow=True)
@@ -82,7 +90,11 @@ class PostFormTests(TestCase):
         self.assertIn((url, 302), response.redirect_chain)
         self.assertFalse(input_is_prefilled(response, 'sometag2', POST_ADD_INPUT_ID))
 
-    def test_invalid_tag_shows_error(self):
+    def test_add_invalid_tag_post(self):
+        """
+        Test adding an invalid tag to a post on a page with only post chosen.
+        Link: /post/<post_pk>
+        """
         url = reverse('post_editor', args=[self.post.pk])
         data = {'tags_to_attach': '!!invalidtag!!', 'action': 'post_attach_tags'}
         response = self.client.post(url, data, follow=True)
