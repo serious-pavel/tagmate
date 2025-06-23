@@ -110,3 +110,24 @@ class PostFormTests(TestCase):
         self.assertTrue(
             input_is_prefilled(response, '!!invalidtag!!', POST_ADD_INPUT_ID)
         )
+
+    def test_add_invalid_tag_post_tg(self):
+        """
+        Test adding an invalid tag to a post on a page with post and TG chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
+        """
+        url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
+        data = {'tags_to_attach': '!!invalidtag2!!', 'action': 'post_attach_tags'}
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Hashtags may only contain ")
+        self.assertFalse(Tag.objects.filter(name='!!invalidtag2!!').exists())
+
+        self.assertFalse(PostTag.objects.filter(
+            post=self.post, tag=Tag.objects.filter(name='!!invalidtag2!!').first()
+        ).exists())
+
+        self.assertFalse(tag_in_list(response, '!!invalidtag2!!', POST_TAG_LIST_ID))
+        self.assertTrue(
+            input_is_prefilled(response, '!!invalidtag2!!', POST_ADD_INPUT_ID)
+        )
