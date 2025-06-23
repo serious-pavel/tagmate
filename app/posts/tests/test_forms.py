@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 from bs4 import BeautifulSoup
 
-from posts.models import Post, Tag, TagGroup, PostTag
+from posts.models import Post, Tag, TagGroup
 
 User = get_user_model()
 POST_TAG_LIST_ID = 'dnd-list-post'
