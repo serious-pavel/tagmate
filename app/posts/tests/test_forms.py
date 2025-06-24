@@ -102,7 +102,7 @@ class TagFormsTests(TestCase):
         # redirect_chain contains tuples of (url, status_code)
         self.assertIn((url, 302), response.redirect_chain)
 
-    def assert_invalid_tag_add(self, url, tag_name, action, tag_list_id, input_id):
+    def assert_invalid_tag_add(self, url, tag_name, action, tag_list_id, main_input_id):
         """
         Helper for asserting invalid tag add scenario.
         """
@@ -113,15 +113,15 @@ class TagFormsTests(TestCase):
         self.assertFalse(Tag.objects.filter(name=tag_name).exists())
         assert_tag_not_in_list(response, tag_name, tag_list_id)
 
-        self.assertTrue(input_is_prefilled(response, tag_name, input_id))
+        self.assertTrue(input_is_prefilled(response, tag_name, main_input_id))
 
         # Input for another "Add Tags" field shouldn't be prefilled
-        if input_id == POST_ADD_INPUT_ID:
-            opposite_input_id = TG_ADD_INPUT_ID
+        if main_input_id == POST_ADD_INPUT_ID:
+            other_input_id = TG_ADD_INPUT_ID
         else:
-            opposite_input_id = POST_ADD_INPUT_ID
+            other_input_id = POST_ADD_INPUT_ID
 
-        self.assertFalse(input_is_prefilled(response, tag_name, opposite_input_id))
+        self.assertFalse(input_is_prefilled(response, tag_name, other_input_id))
 
     def assert_tag_detach(self, url, tag_id, action):
         """
