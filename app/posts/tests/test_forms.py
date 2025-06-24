@@ -109,6 +109,34 @@ class TagFormsTests(TestCase):
 
         self.assertFalse(input_is_prefilled(response, tag_name, opposite_input_id))
 
+    def assert_tag_detach(self, url, tag_id, action, tag_list_id):
+        """
+        Helper for asserting Tag detaching scenario.
+        """
+        response_init = self.client.get(url, follow=True)
+        self.assertEqual(response_init.status_code, 200)
+        self.assertTrue(tag_in_list(response_init, tag_id, tag_list_id))
+
+        # Detaching a Tag from one list shouldn't affect another list with Tags
+        if tag_list_id == POST_TAG_LIST_ID:
+            opposite_tag_list_id = TG_TAG_LIST_ID
+        else:
+            opposite_tag_list_id = POST_TAG_LIST_ID
+
+        opposite_tag_state = tag_in_list(response_init, tag_id, opposite_tag_list_id)
+
+        data = {'tag_to_detach': tag_id, 'action': action}
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(Tag.objects.filter(pk=tag_id).exists())
+
+        self.assertFalse(tag_in_list(response, tag_id, tag_list_id))
+        self.assertEqual(
+            opposite_tag_state, tag_in_list(response, tag_id, opposite_tag_list_id)
+        )
+
+        self.assertIn((url, 302), response.redirect_chain)
+
     def test_post_add_valid_tag_on_post_page(self):
         """
         Test adding a valid tag to a post on a page with only post chosen.
