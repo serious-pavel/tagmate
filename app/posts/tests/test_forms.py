@@ -70,7 +70,7 @@ class TagFormsTests(TestCase):
             )
         elif action == 'tg_attach_tags':
             self.assertTrue(
-                Tag.objects.filter(name=tag_name, tg__name=self.tg.name).exists()
+                Tag.objects.filter(name=tag_name, tag_groups__name=self.tg.name).exists()
             )
 
         self.assertNotContains(response, "Hashtags may only contain ")
