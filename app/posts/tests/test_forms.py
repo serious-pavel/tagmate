@@ -232,7 +232,7 @@ class TagFormsTests(TestCase):
 
     def test_post_detach_tag_attached_post_page(self):
         """
-        Test detaching a Tag attached to a Post only.
+        Test detaching a Tag attached to a Post on a page with only Post chosen.
         Link: /post/<post_pk>
         """
 
