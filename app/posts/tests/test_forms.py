@@ -247,7 +247,7 @@ class TagFormsTests(TestCase):
             url, '!!invalidtag4!!', 'tg_attach_tags', TG_TAG_LIST_ID, TG_ADD_INPUT_ID
         )
 
-    def test_post_detach_tag_attached_post_page(self):
+    def test_post_detach_tag_on_post_page(self):
         """
         Test detaching a Tag attached to a Post on a page with only Post chosen.
         Link: /post/<post_pk>
@@ -257,9 +257,9 @@ class TagFormsTests(TestCase):
         self.assert_tag_detach(url, self.tag_in_post.id, 'post_detach_tag')
         self.assert_tag_detach(url, self.tag_in_both.id, 'post_detach_tag')
 
-    def test_post_detach_tag_attached_post_tg_page(self):
+    def test_post_detach_tag_on_post_tg_page(self):
         """
-        Test detaching a Tag attached to a Post on a page with only Post chosen.
+        Test detaching a Tag attached to a Post on a page with Post and TG chosen.
         Link: /post/<post_pk>/tg/<tg_pk>
         """
 
@@ -267,18 +267,20 @@ class TagFormsTests(TestCase):
         self.assert_tag_detach(url, self.tag_in_post.id, 'post_detach_tag')
         self.assert_tag_detach(url, self.tag_in_both.id, 'post_detach_tag')
 
-    def test_tg_detach_tag_tg_page(self):
+    def test_tg_detach_tag_on_tg_page(self):
         """
         Test detaching a Tag attached to a TagGroup on a page with only TG chosen.
+        Link: /post/<post_pk>
         """
 
         url = reverse('tg_editor', args=[self.tg.pk])
         self.assert_tag_detach(url, self.tag_in_tg.id, 'tg_detach_tag')
         self.assert_tag_detach(url, self.tag_in_both.id, 'tg_detach_tag')
 
-    def test_tg_detach_tag_post_tg_page(self):
+    def test_tg_detach_tag_on_post_tg_page(self):
         """
         Test detaching a Tag attached to a TagGroup on a page with Post and TG chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
         """
 
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
