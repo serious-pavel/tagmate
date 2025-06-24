@@ -109,19 +109,20 @@ class TagFormsTests(TestCase):
 
         self.assertFalse(input_is_prefilled(response, tag_name, opposite_input_id))
 
-    def assert_tag_detach(self, url, tag_id, action, tag_list_id):
+    def assert_tag_detach(self, url, tag_id, action):
         """
         Helper for asserting Tag detaching scenario.
         """
+        if action == 'post_detach_tag':
+            tag_list_id = POST_TAG_LIST_ID
+            opposite_tag_list_id = TG_TAG_LIST_ID
+        else:
+            tag_list_id = TG_TAG_LIST_ID
+            opposite_tag_list_id = POST_TAG_LIST_ID
+
         response_init = self.client.get(url, follow=True)
         self.assertEqual(response_init.status_code, 200)
         self.assertTrue(tag_in_list(response_init, tag_id, tag_list_id))
-
-        # Detaching a Tag from one list shouldn't affect another list with Tags
-        if tag_list_id == POST_TAG_LIST_ID:
-            opposite_tag_list_id = TG_TAG_LIST_ID
-        else:
-            opposite_tag_list_id = POST_TAG_LIST_ID
 
         opposite_tag_state = tag_in_list(response_init, tag_id, opposite_tag_list_id)
 
@@ -131,6 +132,7 @@ class TagFormsTests(TestCase):
         self.assertTrue(Tag.objects.filter(pk=tag_id).exists())
 
         self.assertFalse(tag_in_list(response, tag_id, tag_list_id))
+        # Detaching a Tag from one list shouldn't affect another list with Tags
         self.assertEqual(
             opposite_tag_state, tag_in_list(response, tag_id, opposite_tag_list_id)
         )
