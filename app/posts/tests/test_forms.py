@@ -13,58 +13,33 @@ TG_TAG_LIST_ID = 'dnd-list-tg'
 TG_ADD_INPUT_ID = 'tg-tags-to-attach'
 
 
-def tag_in_list(response, tag_name, parent_id):
+def get_tag_list(response, parent_id):
     """
-    Check if Tag is in the list of tags attached to the Post.
-    Tag is expected to be in the div with id = parent_id.
-    Tag is expected to be a <div class="tag"> with text = tag_name.
+    Return a list of tag names (stripped) inside a div with the given id in the response.
+    Returns [] if container is missing.
     """
     soup = BeautifulSoup(response.content, 'html.parser')
     tag_list = soup.find('div', id=parent_id)
     if not tag_list:
-        return False
-    for div in tag_list.find_all('div', class_="tag"):
-        if div.text.strip() == tag_name:
-            return True
-    return False
+        return []
+    return [div.text.strip() for div in tag_list.find_all('div', class_="tag")]
 
 
 def assert_tag_in_list(response, tag_name, parent_id):
-    """
-    Assert that a Tag with tag_name exists in a div with id=parent_id in the response.
-    Raise AssertionError with a descriptive message if not found.
-    """
-    soup = BeautifulSoup(response.content, 'html.parser')
-    tag_list = soup.find('div', id=parent_id)
-    if not tag_list:
-        raise AssertionError(
-            f"Could not find tag list div with id '{parent_id}' in the response."
-        )
-    tag_divs = [div.text.strip() for div in tag_list.find_all('div', class_="tag")]
+    tag_divs = get_tag_list(response, parent_id)
     if tag_name not in tag_divs:
         raise AssertionError(
-            f"Tag '{tag_name}' was not found in <div id='{parent_id}'>. "
-            f"Available tags: {tag_divs if tag_divs else '[none]'}"
+            f"Expected tag '{tag_name}' in <div id='{parent_id}'>, "
+            f"but only found: {tag_divs if tag_divs else '[none]'}"
         )
 
 
-def assert_tag_not_in_list(response, tag_name, parent_id, msg=None):
-    """
-    Assert that a tag with the given name **is NOT present** in the list rendered in
-    the div with id=parent_id.
-    """
-    soup = BeautifulSoup(response.content, 'html.parser')
-    tag_list = soup.find('div', id=parent_id)
-    if not tag_list:
-        # If the tag list doesn't even exist, then the tag is definitely not present.
-        return
-    tag_divs = [div.text.strip() for div in tag_list.find_all('div', class_="tag")]
+def assert_tag_not_in_list(response, tag_name, parent_id):
+    tag_divs = get_tag_list(response, parent_id)
     if tag_name in tag_divs:
         raise AssertionError(
-            msg or (
-                f"Did NOT expect tag '{tag_name}' in <div id='{parent_id}'>, "
-                f"but found these tags: {tag_divs}"
-            )
+            f"Did NOT expect tag '{tag_name}' in <div id='{parent_id}'>, "
+            f"but found these tags: {tag_divs}"
         )
 
 
@@ -154,27 +129,30 @@ class TagFormsTests(TestCase):
         """
         tag_name = Tag.objects.get(pk=tag_id).name
         if action == 'post_detach_tag':
-            tag_list_id = POST_TAG_LIST_ID
-            opposite_tag_list_id = TG_TAG_LIST_ID
+            main_tag_list_id = POST_TAG_LIST_ID
+            other_tag_list_id = TG_TAG_LIST_ID
         else:
-            tag_list_id = TG_TAG_LIST_ID
-            opposite_tag_list_id = POST_TAG_LIST_ID
+            main_tag_list_id = TG_TAG_LIST_ID
+            other_tag_list_id = POST_TAG_LIST_ID
 
         response_init = self.client.get(url, follow=True)
         self.assertEqual(response_init.status_code, 200)
-        assert_tag_in_list(response_init, tag_name, tag_list_id)
+        assert_tag_in_list(response_init, tag_name, main_tag_list_id)
 
-        opposite_tag_state = tag_in_list(response_init, tag_name, opposite_tag_list_id)
+        other_tag_list_before = get_tag_list(response_init, other_tag_list_id)
+        other_tag_state_before = tag_name in other_tag_list_before
 
         data = {'tag_to_detach': tag_id, 'action': action}
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Tag.objects.filter(pk=tag_id).exists())
 
-        assert_tag_not_in_list(response, tag_name, tag_list_id)
+        assert_tag_not_in_list(response, tag_name, main_tag_list_id)
         # Detaching a Tag from one list shouldn't affect another list with Tags
+        other_tag_list_after = get_tag_list(response, other_tag_list_id)
+        other_tag_state_after = tag_name in other_tag_list_after
         self.assertEqual(
-            opposite_tag_state, tag_in_list(response, tag_name, opposite_tag_list_id)
+            other_tag_state_before, other_tag_state_after
         )
 
         self.assertIn((url, 302), response.redirect_chain)
