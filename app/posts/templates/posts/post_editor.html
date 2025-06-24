@@ -192,7 +192,7 @@
                     <button type="submit">Add Tag(s) to TagGroup</button>
                 </form>
 
-                <div class="tag-list">
+                <div id="dnd-list-tg" class="tag-list">
                     {% for tg_tag in current_tg.tags.all %}
                         <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
                             <form method="post">

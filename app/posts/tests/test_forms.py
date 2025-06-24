@@ -9,6 +9,7 @@ from posts.models import Post, Tag, TagGroup
 User = get_user_model()
 POST_TAG_LIST_ID = 'dnd-list-post'
 POST_ADD_INPUT_ID = 'post-tags-to-attach'
+TG_TAG_LIST_ID = 'dnd-list-tg'
 TG_ADD_INPUT_ID = 'tg-tags-to-attach'
 
 
