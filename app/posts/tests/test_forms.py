@@ -29,6 +29,45 @@ def tag_in_list(response, tag_name, parent_id):
     return False
 
 
+def assert_tag_in_list(response, tag_name, parent_id):
+    """
+    Assert that a Tag with tag_name exists in a div with id=parent_id in the response.
+    Raise AssertionError with a descriptive message if not found.
+    """
+    soup = BeautifulSoup(response.content, 'html.parser')
+    tag_list = soup.find('div', id=parent_id)
+    if not tag_list:
+        raise AssertionError(
+            f"Could not find tag list div with id '{parent_id}' in the response."
+        )
+    tag_divs = [div.text.strip() for div in tag_list.find_all('div', class_="tag")]
+    if tag_name not in tag_divs:
+        raise AssertionError(
+            f"Tag '{tag_name}' was not found in <div id='{parent_id}'>. "
+            f"Available tags: {tag_divs if tag_divs else '[none]'}"
+        )
+
+
+def assert_tag_not_in_list(response, tag_name, parent_id, msg=None):
+    """
+    Assert that a tag with the given name **is NOT present** in the list rendered in
+    the div with id=parent_id.
+    """
+    soup = BeautifulSoup(response.content, 'html.parser')
+    tag_list = soup.find('div', id=parent_id)
+    if not tag_list:
+        # If the tag list doesn't even exist, then the tag is definitely not present.
+        return
+    tag_divs = [div.text.strip() for div in tag_list.find_all('div', class_="tag")]
+    if tag_name in tag_divs:
+        raise AssertionError(
+            msg or (
+                f"Did NOT expect tag '{tag_name}' in <div id='{parent_id}'>, "
+                f"but found these tags: {tag_divs}"
+            )
+        )
+
+
 def input_is_prefilled(response, tag_name, input_id):
     """
     Returns True if the <input> with a given id is prefilled with tag_name as value.
@@ -81,7 +120,7 @@ class TagFormsTests(TestCase):
             )
 
         self.assertNotContains(response, "Hashtags may only contain ")
-        self.assertTrue(tag_in_list(response, tag_name, tag_list_id))
+        assert_tag_in_list(response, tag_name, tag_list_id)
         self.assertFalse(input_is_prefilled(response, tag_name, input_id))
 
         # Check client redirected to the same page
@@ -97,7 +136,7 @@ class TagFormsTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Hashtags may only contain ")
         self.assertFalse(Tag.objects.filter(name=tag_name).exists())
-        self.assertFalse(tag_in_list(response, tag_name, tag_list_id))
+        assert_tag_not_in_list(response, tag_name, tag_list_id)
 
         self.assertTrue(input_is_prefilled(response, tag_name, input_id))
 
@@ -123,7 +162,7 @@ class TagFormsTests(TestCase):
 
         response_init = self.client.get(url, follow=True)
         self.assertEqual(response_init.status_code, 200)
-        self.assertTrue(tag_in_list(response_init, tag_name, tag_list_id))
+        assert_tag_in_list(response_init, tag_name, tag_list_id)
 
         opposite_tag_state = tag_in_list(response_init, tag_name, opposite_tag_list_id)
 
@@ -132,7 +171,7 @@ class TagFormsTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Tag.objects.filter(pk=tag_id).exists())
 
-        self.assertFalse(tag_in_list(response, tag_name, tag_list_id))
+        assert_tag_not_in_list(response, tag_name, tag_list_id)
         # Detaching a Tag from one list shouldn't affect another list with Tags
         self.assertEqual(
             opposite_tag_state, tag_in_list(response, tag_name, opposite_tag_list_id)
