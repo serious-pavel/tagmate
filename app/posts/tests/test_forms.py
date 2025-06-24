@@ -239,3 +239,13 @@ class TagFormsTests(TestCase):
         url = reverse('post_editor', args=[self.post.pk])
         self.assert_tag_detach(url, self.tag_in_post.id, 'post_detach_tag')
         self.assert_tag_detach(url, self.tag_in_both.id, 'post_detach_tag')
+
+    def test_post_detach_tag_attached_post_tg_page(self):
+        """
+        Test detaching a Tag attached to a Post on a page with only Post chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
+        """
+
+        url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
+        self.assert_tag_detach(url, self.tag_in_post.id, 'post_detach_tag')
+        self.assert_tag_detach(url, self.tag_in_both.id, 'post_detach_tag')
