@@ -230,7 +230,7 @@ class TagFormsTests(TestCase):
             url, '!!invalidtag4!!', 'tg_attach_tags', TG_TAG_LIST_ID, TG_ADD_INPUT_ID
         )
 
-    def test_post_detach_tag_attached_to_post_only(self):
+    def test_post_detach_tag_attached_post_page(self):
         """
         Test detaching a Tag attached to a Post only.
         Link: /post/<post_pk>
@@ -238,3 +238,4 @@ class TagFormsTests(TestCase):
 
         url = reverse('post_editor', args=[self.post.pk])
         self.assert_tag_detach(url, self.tag_in_post.id, 'post_detach_tag')
+        self.assert_tag_detach(url, self.tag_in_both.id, 'post_detach_tag')
