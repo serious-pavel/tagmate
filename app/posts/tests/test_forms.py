@@ -169,3 +169,25 @@ class TagFormsTests(TestCase):
         self.assert_valid_tag_add(
             url, 'sometag4', 'tg_attach_tags', TG_TAG_LIST_ID, TG_ADD_INPUT_ID
         )
+
+    def test_tg_add_invalid_tag_on_tg_page(self):
+        """
+        Test adding a valid tag to a TagGroup on a page with only Post chosen.
+        Link: /tg/<tg_pk>
+        """
+        url = reverse('tg_editor', args=[self.tg.pk])
+
+        self.assert_invalid_tag_add(
+            url, '!!invalidtag3!!', 'tg_attach_tags', TG_TAG_LIST_ID, TG_ADD_INPUT_ID
+        )
+
+    def test_tg_add_invalid_tag_on_post_tg_page(self):
+        """
+        Test adding a valid tag to a TagGroup on a page with Post and TG chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
+        """
+        url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
+
+        self.assert_invalid_tag_add(
+            url, '!!invalidtag4!!', 'tg_attach_tags', TG_TAG_LIST_ID, TG_ADD_INPUT_ID
+        )
