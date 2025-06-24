@@ -113,6 +113,7 @@ class TagFormsTests(TestCase):
         """
         Helper for asserting Tag detaching scenario.
         """
+        tag_name = Tag.objects.get(pk=tag_id).name
         if action == 'post_detach_tag':
             tag_list_id = POST_TAG_LIST_ID
             opposite_tag_list_id = TG_TAG_LIST_ID
@@ -122,19 +123,19 @@ class TagFormsTests(TestCase):
 
         response_init = self.client.get(url, follow=True)
         self.assertEqual(response_init.status_code, 200)
-        self.assertTrue(tag_in_list(response_init, tag_id, tag_list_id))
+        self.assertTrue(tag_in_list(response_init, tag_name, tag_list_id))
 
-        opposite_tag_state = tag_in_list(response_init, tag_id, opposite_tag_list_id)
+        opposite_tag_state = tag_in_list(response_init, tag_name, opposite_tag_list_id)
 
         data = {'tag_to_detach': tag_id, 'action': action}
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Tag.objects.filter(pk=tag_id).exists())
 
-        self.assertFalse(tag_in_list(response, tag_id, tag_list_id))
+        self.assertFalse(tag_in_list(response, tag_name, tag_list_id))
         # Detaching a Tag from one list shouldn't affect another list with Tags
         self.assertEqual(
-            opposite_tag_state, tag_in_list(response, tag_id, opposite_tag_list_id)
+            opposite_tag_state, tag_in_list(response, tag_name, opposite_tag_list_id)
         )
 
         self.assertIn((url, 302), response.redirect_chain)
