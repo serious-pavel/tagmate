@@ -275,3 +275,12 @@ class TagFormsTests(TestCase):
         url = reverse('tg_editor', args=[self.tg.pk])
         self.assert_tag_detach(url, self.tag_in_tg.id, 'tg_detach_tag')
         self.assert_tag_detach(url, self.tag_in_both.id, 'tg_detach_tag')
+
+    def test_tg_detach_tag_post_tg_page(self):
+        """
+        Test detaching a Tag attached to a TagGroup on a page with Post and TG chosen.
+        """
+
+        url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
+        self.assert_tag_detach(url, self.tag_in_tg.id, 'tg_detach_tag')
+        self.assert_tag_detach(url, self.tag_in_both.id, 'tg_detach_tag')
