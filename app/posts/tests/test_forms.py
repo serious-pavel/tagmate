@@ -74,7 +74,7 @@ class TagFormsTests(TestCase):
         self.tag_in_both = Tag.objects.create(name="attached_to_both")
 
         self.post.update_tags([self.tag_in_post.id, self.tag_in_both.id])
-        self.tg.tags.add(self.tag_in_tg.id)
+        self.tg.tags.add(self.tag_in_tg.id, self.tag_in_both.id)
 
     def assert_valid_tag_add(self, url, tag_name, action, tag_list_id, input_id):
         """
