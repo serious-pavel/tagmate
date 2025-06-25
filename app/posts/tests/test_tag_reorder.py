@@ -25,6 +25,8 @@ class TestTagReorderUI(StaticLiveServerTestCase):
 
         import os
         print("Can write to /tmp:", os.access("/tmp", os.W_OK))
+        print("Listing /tmp contents:", os.listdir("/tmp"))
+        print("Permissions for /tmp:", oct(os.stat("/tmp").st_mode))
 
         # Authenticate user and get sessionid (using Django test client)
         client = Client()
