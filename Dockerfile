@@ -22,14 +22,12 @@ RUN python -m venv /py && \
     if [ $DEV = "true" ] ; \
       then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi && \
-    rm -rf /tmp/* && \
     apk del .tmp-build-deps && \
+    chmod 1777 /tmp && \
     adduser \
         --disabled-password \
         --no-create-home \
-        django-user && \
-    ls -ld /tmp && \
-    touch /tmp/mytestfile
+        django-user
 
 ENV PATH="/py/bin:$PATH"
 
