@@ -82,14 +82,20 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             tag_a = tags[0]
             tag_b = tags[1]
 
-            # Use ActionChains for drag-and-drop (might require tweaking offsets based on Sortable.js)
+            # Use ActionChains for drag-and-drop
+            # (might require tweaking offsets based on Sortable.js)
             actions = ActionChains(driver)
-            actions.click_and_hold(tag_b).move_to_element(tag_a).move_by_offset(0, -10).release().perform()
+            actions.click_and_hold(tag_b).move_to_element(tag_a).move_by_offset(
+                0, -10).release().perform()
 
             # Wait for AJAX/UI update to finish (time/detector may be improved)
             for _ in range(30):
                 new_tags = driver.find_elements(By.CSS_SELECTOR, "#dnd-list-post .tag")
-                if new_tags[0].text.strip().startswith("tag_b") and new_tags[1].text.strip().startswith("tag_a"):
+                if (
+                    new_tags[0].text.strip().startswith("tag_b")
+                    and
+                    new_tags[1].text.strip().startswith("tag_a")
+                ):
                     break
                 time.sleep(0.2)
             else:
@@ -102,4 +108,3 @@ class TestTagReorderUI(StaticLiveServerTestCase):
 
         finally:
             driver.quit()
-
