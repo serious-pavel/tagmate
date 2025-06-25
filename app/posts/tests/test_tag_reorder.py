@@ -113,4 +113,6 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             assert new_preview_text == "#tag_b #tag_a"
 
         finally:
+            time.sleep(1)
             driver.quit()
+            time.sleep(1)
