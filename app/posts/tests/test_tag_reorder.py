@@ -74,6 +74,10 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             assert tags[0].text.strip().startswith("tag_a")
             assert tags[1].text.strip().startswith("tag_b")
 
+            preview_div = driver.find_element(By.ID, "post-preview-tags")
+            preview_text = preview_div.text.strip()
+            assert preview_text == "#tag_a #tag_b"
+
             # Drag tag2 (B) above tag1 (A)
             tag_a = tags[0]
             tag_b = tags[1]
@@ -91,9 +95,10 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             else:
                 pytest.fail("Tags reorder was not reflected in the block")
 
-            # Sanity: block now shows B, then A
-            assert new_tags[0].text.strip().startswith("tag_b")
-            assert new_tags[1].text.strip().startswith("tag_a")
+            # After successful drag-and-drop and order verification:
+            new_preview_div = driver.find_element(By.ID, "post-preview-tags")
+            new_preview_text = new_preview_div.text.strip()
+            assert new_preview_text == "#tag_b #tag_a"
 
         finally:
             driver.quit()
