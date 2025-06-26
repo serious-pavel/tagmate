@@ -1,4 +1,3 @@
-import tempfile
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -35,19 +34,17 @@ class TestTagReorderUI(StaticLiveServerTestCase):
 
         # Chrome options for Selenium on Alpine/CI
 
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            chrome_options = Options()
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--disable-gpu")
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            # chrome_options.add_argument(f"--user-data-dir={tmpdirname}")
-            chrome_options.binary_location = "/usr/bin/chromium"
-            # Specify exact path to chromedriver!
-            driver = webdriver.Chrome(
-                service=Service(executable_path="/usr/bin/chromedriver"),
-                options=chrome_options
-            )
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.binary_location = "/usr/bin/chromium"
+        # Specify exact path to chromedriver!
+        driver = webdriver.Chrome(
+            service=Service(executable_path="/usr/bin/chromedriver"),
+            options=chrome_options
+        )
 
         try:
             # Set sessionid cookie for authentication
@@ -115,6 +112,4 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             assert new_preview_text == "#tag_b #tag_a"
 
         finally:
-            time.sleep(1)
             driver.quit()
-            time.sleep(1)
