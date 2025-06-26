@@ -50,8 +50,7 @@ class TestTagReorderUI(StaticLiveServerTestCase):
         try:
             # Set sessionid cookie for authentication
             driver.get(self.live_server_url)
-            # adding
-            # cookies
+            # adding cookie
             driver.add_cookie({
                 'name': 'sessionid',
                 'value': sessionid,
@@ -60,7 +59,7 @@ class TestTagReorderUI(StaticLiveServerTestCase):
                 'httpOnly': True,
             })
 
-            # Go to the post editor page (edit the path as needed)
+            # Go to the page
             driver.get(f"{self.live_server_url}{relative_path}")
 
             # Wait until the tags are loaded
@@ -107,10 +106,13 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             else:
                 pytest.fail("Tags reorder was not reflected in the block")
 
-            # After successful drag-and-drop and order verification:
+            # Preview block should change only on changes in Post Tags order
             new_preview_div = driver.find_element(By.ID, "post-preview-tags")
             new_preview_text = new_preview_div.text.strip()
-            assert new_preview_text == "#tag_b #tag_a"
+            if tag_list_id == TG_TAG_LIST_ID:
+                assert new_preview_text == "#tag_a #tag_b"
+            elif tag_list_id == POST_TAG_LIST_ID:
+                assert new_preview_text == "#tag_b #tag_a"
 
         finally:
             driver.quit()
