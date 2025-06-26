@@ -10,25 +10,31 @@ from posts.models import Post, Tag, PostTag
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
+User = get_user_model()
+
+POST_TAG_LIST_ID = 'dnd-list-post'
+TG_TAG_LIST_ID = 'dnd-list-tg'
+
 
 class TestTagReorderUI(StaticLiveServerTestCase):
-    def test_post_tag_reorder_block_updates(self):
-        # SETUP: create user, post, tags
-        User = get_user_model()
-        user = User.objects.create_user(email="test@example.com")  # allauth user
-        post = Post.objects.create(user=user, title="Selenium", description="desc")
-        tag1 = Tag.objects.create(name="tag_a")
-        tag2 = Tag.objects.create(name="tag_b")
-        PostTag.objects.create(post=post, tag=tag1, position=0)
-        PostTag.objects.create(post=post, tag=tag2, position=1)
+    def setUp(self):
+        self.user = User.objects.create_user(email="test@example.com")  # allauth user
+        self.post = Post.objects.create(
+            user=self.user,
+            title="Selenium",
+            description="desc"
+        )
+        self.tag1 = Tag.objects.create(name="tag_a")
+        self.tag2 = Tag.objects.create(name="tag_b")
+        self.post.update_tags([self.tag1.id, self.tag2.id])
 
+    def test_post_tag_reorder_block_updates(self):
         # Authenticate user and get sessionid (using Django test client)
         client = Client()
-        client.force_login(user)
+        client.force_login(self.user)
         sessionid = client.cookies["sessionid"].value
 
         # Chrome options for Selenium on Alpine/CI
-
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
@@ -55,7 +61,7 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             })
 
             # Go to the post editor page (edit the path as needed)
-            driver.get(f"{self.live_server_url}/post/{post.id}")
+            driver.get(f"{self.live_server_url}/post/{self.post.id}")
 
             # Wait until the tags are loaded
             def tags_appeared():
