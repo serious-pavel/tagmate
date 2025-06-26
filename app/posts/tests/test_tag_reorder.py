@@ -28,7 +28,7 @@ class TestTagReorderUI(StaticLiveServerTestCase):
         self.tag2 = Tag.objects.create(name="tag_b")
         self.post.update_tags([self.tag1.id, self.tag2.id])
 
-    def test_post_tag_reorder_block_updates(self):
+    def assert_tag_order(self, tag_list_id, relative_path):
         # Authenticate user and get sessionid (using Django test client)
         client = Client()
         client.force_login(self.user)
@@ -61,11 +61,11 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             })
 
             # Go to the post editor page (edit the path as needed)
-            driver.get(f"{self.live_server_url}/post/{self.post.id}")
+            driver.get(f"{self.live_server_url}{relative_path}")
 
             # Wait until the tags are loaded
             def tags_appeared():
-                tags = driver.find_elements(By.CSS_SELECTOR, "#dnd-list-post .tag")
+                tags = driver.find_elements(By.CSS_SELECTOR, f'#{tag_list_id} .tag')
                 return len(tags) == 2
 
             for _ in range(30):
@@ -75,7 +75,7 @@ class TestTagReorderUI(StaticLiveServerTestCase):
             else:
                 pytest.fail("Tags block did not appear in time")
 
-            tags = driver.find_elements(By.CSS_SELECTOR, "#dnd-list-post .tag")
+            tags = driver.find_elements(By.CSS_SELECTOR, f'#{tag_list_id} .tag')
 
             assert tags[0].text.strip().startswith("tag_a")
             assert tags[1].text.strip().startswith("tag_b")
@@ -96,7 +96,7 @@ class TestTagReorderUI(StaticLiveServerTestCase):
 
             # Wait for AJAX/UI update to finish (time/detector may be improved)
             for _ in range(30):
-                new_tags = driver.find_elements(By.CSS_SELECTOR, "#dnd-list-post .tag")
+                new_tags = driver.find_elements(By.CSS_SELECTOR, f'#{tag_list_id} .tag')
                 if (
                     new_tags[0].text.strip().startswith("tag_b")
                     and
@@ -114,3 +114,13 @@ class TestTagReorderUI(StaticLiveServerTestCase):
 
         finally:
             driver.quit()
+
+    def test_post_tag_reorder_ui_on_post_page(self):
+        self.assert_tag_order(
+            POST_TAG_LIST_ID, f'/post/{self.post.id}'
+        )
+
+    def test_post_tag_reorder_ui_on_post_tg_page(self):
+        self.assert_tag_order(
+            POST_TAG_LIST_ID, f'/post/{self.post.id}/tg/{self.tag1.id}'
+        )
