@@ -23,11 +23,11 @@ RUN python -m venv /py && \
       /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi && \
     apk del .tmp-build-deps && \
-    rm -rf /tmp && \
     if [ "$DEV" = "true" ]; \
       then \
         adduser --disabled-password django-user; \
       else \
+        rm -rf /tmp && \
         adduser --disabled-password --no-create-home django-user; \
     fi
 
