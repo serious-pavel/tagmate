@@ -22,11 +22,6 @@ class TestTagReorderUI(StaticLiveServerTestCase):
         PostTag.objects.create(post=post, tag=tag1, position=0)
         PostTag.objects.create(post=post, tag=tag2, position=1)
 
-        import os
-        print("Can write to /tmp:", os.access("/tmp", os.W_OK))
-        print("Listing /tmp contents:", os.listdir("/tmp"))
-        print("Permissions for /tmp:", oct(os.stat("/tmp").st_mode))
-
         # Authenticate user and get sessionid (using Django test client)
         client = Client()
         client.force_login(user)
