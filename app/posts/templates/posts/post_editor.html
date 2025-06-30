@@ -19,7 +19,7 @@
 {% block title %}Post Editor{% endblock title%}
 
 {% block content %}
-<div class="page-header">Post Editor</div>
+
 <div class="message-area">
     {% if messages %}
         {% for message in messages %}
@@ -98,6 +98,17 @@
             </div>
         </div>
         <div class="block-M">
+        // HTML
+<p id="change-text">Click me to change the text!</p>
+
+// JavaScript
+        <script>
+            const changeText = document.querySelector("#change-text");
+            changeText.addEventListener("click", function() {
+              changeText.textContent = "Text has been changed!";
+            });
+        </script>
+
             <div class="post-editor">
                 {% if current_post %}
                     <form method="post">
