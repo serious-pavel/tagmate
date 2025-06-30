@@ -499,6 +499,10 @@ class DeleteObjectsTests(TestCase):
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
 
+        response_url = response.request['PATH_INFO']
+        self.assertIn((response_url, 302), response.redirect_chain)
+        response_url_args = extract_url(response_url)
+
         if action == 'delete_post':
             assert_tag_not_in_list(
                 response, self.post.title, parent_id, 'list-item-title'
@@ -506,19 +510,6 @@ class DeleteObjectsTests(TestCase):
             assert_tag_in_list(
                 response, self.tg.name, other_parent_id, 'list-item-title'
             )
-        elif action == 'delete_tg':
-            assert_tag_not_in_list(
-                response, self.tg.name, parent_id, 'list-item-title'
-            )
-            assert_tag_in_list(
-                response, self.post.title, other_parent_id, 'list-item-title'
-            )
-
-        response_url = response.request['PATH_INFO']
-        self.assertIn((response_url, 302), response.redirect_chain)
-        response_url_args = extract_url(response_url)
-
-        if action == 'delete_post':
             self.assertFalse(
                 Post.objects.filter(title=self.post.title, user=self.user).exists()
             )
@@ -535,6 +526,13 @@ class DeleteObjectsTests(TestCase):
             )
 
         elif action == 'delete_tg':
+            assert_tag_not_in_list(
+                response, self.tg.name, parent_id, 'list-item-title'
+            )
+            assert_tag_in_list(
+                response, self.post.title, other_parent_id, 'list-item-title'
+            )
+
             self.assertFalse(
                 TagGroup.objects.filter(name=self.tg.name, user=self.user).exists()
             )
