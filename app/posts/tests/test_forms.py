@@ -503,3 +503,19 @@ class CreateObjectsTests(TestCase):
         """
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
         self.assert_object_create(url, 'create_tg')
+
+    def test_post_delete_on_post_page(self):
+        """
+        Test deleting a Post on a page with only Post chosen.
+        Link: /post/<post_pk>
+        """
+        url = reverse('post_editor', args=[self.post.pk])
+        self.assert_object_delete(url, 'delete_post')
+
+    def test_post_delete_on_post_tg_page(self):
+        """
+        Test deleting a Post on a page with Post and TG chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
+        """
+        url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
+        self.assert_object_delete(url, 'delete_post')
