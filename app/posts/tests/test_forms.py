@@ -13,7 +13,7 @@ TG_TAG_LIST_ID = 'dnd-list-tg'
 TG_ADD_INPUT_ID = 'tg-tags-to-attach'
 
 
-def get_tag_list(response, parent_id):
+def get_tag_list(response, parent_id, child_class):
     """
     Return a list of tag names (stripped) inside a div with the given id in the response.
     Returns [] if container is missing.
@@ -22,11 +22,11 @@ def get_tag_list(response, parent_id):
     tag_list = soup.find('div', id=parent_id)
     if not tag_list:
         return []
-    return [div.text.strip() for div in tag_list.find_all('div', class_="tag")]
+    return [div.text.strip() for div in tag_list.find_all('div', class_=child_class)]
 
 
-def assert_tag_in_list(response, tag_name, parent_id):
-    tag_divs = get_tag_list(response, parent_id)
+def assert_tag_in_list(response, tag_name, parent_id, child_class):
+    tag_divs = get_tag_list(response, parent_id, child_class)
     if tag_name not in tag_divs:
         raise AssertionError(
             f"Expected tag '{tag_name}' in <div id='{parent_id}'>, "
@@ -34,8 +34,8 @@ def assert_tag_in_list(response, tag_name, parent_id):
         )
 
 
-def assert_tag_not_in_list(response, tag_name, parent_id):
-    tag_divs = get_tag_list(response, parent_id)
+def assert_tag_not_in_list(response, tag_name, parent_id, child_class):
+    tag_divs = get_tag_list(response, parent_id, child_class)
     if tag_name in tag_divs:
         raise AssertionError(
             f"Did NOT expect tag '{tag_name}' in <div id='{parent_id}'>, "
@@ -95,7 +95,7 @@ class TagFormsTests(TestCase):
             )
 
         self.assertNotContains(response, "Hashtags may only contain ")
-        assert_tag_in_list(response, tag_name, tag_list_id)
+        assert_tag_in_list(response, tag_name, tag_list_id, 'tag')
         self.assertFalse(input_is_prefilled(response, tag_name, input_id))
 
         # Check client redirected to the same page
@@ -111,7 +111,7 @@ class TagFormsTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Hashtags may only contain ")
         self.assertFalse(Tag.objects.filter(name=tag_name).exists())
-        assert_tag_not_in_list(response, tag_name, tag_list_id)
+        assert_tag_not_in_list(response, tag_name, tag_list_id, 'tag')
 
         self.assertTrue(input_is_prefilled(response, tag_name, main_input_id))
 
@@ -137,9 +137,9 @@ class TagFormsTests(TestCase):
 
         response_init = self.client.get(url, follow=True)
         self.assertEqual(response_init.status_code, 200)
-        assert_tag_in_list(response_init, tag_name, main_tag_list_id)
+        assert_tag_in_list(response_init, tag_name, main_tag_list_id, 'tag')
 
-        other_tag_list_before = get_tag_list(response_init, other_tag_list_id)
+        other_tag_list_before = get_tag_list(response_init, other_tag_list_id, 'tag')
         other_tag_state_before = tag_name in other_tag_list_before
 
         data = {'tag_to_detach': tag_id, 'action': action}
@@ -147,9 +147,9 @@ class TagFormsTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Tag.objects.filter(pk=tag_id).exists())
 
-        assert_tag_not_in_list(response, tag_name, main_tag_list_id)
+        assert_tag_not_in_list(response, tag_name, main_tag_list_id, 'tag')
         # Detaching a Tag from one list shouldn't affect another list with Tags
-        other_tag_list_after = get_tag_list(response, other_tag_list_id)
+        other_tag_list_after = get_tag_list(response, other_tag_list_id, 'tag')
         other_tag_state_after = tag_name in other_tag_list_after
         self.assertEqual(
             other_tag_state_before, other_tag_state_after
