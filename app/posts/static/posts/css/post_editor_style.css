@@ -220,3 +220,7 @@ textarea {
     background: #e5ffe7;
     color: #17652c;
 }
+
+.content-nested {
+    width: 100%;
+}
