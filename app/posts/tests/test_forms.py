@@ -379,6 +379,67 @@ class CreateObjectsTests(TestCase):
             if 'post_pk' in url_args:
                 self.assertEqual(response_url_args['post_pk'], url_args['post_pk'])
 
+    def assert_object_delete(self, url, action):
+        url_args = extract_url(url)
+        data = {'action': action}
+        parent_id = None
+        other_parent_id = None
+        self.assertTrue(
+            Post.objects.filter(title=self.post.title, user=self.user).exists()
+        )
+        self.assertTrue(
+            TagGroup.objects.filter(name=self.tg.name, user=self.user).exists()
+        )
+        if action == 'delete_post':
+            parent_id = 'recent-posts'
+            other_parent_id = 'recent-tgs'
+            self.assertIn('post_pk', url_args)
+            self.assertEqual(url_args['post_pk'], self.post.pk)
+        elif action == 'delete_tg':
+            parent_id = 'recent-tgs'
+            other_parent_id = 'recent-posts'
+            self.assertIn('tg_pk', url_args)
+            self.assertEqual(url_args['tg_pk'], self.tg.pk)
+
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+        if action == 'delete_post':
+            assert_tag_not_in_list(
+                response, self.post.title, parent_id, 'list-item-title'
+            )
+            assert_tag_in_list(
+                response, self.tg.name, other_parent_id, 'list-item-title'
+            )
+        elif action == 'delete_tg':
+            assert_tag_not_in_list(
+                response, self.tg.name, parent_id, 'list-item-title'
+            )
+            assert_tag_in_list(
+                response, self.post.title, other_parent_id, 'list-item-title'
+            )
+
+        response_url = response.request['PATH_INFO']
+        self.assertIn((response_url, 302), response.redirect_chain)
+        response_url_args = extract_url(response_url)
+
+        if action == 'delete_post':
+            self.assertFalse(
+                Post.objects.filter(title=self.post.title, user=self.user).exists()
+            )
+            self.assertNotIn('post_pk', response_url_args)
+
+            if 'tg_pk' in url_args:
+                self.assertEqual(response_url_args['tg_pk'], url_args['tg_pk'])
+        elif action == 'delete_tg':
+            self.assertFalse(
+                TagGroup.objects.filter(name=self.tg.name, user=self.user).exists()
+            )
+            self.assertNotIn('tg_pk', response_url_args)
+
+            if 'post_pk' in url_args:
+                self.assertEqual(response_url_args['post_pk'], url_args['post_pk'])
+
     def test_post_create_on_empty_page(self):
         """
         Test creating a new Post on an empty page.
