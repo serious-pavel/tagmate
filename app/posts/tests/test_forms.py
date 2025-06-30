@@ -167,71 +167,6 @@ class TagFormsTests(TestCase):
 
         self.assertIn((url, 302), response.redirect_chain)
 
-    def assert_object_create(self, url, action):
-        """
-        Asserts that a new object is created when the given action is used.
-        """
-        url_args = extract_url(url)
-        new_item_title = 'New Item Name'
-
-        data = {'action': action}
-        parent_id = None
-        if action == 'create_post':
-            data['new_post_title'] = new_item_title
-            parent_id = 'recent-posts'
-            self.assertFalse(
-                Post.objects.filter(title=new_item_title, user=self.user).exists()
-            )
-        elif action == 'create_tg':
-            data['new_tg_name'] = new_item_title
-            parent_id = 'recent-tgs'
-            self.assertFalse(
-                TagGroup.objects.filter(name=new_item_title, user=self.user).exists()
-            )
-
-        response = self.client.post(url, data, follow=True)
-        self.assertEqual(response.status_code, 200)
-
-        assert_tag_in_list(response, new_item_title, parent_id, 'list-item-title')
-
-        response_url = response.request['PATH_INFO']
-        self.assertIn((response_url, 302), response.redirect_chain)
-        response_url_args = extract_url(response_url)
-
-        if action == 'create_post':
-            self.assertTrue(
-                Post.objects.filter(title=new_item_title, user=self.user).exists()
-            )
-            self.assertIn('post_pk', response_url_args)
-
-            new_post_pk = response_url_args['post_pk']
-            self.assertEqual(
-                Post.objects.get(title=new_item_title, user=self.user).pk, new_post_pk
-            )
-
-            if 'post_pk' in url_args:
-                self.assertNotEqual(new_post_pk, url_args['post_pk'])
-
-            if 'tg_pk' in url_args:
-                self.assertEqual(response_url_args['tg_pk'], url_args['tg_pk'])
-
-        if action == 'create_tg':
-            self.assertTrue(
-                TagGroup.objects.filter(name=new_item_title, user=self.user).exists()
-            )
-            self.assertIn('tg_pk', response_url_args)
-
-            new_tg_pk = response_url_args['tg_pk']
-            self.assertEqual(
-                TagGroup.objects.get(name=new_item_title, user=self.user).pk, new_tg_pk
-            )
-
-            if 'tg_pk' in url_args:
-                self.assertNotEqual(new_tg_pk, url_args['tg_pk'])
-
-            if 'post_pk' in url_args:
-                self.assertEqual(response_url_args['post_pk'], url_args['post_pk'])
-
     def test_post_add_valid_tag_on_post_page(self):
         """
         Test adding a valid tag to a post on a page with only post chosen.
@@ -361,6 +296,88 @@ class TagFormsTests(TestCase):
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
         self.assert_tag_detach(url, self.tag_in_tg.id, 'tg_detach_tag')
         self.assert_tag_detach(url, self.tag_in_both.id, 'tg_detach_tag')
+
+
+class CreateObjectsTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(email='create_obj@example.com')
+        self.client.force_login(self.user)
+
+        self.post = Post.objects.create(
+            user=self.user,
+            title="Existing Post",
+            description="Post for testing object creation"
+        )
+
+        self.tg = TagGroup.objects.create(
+            user=self.user,
+            name="Existing TG",
+        )
+
+    def assert_object_create(self, url, action):
+        """
+        Asserts that a new object is created when the given action is used.
+        """
+        url_args = extract_url(url)
+        new_item_title = 'New Item Name'
+
+        data = {'action': action}
+        parent_id = None
+        if action == 'create_post':
+            data['new_post_title'] = new_item_title
+            parent_id = 'recent-posts'
+            self.assertFalse(
+                Post.objects.filter(title=new_item_title, user=self.user).exists()
+            )
+        elif action == 'create_tg':
+            data['new_tg_name'] = new_item_title
+            parent_id = 'recent-tgs'
+            self.assertFalse(
+                TagGroup.objects.filter(name=new_item_title, user=self.user).exists()
+            )
+
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+        assert_tag_in_list(response, new_item_title, parent_id, 'list-item-title')
+
+        response_url = response.request['PATH_INFO']
+        self.assertIn((response_url, 302), response.redirect_chain)
+        response_url_args = extract_url(response_url)
+
+        if action == 'create_post':
+            self.assertTrue(
+                Post.objects.filter(title=new_item_title, user=self.user).exists()
+            )
+            self.assertIn('post_pk', response_url_args)
+
+            new_post_pk = response_url_args['post_pk']
+            self.assertEqual(
+                Post.objects.get(title=new_item_title, user=self.user).pk, new_post_pk
+            )
+
+            if 'post_pk' in url_args:
+                self.assertNotEqual(new_post_pk, url_args['post_pk'])
+
+            if 'tg_pk' in url_args:
+                self.assertEqual(response_url_args['tg_pk'], url_args['tg_pk'])
+
+        if action == 'create_tg':
+            self.assertTrue(
+                TagGroup.objects.filter(name=new_item_title, user=self.user).exists()
+            )
+            self.assertIn('tg_pk', response_url_args)
+
+            new_tg_pk = response_url_args['tg_pk']
+            self.assertEqual(
+                TagGroup.objects.get(name=new_item_title, user=self.user).pk, new_tg_pk
+            )
+
+            if 'tg_pk' in url_args:
+                self.assertNotEqual(new_tg_pk, url_args['tg_pk'])
+
+            if 'post_pk' in url_args:
+                self.assertEqual(response_url_args['post_pk'], url_args['post_pk'])
 
     def test_post_create_on_empty_page(self):
         """
