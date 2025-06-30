@@ -168,6 +168,9 @@ class TagFormsTests(TestCase):
         self.assertIn((url, 302), response.redirect_chain)
 
     def assert_object_create(self, url, action):
+        """
+        Asserts that a new object is created when the given action is used.
+        """
         url_args = extract_url(url)
         new_item_title = 'New Item Name'
 
@@ -348,34 +351,65 @@ class TagFormsTests(TestCase):
         self.assert_tag_detach(url, self.tag_in_both.id, 'tg_detach_tag')
 
     def test_post_create_on_empty_page(self):
+        """
+        Test creating a new Post on an empty page.
+        Link: /
+        """
         url = reverse('index')
         self.assert_object_create(url, 'create_post')
 
     def test_post_create_on_post_page(self):
+        """
+        Test creating a new Post on a page with only Post chosen.
+        Link: /post/<post_pk>
+        """
         url = reverse('post_editor', args=[self.post.pk])
         self.assert_object_create(url, 'create_post')
 
     def test_post_create_on_tg_page(self):
+        """
+        Test creating a new Post on a page with only TG chosen.
+        Link: /tg/<tg_pk>
+        """
         url = reverse('tg_editor', args=[self.tg.pk])
         self.assert_object_create(url, 'create_post')
 
     def test_post_create_on_post_tg_page(self):
+        """
+        Test creating a new post on a page with Post and TG chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
+        """
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
         self.assert_object_create(url, 'create_post')
 
     def test_tg_create_on_empty_page(self):
+        """
+        Test creating a new TagGroup on an empty page.
+        Link: /
+        """
         url = reverse('index')
         self.assert_object_create(url, 'create_tg')
 
     def test_tg_create_on_post_page(self):
+        """
+        Test creating a new TagGroup on a page with only Post chosen.
+        Link: /post/<post_pk>
+        """
         url = reverse('post_editor', args=[self.post.pk])
         self.assert_object_create(url, 'create_tg')
 
     def test_tg_create_on_tg_page(self):
+        """
+        Test creating a new TagGroup on a page with only TG chosen.
+        Link: /tg/<tg_pk>
+        """
         url = reverse('tg_editor', args=[self.tg.pk])
         self.assert_object_create(url, 'create_tg')
 
     def test_tg_create_on_post_tg_page(self):
+        """
+        Test creating a new TagGroup on a page with Post and TG chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
+        """
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
         self.assert_object_create(url, 'create_tg')
-
