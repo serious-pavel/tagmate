@@ -547,3 +547,19 @@ class DeleteObjectsTests(TestCase):
         """
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
         self.assert_object_delete(url, 'delete_post')
+
+    def test_tg_delete_on_tg_page(self):
+        """
+        Test deleting a TagGroup on a page with only TG chosen.
+        Link: /tg/<tg_pk>
+        """
+        url = reverse('tg_editor', args=[self.tg.pk])
+        self.assert_object_delete(url, 'delete_tg')
+
+    def test_tg_delete_on_post_tg_page(self):
+        """
+        Test deleting a TagGroup on a page with Post and TG chosen.
+        Link: /post/<post_pk>/tg/<tg_pk>
+        """
+        url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
+        self.assert_object_delete(url, 'delete_tg')
