@@ -179,11 +179,15 @@ class TagFormsTests(TestCase):
         if action == 'create_post':
             data['new_post_title'] = new_item_title
             parent_id = 'recent-posts'
-            self.assertFalse(Post.objects.filter(title=new_item_title).exists())
+            self.assertFalse(
+                Post.objects.filter(title=new_item_title, user=self.user).exists()
+            )
         elif action == 'create_tg':
             data['new_tg_name'] = new_item_title
             parent_id = 'recent-tgs'
-            self.assertFalse(TagGroup.objects.filter(name=new_item_title).exists())
+            self.assertFalse(
+                TagGroup.objects.filter(name=new_item_title, user=self.user).exists()
+            )
 
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -195,11 +199,15 @@ class TagFormsTests(TestCase):
         response_url_args = extract_url(response_url)
 
         if action == 'create_post':
-            self.assertTrue(Post.objects.filter(title=new_item_title).exists())
+            self.assertTrue(
+                Post.objects.filter(title=new_item_title, user=self.user).exists()
+            )
             self.assertIn('post_pk', response_url_args)
 
             new_post_pk = response_url_args['post_pk']
-            self.assertEqual(Post.objects.get(title=new_item_title).pk, new_post_pk)
+            self.assertEqual(
+                Post.objects.get(title=new_item_title, user=self.user).pk, new_post_pk
+            )
 
             if 'post_pk' in url_args:
                 self.assertNotEqual(new_post_pk, url_args['post_pk'])
@@ -208,11 +216,15 @@ class TagFormsTests(TestCase):
                 self.assertEqual(response_url_args['tg_pk'], url_args['tg_pk'])
 
         if action == 'create_tg':
-            self.assertTrue(TagGroup.objects.filter(name=new_item_title).exists())
+            self.assertTrue(
+                TagGroup.objects.filter(name=new_item_title, user=self.user).exists()
+            )
             self.assertIn('tg_pk', response_url_args)
 
             new_tg_pk = response_url_args['tg_pk']
-            self.assertEqual(TagGroup.objects.get(name=new_item_title).pk, new_tg_pk)
+            self.assertEqual(
+                TagGroup.objects.get(name=new_item_title, user=self.user).pk, new_tg_pk
+            )
 
             if 'tg_pk' in url_args:
                 self.assertNotEqual(new_tg_pk, url_args['tg_pk'])
