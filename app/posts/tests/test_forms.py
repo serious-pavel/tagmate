@@ -300,3 +300,15 @@ class TagFormsTests(TestCase):
     def test_post_create_on_empty_page(self):
         url = reverse('index')
         self.assert_post_create(url)
+
+    def test_post_create_on_post_page(self):
+        url = reverse('post_editor', args=[self.post.pk])
+        self.assert_post_create(url)
+
+    def test_post_create_on_tg_page(self):
+        url = reverse('tg_editor', args=[self.tg.pk])
+        self.assert_post_create(url)
+
+    def test_post_create_on_post_tg_page(self):
+        url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
+        self.assert_post_create(url)
