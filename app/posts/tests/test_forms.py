@@ -189,33 +189,33 @@ class TagFormsTests(TestCase):
 
         response_url = response.request['PATH_INFO']
         self.assertIn((response_url, 302), response.redirect_chain)
-        response_args = extract_url(response_url)
+        response_url_args = extract_url(response_url)
 
         if action == 'create_post':
             self.assertTrue(Post.objects.filter(title=new_item_title).exists())
-            self.assertIn('post_pk', response_args)
+            self.assertIn('post_pk', response_url_args)
 
-            new_post_pk = response_args['post_pk']
+            new_post_pk = response_url_args['post_pk']
             self.assertEqual(Post.objects.get(title=new_item_title).pk, new_post_pk)
 
             if 'post_pk' in url_args:
                 self.assertNotEqual(new_post_pk, url_args['post_pk'])
 
             if 'tg_pk' in url_args:
-                self.assertEqual(response_args['tg_pk'], url_args['tg_pk'])
+                self.assertEqual(response_url_args['tg_pk'], url_args['tg_pk'])
 
         if action == 'create_tg':
             self.assertTrue(TagGroup.objects.filter(name=new_item_title).exists())
-            self.assertIn('tg_pk', response_args)
+            self.assertIn('tg_pk', response_url_args)
 
-            new_tg_pk = response_args['tg_pk']
+            new_tg_pk = response_url_args['tg_pk']
             self.assertEqual(TagGroup.objects.get(name=new_item_title).pk, new_tg_pk)
 
             if 'tg_pk' in url_args:
                 self.assertNotEqual(new_tg_pk, url_args['tg_pk'])
 
             if 'post_pk' in url_args:
-                self.assertEqual(response_args['post_pk'], url_args['post_pk'])
+                self.assertEqual(response_url_args['post_pk'], url_args['post_pk'])
 
     def test_post_add_valid_tag_on_post_page(self):
         """
