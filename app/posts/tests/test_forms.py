@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.urls import resolve
 
 from bs4 import BeautifulSoup
 
@@ -50,6 +51,15 @@ def input_is_prefilled(response, tag_name, input_id):
     soup = BeautifulSoup(response.content, 'html.parser')
     input_field = soup.find("input", {"id": input_id})
     return input_field is not None and input_field.get('value', '') == tag_name
+
+
+def extract_url(url_2):
+    # Remove the domain part if present
+    from urllib.parse import urlparse
+    path = urlparse(url_2).path
+    match = resolve(path)
+    # match.kwargs contains a dictionary of args in url
+    return match.kwargs
 
 
 class TagFormsTests(TestCase):
