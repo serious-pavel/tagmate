@@ -159,16 +159,18 @@ class TagFormsTests(TestCase):
 
     def assert_object_create(self, url, action):
         new_item_title = 'New Item Name'
-        self.assertFalse(Post.objects.filter(title=new_item_title).exists())
 
         data = {'action': action}
         parent_id = None
         if action == 'create_post':
             data['new_post_title'] = new_item_title
             parent_id = 'recent-posts'
+            self.assertFalse(Post.objects.filter(title=new_item_title).exists())
         elif action == 'create_tg':
             data['new_tg_name'] = new_item_title
             parent_id = 'recent-tgs'
+            self.assertFalse(TagGroup.objects.filter(name=new_item_title).exists())
+
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
 
