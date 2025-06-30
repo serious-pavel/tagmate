@@ -157,6 +157,16 @@ class TagFormsTests(TestCase):
 
         self.assertIn((url, 302), response.redirect_chain)
 
+    def assert_post_create(self, url):
+        new_post_title = 'New post title'
+        self.assertFalse(Post.objects.filter(title=new_post_title).exists())
+
+        data = {'action': 'create_post', 'new_post_title': new_post_title}
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+        assert_tag_in_list(response, new_post_title, 'recent-posts', 'list-item-title')
+
     def test_post_add_valid_tag_on_post_page(self):
         """
         Test adding a valid tag to a post on a page with only post chosen.
@@ -286,3 +296,7 @@ class TagFormsTests(TestCase):
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
         self.assert_tag_detach(url, self.tag_in_tg.id, 'tg_detach_tag')
         self.assert_tag_detach(url, self.tag_in_both.id, 'tg_detach_tag')
+
+    def test_post_create_on_empty_page(self):
+        url = reverse('index')
+        self.assert_post_create(url)
