@@ -188,6 +188,7 @@ class TagFormsTests(TestCase):
         assert_tag_in_list(response, new_item_title, parent_id, 'list-item-title')
 
         response_url = response.request['PATH_INFO']
+        self.assertIn((response_url, 302), response.redirect_chain)
         response_args = extract_url(response_url)
 
         if action == 'create_post':
