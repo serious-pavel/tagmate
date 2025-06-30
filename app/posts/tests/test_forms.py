@@ -157,7 +157,7 @@ class TagFormsTests(TestCase):
 
         self.assertIn((url, 302), response.redirect_chain)
 
-    def assert_post_create(self, url, action):
+    def assert_object_create(self, url, action):
         new_item_title = 'New Item Name'
         self.assertFalse(Post.objects.filter(title=new_item_title).exists())
 
@@ -306,33 +306,33 @@ class TagFormsTests(TestCase):
 
     def test_post_create_on_empty_page(self):
         url = reverse('index')
-        self.assert_post_create(url, 'create_post')
+        self.assert_object_create(url, 'create_post')
 
     def test_post_create_on_post_page(self):
         url = reverse('post_editor', args=[self.post.pk])
-        self.assert_post_create(url, 'create_post')
+        self.assert_object_create(url, 'create_post')
 
     def test_post_create_on_tg_page(self):
         url = reverse('tg_editor', args=[self.tg.pk])
-        self.assert_post_create(url, 'create_post')
+        self.assert_object_create(url, 'create_post')
 
     def test_post_create_on_post_tg_page(self):
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
-        self.assert_post_create(url, 'create_post')
+        self.assert_object_create(url, 'create_post')
 
     def test_tg_create_on_empty_page(self):
         url = reverse('index')
-        self.assert_post_create(url, 'create_tg')
+        self.assert_object_create(url, 'create_tg')
 
     def test_tg_create_on_post_page(self):
         url = reverse('post_editor', args=[self.post.pk])
-        self.assert_post_create(url, 'create_tg')
+        self.assert_object_create(url, 'create_tg')
 
     def test_tg_create_on_tg_page(self):
         url = reverse('tg_editor', args=[self.tg.pk])
-        self.assert_post_create(url, 'create_tg')
+        self.assert_object_create(url, 'create_tg')
 
     def test_tg_create_on_post_tg_page(self):
         url = reverse('post_tg_editor', args=[self.post.pk, self.tg.pk])
-        self.assert_post_create(url, 'create_tg')
+        self.assert_object_create(url, 'create_tg')
 
