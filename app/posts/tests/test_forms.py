@@ -482,6 +482,9 @@ class DeleteObjectsTests(TestCase):
         self.assertTrue(
             TagGroup.objects.filter(name=self.tg.name, user=self.user).exists()
         )
+        before_posts_count = Post.objects.filter(user=self.user).count()
+        before_tgs_count = TagGroup.objects.filter(user=self.user).count()
+
         if action == 'delete_post':
             parent_id = 'recent-posts'
             other_parent_id = 'recent-tgs'
@@ -523,6 +526,14 @@ class DeleteObjectsTests(TestCase):
 
             if 'tg_pk' in url_args:
                 self.assertEqual(response_url_args['tg_pk'], url_args['tg_pk'])
+
+            self.assertEqual(
+                Post.objects.filter(user=self.user).count(), before_posts_count - 1
+            )
+            self.assertEqual(
+                TagGroup.objects.filter(user=self.user).count(), before_tgs_count
+            )
+
         elif action == 'delete_tg':
             self.assertFalse(
                 TagGroup.objects.filter(name=self.tg.name, user=self.user).exists()
@@ -531,6 +542,13 @@ class DeleteObjectsTests(TestCase):
 
             if 'post_pk' in url_args:
                 self.assertEqual(response_url_args['post_pk'], url_args['post_pk'])
+
+            self.assertEqual(
+                TagGroup.objects.filter(user=self.user).count(), before_tgs_count - 1
+            )
+            self.assertEqual(
+                Post.objects.filter(user=self.user).count(), before_posts_count
+            )
 
     def test_post_delete_on_post_page(self):
         """
