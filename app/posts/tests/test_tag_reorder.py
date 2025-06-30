@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from django.contrib.auth import get_user_model
 from django.test import Client
-from posts.models import Post, Tag, PostTag
+from posts.models import Post, Tag
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
