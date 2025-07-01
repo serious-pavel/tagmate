@@ -112,9 +112,12 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 post_title = request.POST.get('post_title')
                 post_desc = request.POST.get('post_desc')
 
-                current_post.title = post_title
-                current_post.description = post_desc
-                current_post.save()
+                if post_title or post_desc:
+                    if post_title:
+                        current_post.title = post_title
+                    if post_desc:
+                        current_post.description = post_desc
+                    current_post.save()
 
                 messages.success(request, f'Post {current_post.title} updated')
                 return redirect(request.path)
