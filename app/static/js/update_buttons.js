@@ -11,13 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
             descInput.value !== initialDesc
         );
         if (changed) {
-            updateBtn.style.opacity = 1;
-            updateBtn.style.pointerEvents = 'auto';
-            updateBtn.classList.add('highlighted'); // Use your .highlighted CSS for extra emphasis
+            // updateBtn.classList.remove('btn-inactive');
+            updateBtn.classList.add('btn-active');
         } else {
-            updateBtn.style.opacity = 0.4;
-            updateBtn.style.pointerEvents = 'none';
-            updateBtn.classList.remove('highlighted');
+            updateBtn.classList.remove('btn-active');
+            // updateBtn.classList.add('btn-inactive');
         }
     }
 

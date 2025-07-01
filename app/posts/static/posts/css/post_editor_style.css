@@ -242,7 +242,12 @@ textarea {
   padding: .2em;
 }
 
-#update-post-btn {
+.update-btn {
     opacity: 0.4;
     pointer-events: none;
+}
+
+.update-btn.btn-active {
+    opacity: 1;
+    pointer-events: auto;
 }

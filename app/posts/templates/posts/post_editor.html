@@ -221,7 +221,7 @@
             <div class="post-preview-text">
                 <form method="post">
                     {% csrf_token %}
-                    <button id="update-post-desc-btn">Update Post</button>
+                    <button id="update-post-desc-btn" class="update-btn">Update Post</button>
                     <label>
                         <input type="hidden" name="action" value="update_post">
                         <textarea type="text" class="edit-like-text" oninput="auto_grow(this)" id="post-desc"
