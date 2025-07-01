@@ -14,6 +14,7 @@
     <script src="{% static 'js/show_hide_items.js' %}"></script>
     <script src="{% static 'js/show_messages.js' %}"></script>
     <script src="{% static 'js/dnd_sortable.js' %}"></script>
+    <script src="{% static 'js/auto_grow_textarea.js' %}"></script>
 {% endblock scripts %}
 
 {% block title %}Post Editor{% endblock title%}
@@ -104,10 +105,9 @@
                         {% csrf_token %}
                         <label>
                             <input type="hidden" name="action" value="update_post">
+                            <input type="hidden" name="post_desc" value="{{ current_post.description }}">
                             <input type="text" class="edit-like-text"
                                 name="post_title" placeholder="" value="{{ current_post.title }}" required>
-                            <textarea type="text" class="edit-like-text"
-                                name="post_desc" placeholder="">{{ current_post.description }}</textarea>
                         </label>
                         <button>Update Post</button>
 
@@ -210,10 +210,19 @@
         </div>
 
         <div class="post-preview block-R">
-            Post preview:
-            <p>{{ current_post.title }}</p>
+            Post {{ current_post.title }} preview:
             <div class="post-preview-text">
-                <p>{{ current_post.description|linebreaksbr }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button>Update Post</button>
+                    <label>
+                        <input type="hidden" name="action" value="update_post">
+                        <input type="hidden" name="post_title" value="{{ current_post.title }}">
+                        <textarea type="text" class="edit-like-text" oninput="auto_grow(this)"
+                            name="post_desc" placeholder="">{{ current_post.description }}</textarea>
+                    </label>
+                </form>
+
                 <div id="post-preview-tags">
                     {% for tag in current_post.ordered_tags %}
                         {{ tag }}
