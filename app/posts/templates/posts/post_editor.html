@@ -34,7 +34,9 @@
     <a href="{% url 'google_login' %}">Login</a>
 {% else %}
     <div id="main">
+
         <div class="block-L">
+
             <div id="recent-posts" class="list">
                 Recent Posts:
                 <div class="list-item">
@@ -56,15 +58,16 @@
                     {% else %}
                         "{% url 'post_editor' post_pk=post.id %}">
                     {% endif %}
-                        <div class="list-item-title">
-                            {{ post.title }}
-                        </div>
-                        <div class="list-item-date">
-                            {{ post.created_at|date:"d M'y" }}
-                        </div>
+                    <div class="list-item-title">
+                        {{ post.title }}
+                    </div>
+                    <div class="list-item-date">
+                        {{ post.created_at|date:"d M'y" }}
+                    </div>
                     </a>
                 {% endfor %}
             </div>
+
             <div id="recent-tgs" class="list">
                 Recent TagGroups:
                 <div class="list-item">
@@ -88,17 +91,19 @@
                         {% else %}
                             "{% url 'tg_editor' tg_pk=tg.id %}">
                         {% endif %}
-                            <div class="list-item-title">
-                                {{ tg.name }}
-                            </div>
-                            <div class="list-item-date">
-                                {{ tg.updated_at|date:"d M'y" }}
-                            </div>
-                        </a>
+                        <div class="list-item-title">
+                            {{ tg.name }}
+                        </div>
+                        <div class="list-item-date">
+                            {{ tg.updated_at|date:"d M'y" }}
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>
+
         <div class="block-M">
+
             <div class="post-editor">
                 {% if current_post %}
                     <form method="post">
@@ -119,9 +124,9 @@
                     </form>
                 {% endif %}
             </div>
+
             <div class="tags-editor">
                 Tags:
-
                 <form method="post" >
                     {% csrf_token %}
                     <label>
@@ -148,6 +153,7 @@
                     {% endfor %}
                 </div>
             </div>
+
             <div class="post-tg-intermediate">
                 <form method="post">
                     {% csrf_token %}
@@ -160,6 +166,7 @@
                     <button>⬆ Copy Tags to Post</button>
                 </form>
             </div>
+
             <div class="tg-editor">
                 TagGroups:
                 {% if current_tg %}
@@ -179,8 +186,8 @@
                     </form>
                 {% endif %}
             </div>
-            <div class="tags-editor">
 
+            <div class="tags-editor">
                 <form method="post" >
                     {% csrf_token %}
                     <label>
@@ -231,6 +238,7 @@
             </div>
             <button type="button" onclick="copyPreviewText()">Copy as Plain Text</button>
         </div>
+
     </div>
 {% endif %}
 {% endblock content %}
