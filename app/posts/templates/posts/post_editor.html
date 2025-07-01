@@ -15,6 +15,7 @@
     <script src="{% static 'js/show_messages.js' %}"></script>
     <script src="{% static 'js/dnd_sortable.js' %}"></script>
     <script src="{% static 'js/auto_grow_textarea.js' %}"></script>
+    <script src="{% static 'js/update_buttons.js' %}"></script>
 {% endblock scripts %}
 
 {% block title %}Post Editor{% endblock title%}
@@ -221,11 +222,11 @@
             <div class="post-preview-text">
                 <form method="post">
                     {% csrf_token %}
-                    <button>Update Post</button>
+                    <button id="update-post-desc-btn">Update Post</button>
                     <label>
                         <input type="hidden" name="action" value="update_post">
                         <input type="hidden" name="post_title" value="{{ current_post.title }}">
-                        <textarea type="text" class="edit-like-text" oninput="auto_grow(this)"
+                        <textarea type="text" class="edit-like-text" oninput="auto_grow(this)" id="post-desc"
                             name="post_desc" placeholder="">{{ current_post.description }}</textarea>
                     </label>
                 </form>
