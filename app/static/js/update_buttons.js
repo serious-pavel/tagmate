@@ -24,3 +24,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initial check
     checkChanged();
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const descInput = document.getElementById('post-title');
+    const updateBtn = document.getElementById('update-post-title-btn');
+
+    const initialDesc = descInput.value;
+
+    function checkChanged() {
+        const changed = (
+            descInput.value !== initialDesc
+        );
+        if (changed) {
+            updateBtn.classList.add('btn-active');
+        } else {
+            updateBtn.classList.remove('btn-active');
+        }
+    }
+
+    descInput.addEventListener('input', checkChanged);
+
+    checkChanged();
+});
