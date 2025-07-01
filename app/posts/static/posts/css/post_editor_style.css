@@ -241,3 +241,8 @@ textarea {
   outline: none;
   padding: .2em;
 }
+
+#update-post-btn {
+    opacity: 0.4;
+    pointer-events: none;
+}
