@@ -170,13 +170,14 @@
             <div class="tg-editor">
                 TagGroups:
                 {% if current_tg %}
-                    <form method="post">
+                    <form method="post" class="update-form">
                         {% csrf_token %}
                         <label>
                             <input type="hidden" name="action" value="update_tg">
-                            <input type="text" name="tg_name" placeholder="" value="{{ current_tg.name }}" required>
+                            <input type="text" name="tg_name" placeholder="" value="{{ current_tg.name }}"
+                                   id="tg-name" class="edit-like-text" required>
                         </label>
-                        <button>Update TagGroup</button>
+                        <button class="update-btn" id="update-tg-name-btn">Update Name</button>
                     </form>
 
                     <form method="post">

@@ -46,3 +46,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     checkChanged();
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const descInput = document.getElementById('tg-name');
+    const updateBtn = document.getElementById('update-tg-name-btn');
+
+    const initialDesc = descInput.value;
+
+    function checkChanged() {
+        const changed = (
+            descInput.value !== initialDesc
+        );
+        if (changed) {
+            updateBtn.classList.add('btn-active');
+        } else {
+            updateBtn.classList.remove('btn-active');
+        }
+    }
+
+    descInput.addEventListener('input', checkChanged);
+
+    checkChanged();
+});
