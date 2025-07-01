@@ -219,9 +219,9 @@
         <div class="post-preview block-R">
             Post {{ current_post.title }} preview:
             <div class="post-preview-text">
-                <form method="post">
+                <form method="post" class="update-form">
                     {% csrf_token %}
-                    <button id="update-post-desc-btn" class="update-btn">Update Post</button>
+                    <button id="update-post-desc-btn" class="update-btn">Save!</button>
                     <label>
                         <input type="hidden" name="action" value="update_post">
                         <textarea type="text" class="edit-like-text" oninput="auto_grow(this)" id="post-desc"
