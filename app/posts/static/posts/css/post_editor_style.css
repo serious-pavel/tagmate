@@ -229,7 +229,6 @@ textarea {
   border: none;
   background: rgba(0, 0, 0, 0.07);
   font: inherit;
-  width: 100%;
   padding: 5px;
   margin: 0;
   resize: none; /* for textarea */
@@ -237,11 +236,17 @@ textarea {
   border-radius: 5px;
 }
 
+textarea.edit-like-text {
+  width: 97%;
+}
+
+input.edit-like-text {
+    width: 50%;
+}
+
 .edit-like-text:focus {
-  border: 1px solid #007bff;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.32);
   outline: none;
-  padding: .2em;
 }
 
 .update-btn {
