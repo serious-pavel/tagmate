@@ -16,6 +16,7 @@
     <script src="{% static 'js/dnd_sortable.js' %}"></script>
     <script src="{% static 'js/auto_grow_textarea.js' %}"></script>
     <script src="{% static 'js/update_buttons.js' %}"></script>
+    <script src="{% static 'js/submit_on_blur.js' %}"></script>
 {% endblock scripts %}
 
 {% block title %}Post Editor{% endblock title%}
@@ -111,7 +112,7 @@
                         {% csrf_token %}
                         <label>
                             <input type="hidden" name="action" value="update_post">
-                            <input type="text" class="edit-like-text" id="post-title"
+                            <input type="text" class="edit-like-text submit-on-blur" id="post-title"
                                 name="post_title" placeholder="" value="{{ current_post.title }}" required>
                         </label>
                         <button class="update-btn" id="update-post-title-btn">Update Title</button>
@@ -175,7 +176,7 @@
                         <label>
                             <input type="hidden" name="action" value="update_tg">
                             <input type="text" name="tg_name" placeholder="" value="{{ current_tg.name }}"
-                                   id="tg-name" class="edit-like-text" required>
+                                   id="tg-name" class="edit-like-text submit-on-blur" required>
                         </label>
                         <button class="update-btn" id="update-tg-name-btn">Update Name</button>
                     </form>
@@ -225,7 +226,7 @@
                     <button id="update-post-desc-btn" class="update-btn">Save!</button>
                     <label>
                         <input type="hidden" name="action" value="update_post">
-                        <textarea type="text" class="edit-like-text" oninput="auto_grow(this)" id="post-desc"
+                        <textarea type="text" class="edit-like-text submit-on-blur" oninput="auto_grow(this)" id="post-desc"
                             name="post_desc" placeholder="">{{ current_post.description }}</textarea>
                     </label>
                 </form>
