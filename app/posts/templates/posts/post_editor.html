@@ -118,10 +118,10 @@
                         <button class="update-btn" id="update-post-title-btn">Update Title</button>
 
                     </form>
-                    <form method="post">
+                    <form method="post" class="delete-form">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="delete_post">
-                        <button class="highlighted">Delete Post</button>
+                        <button class="highlighted delete-btn">Delete Post</button>
                     </form>
                 {% endif %}
             </div>
@@ -181,10 +181,10 @@
                         <button class="update-btn" id="update-tg-name-btn">Update Name</button>
                     </form>
 
-                    <form method="post">
+                    <form method="post" class="delete-form">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="delete_tg">
-                        <button class="highlighted">Delete TagGroup</button>
+                        <button class="highlighted delete-btn">Delete TagGroup</button>
                     </form>
                 {% endif %}
             </div>
