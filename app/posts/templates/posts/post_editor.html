@@ -127,7 +127,6 @@
             </div>
 
             <div class="tags-editor">
-                Tags:
                 <form method="post" >
                     {% csrf_token %}
                     <label>
@@ -169,7 +168,6 @@
             </div>
 
             <div class="tg-editor">
-                TagGroups:
                 {% if current_tg %}
                     <form method="post" class="update-form">
                         {% csrf_token %}
