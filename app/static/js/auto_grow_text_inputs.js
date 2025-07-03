@@ -4,9 +4,11 @@ function auto_grow(element) {
 }
 
 // Expand on page load for prefilled content
-window.addEventListener('DOMContentLoaded', function() {
+// Use window.onload ensures all resources (including styles/fonts) loaded
+window.addEventListener('load', function() {
   document.querySelectorAll('textarea').forEach(auto_grow);
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     function autoResizeInput(input) {
