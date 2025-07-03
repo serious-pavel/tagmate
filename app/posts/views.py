@@ -108,19 +108,21 @@ def post_editor(request, post_pk=None, tg_pk=None):
             current_post.update_tags(current_post.ordered_tag_ids + tg_tag_ids)
 
         if current_post:
-            if action == 'update_post':
+            if action == 'update_post_title':
                 post_title = request.POST.get('post_title')
-                post_desc = request.POST.get('post_desc')
-
-                if post_title or post_desc:
-                    if post_title:
-                        current_post.title = post_title
-                    if post_desc:
-                        current_post.description = post_desc
+                if post_title:
+                    current_post.title = post_title
                     current_post.save()
+                    messages.success(request, f'Post {current_post.title} updated')
+                    return redirect(request.path)
 
-                messages.success(request, f'Post {current_post.title} updated')
-                return redirect(request.path)
+            if action == 'update_post_desc':
+                post_desc = request.POST.get('post_desc')
+                if post_desc is not None:
+                    current_post.description = post_desc
+                    current_post.save()
+                    messages.success(request, f'Post {current_post.title} updated')
+                    return redirect(request.path)
 
             if action == 'delete_post':
                 # Deleting the Tags that are not used in any other Post or ANY TagGroup
