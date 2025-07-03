@@ -270,3 +270,16 @@ input.edit-like-text {
     right: 0;
     top: -10px;
 }
+
+.item-editor form{
+    display: flex;
+    align-items: center;
+}
+
+.item-editor .update-form {
+    justify-content: center;
+}
+
+.item-editor .delete-form {
+    justify-content: flex-end;
+}
