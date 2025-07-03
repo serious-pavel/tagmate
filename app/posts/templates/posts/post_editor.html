@@ -111,7 +111,7 @@
                     <form method="post" class="update-form">
                         {% csrf_token %}
                         <label>
-                            <input type="hidden" name="action" value="update_post">
+                            <input type="hidden" name="action" value="update_post_title">
                             <input type="text" class="edit-like-text submit-on-blur" id="post-title"
                                 name="post_title" placeholder="" value="{{ current_post.title }}" required>
                         </label>
@@ -225,7 +225,7 @@
                     {% csrf_token %}
                     <button id="update-post-desc-btn" class="update-btn">Save!</button>
                     <label>
-                        <input type="hidden" name="action" value="update_post">
+                        <input type="hidden" name="action" value="update_post_desc">
                         <textarea type="text" class="edit-like-text submit-on-blur" oninput="auto_grow(this)" id="post-desc"
                             name="post_desc" placeholder="">{{ current_post.description }}</textarea>
                     </label>
