@@ -230,6 +230,7 @@ textarea {
   font: inherit;
   padding: 5px;
   margin: 0;
+  overflow: hidden !important;
   resize: none; /* for textarea */
   box-shadow: inset 0 0 5px 2px rgba(0, 193, 127, 0.15);
   border-radius: 5px;
