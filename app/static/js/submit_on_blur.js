@@ -9,15 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (changed) {
                 // Find an associated button
-                let btn = null;
-                if (field.id === "tg-name") {
-                    btn = document.getElementById("update-tg-name-btn");
-                } else if (field.id === "post-title") {
-                    btn = document.getElementById("update-post-title-btn");
-                } else if (field.id === "post-desc") {
-                    btn = document.getElementById("update-post-desc-btn");
-                }
-
+                let btn = document.getElementById(`update-${field.id}-btn`);
                 if (btn) {
                     btn.click();
                 } else if (field.form) {
