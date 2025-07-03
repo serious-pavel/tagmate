@@ -106,7 +106,7 @@
 
         <div class="block-M">
 
-            <div class="post-editor">
+            <div class="post-editor item-editor">
                 {% if current_post %}
                     <form method="post" class="update-form">
                         {% csrf_token %}
@@ -167,7 +167,7 @@
                 </form>
             </div>
 
-            <div class="tg-editor">
+            <div class="tg-editor item-editor">
                 {% if current_tg %}
                     <form method="post" class="update-form">
                         {% csrf_token %}
