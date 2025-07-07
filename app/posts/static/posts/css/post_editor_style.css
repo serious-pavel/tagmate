@@ -283,3 +283,39 @@ input.edit-like-text {
 .item-editor .delete-form {
     justify-content: flex-end;
 }
+
+.tabs {
+    display: flex;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 6px 0;
+    background: #d5c9c9;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    transition: background 0.2s, border-color 0.2s;
+    font-size: inherit;
+    font-weight: 300;
+}
+
+.tab-btn.active {
+    background: #ffeaea;
+    font-weight: 400;
+}
+
+#recent-posts,
+#recent-tgs {
+    display: none;
+}
+
+/* Only show if .blockL-show-posts or .blockL-show-tgs is present on <body> */
+body.blockL-show-posts #recent-posts {
+    display: flex;
+}
+body.blockL-show-tgs #recent-tgs {
+    display: flex;
+}
