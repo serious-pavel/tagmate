@@ -133,15 +133,16 @@
                     <div class="tags-editor">
                         <form method="post" >
                             {% csrf_token %}
-                            <label>
+                            <label class="input-button-group">
                                 <input type="hidden" name="action" value="post_attach_tags">
                                 <input type="text" name="tags_to_attach" id="post-tags-to-attach"
                                        placeholder="Add tags (comma, hashtag or space separated)"
                                        value="{{ post_tags_to_attach }}"
                                        {% if submitted_input_id == "post_tags_to_attach" %}autofocus{% endif %}
                                        required>
+                                <button type="submit">Add</button>
+
                             </label>
-                            <button type="submit">Add Tag(s) to Post</button>
                         </form>
 
                         <div id="dnd-list-post" class="tag-list" data-post-id="{{ current_post.id }}">
