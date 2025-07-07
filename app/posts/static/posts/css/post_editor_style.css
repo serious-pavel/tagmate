@@ -319,3 +319,44 @@ body.blockL-show-posts #recent-posts {
 body.blockL-show-tgs #recent-tgs {
     display: flex;
 }
+
+/* Make the form group a flex container */
+.input-button-group {
+    display: flex;
+    width: 97%;
+    margin: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    background: #fff;
+}
+
+.input-button-group input[type="text"] {
+    flex: 1;
+    border: none;
+    padding: 5px;
+    font-size: inherit;
+    outline: none;
+    border-radius: 0;
+    background: transparent;
+    min-width: 0;
+}
+
+.input-button-group button[type="submit"] {
+    border: none;
+    background: #1976d2;
+    color: #fff;
+    font-size: 1em;
+    padding: 0 2em;
+    margin-left: 0;
+    border-radius: 0;
+    transition: background 0.2s;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.input-button-group button[type="submit"]:hover {
+    background: #135a96;
+}
