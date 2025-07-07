@@ -14,6 +14,12 @@
     <title>TagMate - {% block title %}{% endblock title%}</title>
 </head>
 <body>
+<script>
+(function() {
+  var tab = localStorage.getItem('blockL_selected_tab') || 'posts';
+  document.body.classList.add(tab === 'tgs' ? 'blockL-show-tgs' : 'blockL-show-posts');
+})();
+</script>
     <div class="header">
         <div class="header-left">
             {% with request.resolver_match.url_name as url_name %}
