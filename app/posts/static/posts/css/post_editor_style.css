@@ -1,7 +1,17 @@
+.content-nested {
+    display: flex;
+}
+
 #main {
     display: flex;
     min-width: 100%;
     box-shadow: 0 0 15px 0 firebrick;
+}
+
+#main > .block-L,
+#main > .block-M,
+#main > .block-R {
+    height: calc(100% - 20px);
 }
 
 #main > div {
