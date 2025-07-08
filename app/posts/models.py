@@ -62,6 +62,17 @@ class TagGroup(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.name:
+            counter = 1
+            base_name = 'Untitled TagGroup {}'
+            unique_name = base_name.format(counter)
+            while TagGroup.objects.filter(name=unique_name, user=self.user).exists():
+                counter += 1
+                unique_name = base_name.format(counter)
+            self.name = unique_name
+        super().save(*args, **kwargs)
+
     def clear_tags(self):
         """ Deleting the Tags that are not used in any other TagGroup or ANY Post"""
         # TODO seems inefficient, fetches all Tags before Counter
