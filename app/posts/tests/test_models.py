@@ -774,3 +774,17 @@ class UniqueConstraintOnCreationTests(TestCase):
         TagGroup.objects.create(user=self.user, name='Tag Group')
         with self.assertRaises(IntegrityError):
             TagGroup.objects.create(user=self.user, name='Tag Group')
+
+    def test_automatic_naming_dont_raise_errors(self):
+        """
+        Test that automatic naming works when the name is not provided
+        Names should follow the pattern "Untitled TagGroup {number}"
+            even if there are other TagGroups with that name
+        """
+        TagGroup.objects.create(user=self.user, name='Untitled TagGroup 2')
+        TagGroup.objects.create(user=self.user)  # Untitled TagGroup 1
+        TagGroup.objects.create(user=self.user)  # Untitled TagGroup 3
+
+        self.assertEqual(TagGroup.objects.count(), 3)
+        self.assertTrue(TagGroup.objects.filter(name='Untitled TagGroup 1').exists())
+        self.assertTrue(TagGroup.objects.filter(name='Untitled TagGroup 3').exists())
