@@ -761,3 +761,16 @@ class TagGroupClearTagsTests(TestCase):
         self.assertTrue(Tag.objects.filter(id=self.tag_other_post.id).exists())
 
         self.assertEqual(Tag.objects.count(), tags_before_clear)
+
+
+class UniqueConstraintOnCreationTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(email='test_unique@example.com')
+
+    def test_unique_constraint_on_tg_creation(self):
+        """
+        Test that a tag group cannot be created with the same name as another tag group
+        """
+        TagGroup.objects.create(user=self.user, name='Tag Group')
+        with self.assertRaises(IntegrityError):
+            TagGroup.objects.create(user=self.user, name='Tag Group')
