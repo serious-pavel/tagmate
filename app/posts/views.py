@@ -39,14 +39,14 @@ def post_editor(request, post_pk=None, tg_pk=None):
             new_post_title = request.POST.get('new_post_title') or 'Untitled Post'
             new_post = Post(user=request.user, title=new_post_title)
             new_post.save()
-            messages.success(request, f'New post {new_post.title} created')
+            messages.success(request, f'New Post {new_post.title} created')
             return redirect_post_editor(request, new_post.id, tg_pk)
 
         if action == 'create_tg':
             new_tg_name = request.POST.get('new_tg_name')
             new_tg = TagGroup(user=request.user, name=new_tg_name)
             new_tg.save()
-            messages.success(request, f'New post {new_tg.name} created')
+            messages.success(request, f'New TagGroup {new_tg.name} created')
             return redirect_post_editor(request, post_pk, new_tg.id)
 
         tags_to_attach = request.POST.get('tags_to_attach')
