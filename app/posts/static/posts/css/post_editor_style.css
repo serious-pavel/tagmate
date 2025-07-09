@@ -3,10 +3,6 @@
     flex-direction: column;
 }
 
-.content-main {
-    overflow: hidden;
-}
-
 #main {
     display: flex;
     min-width: 100%;
