@@ -48,6 +48,9 @@ class TestTagReorderUI(StaticLiveServerTestCase):
         )
 
         try:
+            # Set window size to ensure all content is visible
+            driver.set_window_size(1366, 768)
+
             # Set sessionid cookie for authentication
             driver.get(self.live_server_url)
             # adding cookie
