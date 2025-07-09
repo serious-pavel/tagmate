@@ -161,19 +161,20 @@
 
                 {% endif %}
             </div>
-
-            <div class="post-tg-intermediate">
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="copy_tags_to_tg">
-                    <button>Copy Tags to TagGroup ⬇</button>
-                </form>
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="copy_tags_to_post">
-                    <button>⬆ Copy Tags to Post</button>
-                </form>
-            </div>
+            {% if current_post and current_tg %}
+                <div class="post-tg-intermediate">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="copy_tags_to_tg">
+                        <button>Copy Tags to TagGroup ⬇</button>
+                    </form>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="copy_tags_to_post">
+                        <button>⬆ Copy Tags to Post</button>
+                    </form>
+                </div>
+            {% endif %}
 
             <div class="tg-editor item-editor">
                 {% if current_tg %}
