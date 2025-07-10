@@ -136,7 +136,7 @@
                     <form method="post" class="delete-form">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="delete_post">
-                        <button class="highlighted delete-btn">Delete Post</button>
+                        <button type="button" class="highlighted delete-btn" id="show-delete-modal-btn">Delete Post</button>
                     </form>
 
                     <div class="tags-editor">
