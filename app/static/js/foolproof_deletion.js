@@ -1,36 +1,53 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const modalBg = document.getElementById('delete-modal-bg');
-    const showModalBtn = document.getElementById('show-delete-modal-btn');
-    const cancelBtn = document.getElementById('cancel-delete-btn');
-    const confirmBtn = document.getElementById('confirm-delete-btn');
-    const deleteForm = document.querySelector('.delete-form');
+    let modalBg = document.getElementById('delete-modal-bg');
+    let confirmBtn = document.getElementById('confirm-delete-btn');
+    let cancelBtn = document.getElementById('cancel-delete-btn');
+    let modalText = document.getElementById('delete-modal-text');
+    let targetForm = null;
 
-    // Show Modal
-    showModalBtn.addEventListener('click', function(e) {
-        modalBg.style.display = 'flex';
+    // Optionally, set default messages per type
+    const MESSAGES = {
+        post: "Are you sure you want to delete this post?",
+        taggroup: "Are you sure you want to delete this TagGroup?",
+        default: "Are you sure you want to delete this item?"
+    };
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function(evt) {
+            evt.preventDefault();
+            targetForm = btn.closest('form');
+
+            // Look for a custom message or type
+            let type = btn.getAttribute('data-delete-type');
+            let custom = btn.getAttribute('data-delete-message');
+            modalText.textContent = custom || MESSAGES[type] || MESSAGES.default;
+
+            modalBg.style.display = 'flex';
+        });
     });
 
-    // Cancel / Hide Modal
-    cancelBtn.addEventListener('click', function(e) {
+    confirmBtn.addEventListener('click', function() {
+        if (targetForm) {
+            targetForm.submit();
+        }
+    });
+    cancelBtn.addEventListener('click', function() {
         modalBg.style.display = 'none';
+        targetForm = null;
     });
 
-    // Delete Confirmed
-    confirmBtn.addEventListener('click', function(e) {
-        deleteForm.submit();
-    });
-
-    // Click outside modal window = cancel
-    modalBg.addEventListener('mousedown', function(e) {
-        if (e.target === modalBg) {
+    // Clicking on background closes modal
+    modalBg.addEventListener('mousedown', function(evt) {
+        if (evt.target === modalBg) {
             modalBg.style.display = 'none';
+            targetForm = null;
         }
     });
 
-    // (optional) ESC key closes modal
     document.addEventListener('keydown', function(e) {
         if (modalBg.style.display !== 'none' && e.key === "Escape") {
             modalBg.style.display = 'none';
+            targetForm = null;
         }
     });
 });
