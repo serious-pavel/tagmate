@@ -273,17 +273,29 @@ input.edit-like-text {
     top: -10px;
 }
 
-.item-editor form{
+.item-editor form {
     display: flex;
     align-items: center;
 }
 
-.item-editor .update-form {
+.form-wrapper-outer {
+  display: flex;
     justify-content: center;
 }
 
-.item-editor .delete-form {
-    justify-content: flex-end;
+.form-wrapper-inner {
+  display: inline-block;
+    position: relative;
+}
+
+.delete-form {
+  position: absolute;
+  right: -130px;
+  bottom: 5px;
+}
+
+.item-editor .update-form {
+    justify-content: center;
 }
 
 .tabs {
