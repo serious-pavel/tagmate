@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}Profile{% endblock title%}
+{% block title %}Profile{% endblock title %}
 
 {% block content %}
-{% if user.is_authenticated %}
+  {% if user.is_authenticated %}
     <img src="{{ user.profile_picture }}" alt="" class="rounded">
     <p>You're logged in as {{ user.full_name }} ({{ user.email }})</p>
     <p>Your uid is {{ social_acc.uid }}</p>
     <a href="{% url 'account_logout' %}">Logout</a>
     {% if user.is_staff and user.is_superuser %}
-        <a href="{% url 'admin:index' %}">Admin</a>
+      <a href="{% url 'admin:index' %}">Admin</a>
     {% endif %}
-{% else %}
+  {% else %}
     <p>You are not logged in</p>
     <a href="{% url 'google_login' %}">Login</a>
-{% endif %}
+  {% endif %}
 {% endblock content %}
