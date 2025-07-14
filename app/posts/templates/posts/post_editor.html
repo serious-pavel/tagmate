@@ -139,7 +139,7 @@
                             <form method="post" class="delete-form">
                                 {% csrf_token %}
                                 <input type="hidden" name="action" value="delete_post">
-                                <button type="button" class="delete-btn" data-delete-type="post"></button>
+                                <button type="button" class="delete-btn" data-delete-type="post" title="Delete Post"></button>
                             </form>
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                             <form method="post" class="delete-form">
                                 {% csrf_token %}
                                 <input type="hidden" name="action" value="delete_tg">
-                                <button type="button" class="delete-btn" data-delete-type="taggroup"></button>
+                                <button type="button" class="delete-btn" data-delete-type="taggroup" title="Delete TagGroup"></button>
                             </form>
                         </div>
                     </div>
