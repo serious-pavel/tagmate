@@ -39,6 +39,15 @@
   width: 25%;
 }
 
+
+/* common styles */
+.highlighted {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 3px 2px red ;
+}
+
+
+/* app-block-L styles */
 .list {
   display: flex;
   flex-direction: column;
@@ -77,6 +86,70 @@
   overflow-wrap: break-word;
 }
 
+.fake-btn{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 5px;
+  translate: -5px -5px;
+  z-index: 2;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  display: none;
+}
+
+.list-item:hover .close-btn{
+  display: block;
+  z-index: 1;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 5px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 6px 0;
+  background: #d5c9c9;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+  transition: background 0.2s, border-color 0.2s;
+  font-size: inherit;
+  font-weight: 300;
+}
+
+.tab-btn.active {
+  background: #ffeaea;
+  font-weight: 400;
+}
+
+#recent-posts,
+#recent-tgs {
+  display: none;
+}
+
+/* Only show if .blockL-show-posts or .blockL-show-tgs is present on <body> */
+body.blockL-show-posts #recent-posts {
+  display: flex;
+}
+body.blockL-show-tgs #recent-tgs {
+  display: flex;
+}
+
+
+/* app-block-M styles */
 .tag-list {
   display: flex;
   align-content: flex-start;
@@ -132,40 +205,44 @@
   display:block;
 }
 
-.highlighted {
-  background-color: rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 0 3px 2px red ;
-}
-
-#post-preview-tags {
-  overflow: hidden;
-  font-size: 12px;
-}
-
-.fake-btn{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: block;
+.input-button-group {
+  display: flex;
+  width: 97%;
+  margin: 10px;
   border-radius: 5px;
-  translate: -5px -5px;
-  z-index: 2;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  background: #fff;
 }
 
-.close-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+.input-button-group input[type="text"] {
+  flex: 1;
   border: none;
-  display: none;
+  padding: 5px;
+  font-size: inherit;
+  outline: none;
+  border-radius: 0;
+  background: transparent;
+  min-width: 0;
 }
 
-.list-item:hover .close-btn{
-  display: block;
-  z-index: 1;
+.input-button-group button[type="submit"] {
+  border: none;
+  background: #1976d2;
+  color: #fff;
+  font-size: 1em;
+  padding: 0 2em;
+  margin-left: 0;
+  border-radius: 0;
+  transition: background 0.2s;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.input-button-group button[type="submit"]:hover {
+  background: #135a96;
 }
 
 .post-tg-intermediate {
@@ -243,79 +320,9 @@ input.edit-like-text {
   justify-content: center;
 }
 
-.tabs {
-  display: flex;
-  margin-bottom: 10px;
-  gap: 5px;
-}
 
-.tab-btn {
-  flex: 1;
-  padding: 6px 0;
-  background: #d5c9c9;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px 5px 0 0;
-  transition: background 0.2s, border-color 0.2s;
-  font-size: inherit;
-  font-weight: 300;
-}
-
-.tab-btn.active {
-  background: #ffeaea;
-  font-weight: 400;
-}
-
-#recent-posts,
-#recent-tgs {
-  display: none;
-}
-
-/* Only show if .blockL-show-posts or .blockL-show-tgs is present on <body> */
-body.blockL-show-posts #recent-posts {
-  display: flex;
-}
-body.blockL-show-tgs #recent-tgs {
-  display: flex;
-}
-
-/* Make the form group a flex container */
-.input-button-group {
-  display: flex;
-  width: 97%;
-  margin: 10px;
-  border-radius: 5px;
+/* app-block-R styles */
+#post-preview-tags {
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  background: #fff;
-}
-
-.input-button-group input[type="text"] {
-  flex: 1;
-  border: none;
-  padding: 5px;
-  font-size: inherit;
-  outline: none;
-  border-radius: 0;
-  background: transparent;
-  min-width: 0;
-}
-
-.input-button-group button[type="submit"] {
-  border: none;
-  background: #1976d2;
-  color: #fff;
-  font-size: 1em;
-  padding: 0 2em;
-  margin-left: 0;
-  border-radius: 0;
-  transition: background 0.2s;
-  cursor: pointer;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-}
-
-.input-button-group button[type="submit"]:hover {
-  background: #135a96;
+  font-size: 12px;
 }
