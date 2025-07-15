@@ -37,9 +37,9 @@
       </div>
     </div>
 
-    <div id="main">
+    <div id="app-main">
 
-      <div class="block-L">
+      <div class="app-block app-block-L">
 
         <div class="tabs">
           <button id="tab-posts" class="tab-btn" type="button">Posts</button>
@@ -111,7 +111,7 @@
         </div>
       </div>
 
-      <div class="block-M">
+      <div class="app-block app-block-M">
 
         <div class="post-editor item-editor">
           {% if current_post %}
@@ -235,7 +235,7 @@
         </div>
       </div>
 
-      <div class="post-preview block-R">
+      <div class="app-block app-block-R post-preview">
         Post {{ current_post.title }} preview:
         <div class="post-preview-text">
           <form method="post" class="update-form">
