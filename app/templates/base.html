@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <link rel="shortcut icon" href="{% static 'img/hashtag-square-svgrepo-com.svg' %}" sizes="any">
   <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/messaging_style.css' %}">
   {% block links %}
   {% endblock links %}
   <script>{% block script %}{% endblock script %}</script>
@@ -44,6 +45,13 @@
 </div>
 <div class="content-main">
   <div class="content-nested">
+    <div class="message-area">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
     {% block content %}
     {% endblock content %}
   </div>
