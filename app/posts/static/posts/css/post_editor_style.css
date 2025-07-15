@@ -354,27 +354,3 @@ body.blockL-show-tgs #recent-tgs {
 .input-button-group button[type="submit"]:hover {
   background: #135a96;
 }
-
-.modal-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right:0;
-  bottom:0;
-  z-index: 1000;
-  background: rgba(40,40,40,0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(2px);
-}
-
-.modal-window {
-  background: #fff;
-  border-radius: 8px;
-  padding: 2em;
-  box-shadow: 0 4px 40px rgba(0,0,0,0.2);
-  max-width: 320px;
-  text-align: center;
-  z-index: 1001;
-}
