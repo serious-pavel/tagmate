@@ -224,23 +224,7 @@ input.edit-like-text {
 }
 
 .update-btn {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s;
-}
-
-.update-btn.btn-active {
-  opacity: 1;
-  pointer-events: auto;
-}
-.update-form {
-  position: relative;
-}
-
-.update-form .update-btn {
-  position: absolute;
-  right: 0;
-  top: -10px;
+  display: none;
 }
 
 .item-editor form {
