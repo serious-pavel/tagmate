@@ -196,7 +196,7 @@
 }
 
 textarea.edit-like-text {
-  width: 97%;
+  width: calc(100% - 10px);
   min-height: 115px;
 }
 
