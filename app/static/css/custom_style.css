@@ -77,7 +77,7 @@ body {
   margin-right: 16px;
 }
 
-.header-right a:not(:last-child) {
+.header-right :not(:last-child) {
   margin-left: 16px;
 }
 
