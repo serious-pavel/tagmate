@@ -30,6 +30,10 @@
   --warning: oklch(0.5 0.05 100);
   --success: oklch(0.5 0.05 160);
   --info: oklch(0.5 0.05 260);
+
+  --text-size-L: 1.1em;
+  --text-size-M: 1em;
+  --text-size-S: 0.8em;
 }
 body.dark {
   /* hsl (fallback color) */
@@ -62,6 +66,10 @@ body.dark {
   --warning: oklch(0.7 0.05 100);
   --success: oklch(0.7 0.05 160);
   --info: oklch(0.7 0.05 260);
+}
+
+* {
+  color: var(--text-muted);
 }
 
 .content-nested {
@@ -343,12 +351,14 @@ body.blockL-show-tgs #recent-tgs {
 textarea.edit-like-text {
   width: calc(100% - 10px);
   min-height: 115px;
+  font-size: var(--text-size-M);
 }
 
 input.edit-like-text {
   width: auto;
   min-width: 1em;
   text-align: center;
+  font-size: var(--text-size-L);
 }
 
 .update-btn {
@@ -394,5 +404,14 @@ input.edit-like-text {
 /* app-block-R styles */
 #post-preview-tags {
   overflow: hidden;
-  font-size: 12px;
+  font-size: var(--text-size-S);
+}
+
+.post-preview:not(div) {
+  color: var(--text);
+  font-size: var(--text-size-L);
+}
+
+.post-preview-text .update-form {
+  margin: 10px 0;
 }
