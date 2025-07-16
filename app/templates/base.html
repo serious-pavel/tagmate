@@ -11,6 +11,7 @@
   {% endblock links %}
   <script>{% block script %}{% endblock script %}</script>
   <script src="{% static 'js/show_messages.js' %}"></script>
+  <script src="{% static 'js/toggle_theme.js' %}"></script>
   {% block scripts %}
   {% endblock scripts %}
   <title>TagMate - {% block title %}{% endblock title %}</title>
@@ -36,6 +37,11 @@
   </div>
   TagMate
   <div class="header-right">
+    <div class="theme-toggle">
+      <button id="themeToggleBtn" aria-label="Toggle theme" style="background: black; border: none;">
+        <span id="themeLabel" style="font-size: x-large;">🌞</span>
+      </button>
+    </div>
     {% block header-filter %}
       <a href="https://github.com/serious-pavel/personal_site"><img src="{% static 'img/github-142-svgrepo-com.svg' %}"
                                                                     alt=""></a>
