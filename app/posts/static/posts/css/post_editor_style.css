@@ -23,6 +23,7 @@
   --highlight: oklch(1 0.04 239);
   --border: oklch(0.6 0.04 239);
   --border-muted: oklch(0.7 0.04 239);
+  --border-light: oklch(0.8 0.04 239);
   --primary: oklch(0.4 0.1 239);
   --secondary: oklch(0.4 0.1 59);
   --danger: oklch(0.5 0.05 30);
@@ -322,7 +323,7 @@ body.blockL-show-tgs #recent-tgs {
 
 .edit-like-text {
   border: none;
-  background: var(--bg-dark);
+  background: var(--bg);
   font: inherit;
   padding: 5px;
   margin: 0;
@@ -330,6 +331,13 @@ body.blockL-show-tgs #recent-tgs {
   resize: none; /* for textarea */
   box-shadow: inset 1px 1px 4px var(--border-muted);
   border-radius: 5px;
+  color: var(--text-muted);
+}
+
+.edit-like-text:focus {
+  background: var(--bg-light);
+  box-shadow: inset 1px 1px 4px var(--border-light);  /* --border-light didn't set for dark mode */
+  outline: none;
 }
 
 textarea.edit-like-text {
@@ -341,11 +349,6 @@ input.edit-like-text {
   width: auto;
   min-width: 1em;
   text-align: center;
-}
-
-.edit-like-text:focus {
-  background: rgba(255, 255, 255, 0.32);
-  outline: none;
 }
 
 .update-btn {
