@@ -145,7 +145,6 @@ body.theme-dark {
 
 .list-item {
   text-decoration: none;
-  color: black;
   padding: 5px;
   background-color: rgba(0, 0, 0, 0.12);
   box-shadow: 1px -1px 1px 0 rgba(0, 0, 0, 0.2);
@@ -153,19 +152,20 @@ body.theme-dark {
   position: relative;
 }
 
+.list-item-title {
+  font-size: var(--text-size-M);
+  color: var(--text-muted);
+  overflow: hidden;
+  overflow-wrap: break-word;
+}
+
 .list-item-date {
   display: flex;
   gap: 5px;
   justify-content: flex-end;
   font-size: var(--text-size-S);
+  color: var(--text-dimmed);
   font-style: italic;
-  color: var(--text-muted);
-}
-
-.list-item-title {
-  font-size: var(--text-size-M);
-  overflow: hidden;
-  overflow-wrap: break-word;
 }
 
 .fake-btn{
