@@ -29,6 +29,7 @@ body.theme-light {
   --bg-light: oklch(1 0.02 239);
   --text: oklch(0.15 0.04 239);
   --text-muted: oklch(0.4 0.04 239);
+  --text-dimmed: oklch(0.6 0.04 239);
   --highlight: oklch(1 0.04 239);
   --border: oklch(0.6 0.04 239);
   --border-muted: oklch(0.7 0.04 239);
@@ -61,6 +62,7 @@ body.theme-dark {
   --bg-light: oklch(0.3 0.02 239);
   --text: oklch(0.96 0.04 239);
   --text-muted: oklch(0.76 0.04 239);
+  --text-dimmed: oklch(0.56 0.04 239);
   --highlight: oklch(0.5 0.04 239);
   --border: oklch(0.4 0.04 239);
   --border-muted: oklch(0.3 0.04 239);
@@ -157,7 +159,7 @@ body.theme-dark {
   justify-content: flex-end;
   font-size: 13px;
   font-style: italic;
-  color: rgba(0, 0, 0, 0.46);
+  color: var(--text-muted);
 }
 
 .list-item-title {
