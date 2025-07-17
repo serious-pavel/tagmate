@@ -157,13 +157,13 @@ body.theme-dark {
   display: flex;
   gap: 5px;
   justify-content: flex-end;
-  font-size: 13px;
+  font-size: var(--text-size-S);
   font-style: italic;
   color: var(--text-muted);
 }
 
 .list-item-title {
-  font-size: 15px;
+  font-size: var(--text-size-M);
   overflow: hidden;
   overflow-wrap: break-word;
 }
