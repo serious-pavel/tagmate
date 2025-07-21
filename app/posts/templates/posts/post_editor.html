@@ -96,21 +96,24 @@
               <button class="close-btn" onclick="showItemCreate('tg')">x</button>
             </div>
           </div>
-          {% for tg in user.tag_groups.all|dictsortreversed:"updated_at" %}
-            <a class="list-item{% if tg.id == current_tg.id %} highlighted{% endif %}" href=
-              {% if current_post %}
-                "{% url 'post_tg_editor' post_pk=current_post.id tg_pk=tg.id %}">
-              {% else %}
-                "{% url 'tg_editor' tg_pk=tg.id %}">
-              {% endif %}
-            <div class="list-item-title">
-              {{ tg.name }}
-            </div>
-            <div class="list-item-date">
-              {{ tg.updated_at|date:"d M'y" }}
-            </div>
-            </a>
-          {% endfor %}
+          <div class="list-inner">
+            {% for tg in user.tag_groups.all|dictsortreversed:"updated_at" %}
+              <a class="list-item{% if tg.id == current_tg.id %} highlighted{% endif %}" href=
+                {% if current_post %}
+                  "{% url 'post_tg_editor' post_pk=current_post.id tg_pk=tg.id %}">
+                {% else %}
+                  "{% url 'tg_editor' tg_pk=tg.id %}">
+                {% endif %}
+              <div class="list-item-title">
+                {{ tg.name }}
+              </div>
+              <div class="list-item-date">
+                {{ tg.updated_at|date:"d M'y" }}
+              </div>
+              </a>
+            {% endfor %}
+          </div>
+          <div class="list-end"></div>
         </div>
       </div>
 
