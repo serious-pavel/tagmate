@@ -116,9 +116,9 @@ body.theme-dark {
 }
 
 .app-block-R {
-  min-width: 300px;
-  max-width: 600px;
-  width: 25%;
+  min-width: 22rem;
+  width: 33%;
+  overflow-wrap: break-word;
 }
 
 
