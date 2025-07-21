@@ -60,21 +60,24 @@
             </form>
             <button class="close-btn" onclick="showItemCreate('post')">x</button>
           </div>
-          {% for post in user.posts.all|dictsortreversed:"updated_at" %}
-            <a class="list-item{% if post.id == current_post.id %} highlighted{% endif %}" href=
-              {% if current_tg %}
-                "{% url 'post_tg_editor' post_pk=post.id tg_pk=current_tg.id %}">
-              {% else %}
-                "{% url 'post_editor' post_pk=post.id %}">
-              {% endif %}
-            <div class="list-item-title">
-              {{ post.title }}
-            </div>
-            <div class="list-item-date">
-              {{ post.created_at|date:"d M'y" }}
-            </div>
-            </a>
-          {% endfor %}
+          <div class="list-inner">
+            {% for post in user.posts.all|dictsortreversed:"updated_at" %}
+              <a class="list-item{% if post.id == current_post.id %} highlighted{% endif %}" href=
+                {% if current_tg %}
+                  "{% url 'post_tg_editor' post_pk=post.id tg_pk=current_tg.id %}">
+                {% else %}
+                  "{% url 'post_editor' post_pk=post.id %}">
+                {% endif %}
+              <div class="list-item-title">
+                {{ post.title }}
+              </div>
+              <div class="list-item-date">
+                {{ post.created_at|date:"d M'y" }}
+              </div>
+              </a>
+            {% endfor %}
+          </div>
+          <div class="list-end"></div>
         </div>
 
         <div id="recent-tgs" class="list">
