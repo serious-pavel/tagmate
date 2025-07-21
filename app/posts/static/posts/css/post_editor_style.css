@@ -60,7 +60,7 @@
   text-decoration: none;
   padding: 5px;
   background-color: var(--bg-dark);
-  box-shadow: 1px -1px 1px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 5px var(--border);;
   border-radius: 5px;
   position: relative;
   overflow: hidden;
@@ -347,4 +347,18 @@ input.edit-like-text {
 .highlighted {
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 0 3px 2px red ;
+}
+
+.list-item.highlighted {
+  background-color: var(--bg-light);
+  box-shadow: 2px 2px 5px var(--primary-inverted);
+}
+
+.list-item.highlighted > .list-item-date {
+  background: linear-gradient(to right, transparent, var(--bg-light) 2.5rem);
+  color: var(--text-muted);
+}
+
+.list-item.highlighted > .list-item-title {
+  color: var(--text);
 }
