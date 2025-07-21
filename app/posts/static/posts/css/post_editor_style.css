@@ -42,13 +42,6 @@
 }
 
 
-/* common styles */
-.highlighted {
-  background-color: rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 0 3px 2px red ;
-}
-
-
 /* app-block-L styles */
 .list {
   display: flex;
@@ -347,4 +340,11 @@ input.edit-like-text {
 
 .post-preview-text .update-form {
   margin: 10px 0;
+}
+
+
+/* common styles */
+.highlighted {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 3px 2px red ;
 }
