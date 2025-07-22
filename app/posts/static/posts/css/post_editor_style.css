@@ -388,3 +388,8 @@ input.edit-like-text {
 .list-item.highlighted > .list-item-title {
   color: var(--text);
 }
+
+.highlighted-text {
+  color: var(--text-dimmed);
+  font-weight: 500;
+}
