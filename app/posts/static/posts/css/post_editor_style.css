@@ -289,7 +289,7 @@ body.blockL-show-tgs #recent-tgs {
   margin: 0;
   overflow: hidden !important;
   resize: none; /* for textarea */
-  box-shadow: inset 1px 1px 4px var(--border-muted);
+  box-shadow: inset 1px 1px 4px var(--border-muted), inset 1px 1px 3px var(--border-light);
   border-radius: 5px;
   color: var(--text-muted);
 }
