@@ -114,6 +114,35 @@
   padding: 0.3rem 0.3rem 0 3.5rem;
 }
 
+.fake-btn path.stroke {
+  stroke: var(--primary-inverted);
+}
+
+.fake-btn:hover path.stroke {
+  stroke: var(--primary);
+}
+
+.fake-btn:active path.stroke {
+  stroke: var(--primary-inverted);
+}
+
+.fake-btn path.circle {
+  stroke: var(--primary);
+}
+
+.fake-btn:active path.circle {
+  stroke: var(--primary-inverted);
+}
+
+.fake-btn path.opacity-layer {
+  fill: var(--bg-light);
+}
+
+.fake-btn:hover path.opacity-layer,
+.fake-btn:active path.opacity-layer {
+  fill: var(--bg-dark);
+}
+
 .fake-btn{
   position: absolute;
   width: 100%;
@@ -122,6 +151,16 @@
   border-radius: 5px;
   translate: -5px -5px;
   z-index: 2;
+  background: var(--bg-dark);
+}
+
+.fake-btn:hover {
+  background: var(--bg);
+}
+
+.fake-btn:active {
+  background: var(--bg-light);
+  transform: translate(1px, 1px);
 }
 
 .close-btn {
