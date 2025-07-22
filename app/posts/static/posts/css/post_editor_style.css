@@ -377,7 +377,7 @@ input.edit-like-text {
 
 .list-item.highlighted {
   background-color: var(--bg-light);
-  box-shadow: 2px 2px 5px var(--primary-inverted);
+  box-shadow: 2px 2px 5px var(--primary-inverted), inset 0 0 4px 0 var(--primary);
 }
 
 .list-item.highlighted > .list-item-date {
