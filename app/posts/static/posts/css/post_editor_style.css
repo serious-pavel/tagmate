@@ -1,6 +1,7 @@
 :root {
   --gap: 10px;
   --padding: 10px;
+  --tab-height: 2rem;
 }
 
 .content-nested {
@@ -52,11 +53,46 @@
 
 
 /* app-block-L styles */
+.tabs {
+  display: flex;
+  gap: var(--gap);
+  height: var(--tab-height);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0 1ch;
+  background: var(--bg);
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.2s, border-color 0.2s;
+  font-size: inherit;
+  font-weight: 300;
+  color: var(--text-muted);
+  background-color: var(--bg-dark);
+  box-shadow: inset 0 0 5px var(--border), 1px 1px 2px var(--border);
+}
+
+.tab-btn.active {
+  background: var(--bg-light);
+  font-weight: 400;
+  color: var(--text);
+  box-shadow: inset 0 0 4px 0 var(--primary), 1px 1px 5px 1px var(--primary-inverted);
+}
+
+.list-item,
+.tabs {
+  margin: 0 var(--padding);
+}
+
 .list {
+  margin-top: var(--gap);
   display: flex;
   flex-direction: column;
   gap: var(--gap);
-  height: calc(100% - 50px);
+  /* Height should be 100% minus all the elements before with gaps and paddings */
+  height: calc(100% - var(--padding) - var(--tab-height) - var(--gap));
   position: relative;
 }
 
@@ -89,11 +125,6 @@
   min-height: 3rem;
   max-height: 3rem;
   line-height: 1.5;
-}
-
-.list-item,
-.tabs {
-  margin: 0 var(--padding);
 }
 
 .list-item:last-child {
@@ -181,35 +212,6 @@
 .list-item:hover .close-btn{
   display: block;
   z-index: 1;
-}
-
-.tabs {
-  display: flex;
-  margin-bottom: 10px;
-  gap: var(--gap);
-  height: 2rem;
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 0 1ch;
-  background: var(--bg);
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.2s, border-color 0.2s;
-  font-size: inherit;
-  font-weight: 300;
-  color: var(--text-muted);
-  background-color: var(--bg-dark);
-  box-shadow: inset 0 0 5px var(--border), 1px 1px 2px var(--border);
-}
-
-.tab-btn.active {
-  background: var(--bg-light);
-  font-weight: 400;
-  color: var(--text);
-  box-shadow: inset 0 0 4px 0 var(--primary), 1px 1px 5px 1px var(--primary-inverted);
 }
 
 #recent-posts,
