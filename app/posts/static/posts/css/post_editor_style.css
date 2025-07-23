@@ -187,11 +187,12 @@
   display: flex;
   margin-bottom: 10px;
   gap: var(--gap);
+  height: 2rem;
 }
 
 .tab-btn {
   flex: 1;
-  padding: 6px 0;
+  padding: 0 1ch;
   background: var(--bg);
   border: none;
   cursor: pointer;
