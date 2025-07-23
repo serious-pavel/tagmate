@@ -19,9 +19,10 @@
 }
 
 #app-main > .app-block {
-  height: calc(100% - 20px);
-  overflow: auto;
   padding: var(--padding);
+  /* Prevent padding affecting height of block */
+  height: calc(100% - calc(var(--padding) * 2));
+  overflow: auto;
   background-color: var(--bg);
   border-radius: 10px;
   box-shadow: 2px 2px 5px var(--border);
