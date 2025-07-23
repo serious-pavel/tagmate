@@ -198,6 +198,18 @@
   transform: translate(1px, 1px);
 }
 
+.list-item input[type="text"] {
+    border: none;
+    padding: 5px;
+    font-size: var(--text-size-S);
+    outline: none;
+    background: var(--bg-light);
+    min-width: 0;
+    width: calc(100% - 10px);
+    border-radius: 5px;
+    text-align: center;
+}
+
 .close-btn {
   position: absolute;
   top: 5px;
