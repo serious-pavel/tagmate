@@ -27,6 +27,9 @@
   border-radius: 10px;
   box-shadow: 2px 2px 5px var(--border);
 }
+#app-main > .app-block-L {
+  padding: var(--padding) 0;
+}
 
 .app-block-L {
   min-width: 13rem;
@@ -52,7 +55,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) / 2);
+  gap: var(--gap);
   height: calc(100% - 50px);
   position: relative;
 }
@@ -86,11 +89,11 @@
   min-height: 3rem;
   max-height: 3rem;
   line-height: 1.5;
-  margin: 0 calc(var(--padding) / 2);
 }
 
-.list-item:first-child {
-  margin-top: calc(var(--gap) / 2);
+.list-item,
+.tabs {
+  margin: 0 var(--padding);
 }
 
 .list-item:last-child {
@@ -183,7 +186,7 @@
 .tabs {
   display: flex;
   margin-bottom: 10px;
-  gap: 5px;
+  gap: var(--gap);
 }
 
 .tab-btn {
