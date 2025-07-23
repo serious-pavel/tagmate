@@ -28,6 +28,7 @@
   border-radius: 10px;
   box-shadow: 2px 2px 5px var(--border);
 }
+
 #app-main > .app-block-L {
   padding: var(--padding) 0;
 }
@@ -178,7 +179,7 @@
   fill: var(--bg-dark);
 }
 
-.fake-btn{
+.fake-btn {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -199,15 +200,15 @@
 }
 
 .list-item input[type="text"] {
-    border: none;
-    padding: 5px;
-    font-size: var(--text-size-S);
-    outline: none;
-    background: var(--bg-light);
-    min-width: 0;
-    width: calc(100% - 10px);
-    border-radius: 5px;
-    text-align: center;
+  border: none;
+  padding: 5px;
+  font-size: var(--text-size-S);
+  outline: none;
+  background: var(--bg-light);
+  min-width: 0;
+  width: calc(100% - 10px);
+  border-radius: 5px;
+  text-align: center;
 }
 
 .close-btn {
