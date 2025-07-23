@@ -199,14 +199,20 @@
   transform: translate(1px, 1px);
 }
 
+.list-item label {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  flex-direction: column;
+}
+
 .list-item input[type="text"] {
   border: none;
-  padding: 5px;
+  padding: 4px;
   font-size: var(--text-size-S);
   outline: none;
   background: var(--bg-light);
   min-width: 0;
-  width: calc(100% - 10px);
   border-radius: 5px;
   text-align: center;
 }
