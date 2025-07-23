@@ -83,3 +83,7 @@ body.theme-dark {
 input[type="text"]::placeholder {
   color: var(--text-dimmed);
 }
+
+input[type="text"] {
+  box-shadow: inset 1px 1px 4px var(--border-muted), inset 1px 1px 3px var(--border-light);
+}

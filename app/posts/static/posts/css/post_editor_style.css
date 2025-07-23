@@ -303,7 +303,6 @@ body.blockL-show-tgs #recent-tgs {
   margin: 10px;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: 1px 1px 3px var(--border-muted);
   background: var(--bg-light);
 }
 
@@ -331,6 +330,7 @@ body.blockL-show-tgs #recent-tgs {
   font-weight: bold;
   display: flex;
   align-items: center;
+  box-shadow: inset 0 2px 4px var(--border-light);
 }
 
 .input-button-group button[type="submit"]:hover {
