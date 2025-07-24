@@ -202,6 +202,10 @@
   flex-direction: column;
 }
 
+.list-item label button {
+  height: 1.4rem;
+}
+
 .list-item input[type="text"] {
   border: none;
   padding: 4px;
