@@ -68,6 +68,7 @@
   color: var(--text-muted);
   background-color: var(--bg-dark);
   box-shadow: 2px 2px 5px var(--border), inset 1px 1px 4px var(--bg);
+  font-weight: 350;
 }
 
 .tab-btn,
@@ -80,7 +81,6 @@
   border: none;
   transition: background 0.2s, border-color 0.2s;
   font-size: inherit;
-  font-weight: 300;
 }
 
 .list-item {
@@ -100,13 +100,6 @@
   display: block;
   translate: -1ch -5px; /* Should be opposite of paren(list-item) padding */
   z-index: 2;
-}
-
-.tab-btn.active {
-  background: var(--bg-light);
-  font-weight: 400;
-  color: var(--text);
-  box-shadow: inset 0 0 4px 0 var(--primary), 1px 1px 5px 1px var(--primary-inverted);
 }
 
 .list-item,
@@ -447,18 +440,19 @@ input.edit-like-text {
   box-shadow: inset 0 0 3px 2px red ;
 }
 
-.tab-btn.active,
-.list-item.highlighted {
+.active {
+  font-weight: 400;
   background-color: var(--bg-light);
   box-shadow: 2px 2px 5px var(--primary), inset 0 0 2px 0 var(--primary);
+  color: var(--text);
 }
 
-.list-item.highlighted > .list-item-date {
+.list-item.active > .list-item-date {
   background: linear-gradient(to right, transparent, var(--bg-light) 2.5rem);
   color: var(--text-muted);
 }
 
-.list-item.highlighted > .list-item-title {
+.list-item.active > .list-item-title {
   color: var(--text);
 }
 
