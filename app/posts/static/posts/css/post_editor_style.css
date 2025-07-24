@@ -202,7 +202,7 @@
   flex-direction: column;
 }
 
-.list-item label button {
+.create-item-btn {
   height: 1.4rem;
 }
 
