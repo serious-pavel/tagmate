@@ -93,6 +93,8 @@ button {
   box-shadow: 1px 1px 1px 0px var(--primary), inset 0px 0px 1px 1px var(--bg);
   border: none;
   border-radius: 5px;
-  font-size: var(--text-size-S);
+  font-size: var(--text-size-M);
+  padding: 5px 1ch;
+  height: 2rem;
   color: var(--primary-inverted);
 }
