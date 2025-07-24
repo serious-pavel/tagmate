@@ -94,3 +94,14 @@ body {
 img.rounded {
   border-radius: 50%;
 }
+
+#themeToggleBtn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+#themeLabel {
+  font-size: 1.5rem;
+}
