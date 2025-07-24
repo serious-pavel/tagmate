@@ -203,7 +203,9 @@
 }
 
 .create-item-btn {
+  font-size: var(--text-size-S);
   height: 1.4rem;
+  padding: 0;
 }
 
 .list-item input[type="text"] {
