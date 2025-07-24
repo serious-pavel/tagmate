@@ -64,7 +64,7 @@
           </div>
           <div class="list-inner">
             {% for post in user.posts.all|dictsortreversed:"updated_at" %}
-              <a class="list-item{% if post.id == current_post.id %} highlighted{% endif %}" href=
+              <a class="list-item{% if post.id == current_post.id %} active{% endif %}" href=
                 {% if current_tg %}
                   "{% url 'post_tg_editor' post_pk=post.id tg_pk=current_tg.id %}">
                 {% else %}
@@ -102,7 +102,7 @@
           </div>
           <div class="list-inner">
             {% for tg in user.tag_groups.all|dictsortreversed:"updated_at" %}
-              <a class="list-item{% if tg.id == current_tg.id %} highlighted{% endif %}" href=
+              <a class="list-item{% if tg.id == current_tg.id %} active{% endif %}" href=
                 {% if current_post %}
                   "{% url 'post_tg_editor' post_pk=current_post.id tg_pk=tg.id %}">
                 {% else %}
