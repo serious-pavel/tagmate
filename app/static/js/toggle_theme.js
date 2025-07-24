@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   setTheme(theme);
 
-  document.getElementById("themeToggleBtn").addEventListener("click", function() {
+  document.getElementById("theme-toggle-btn").addEventListener("click", function() {
     theme = theme === "light" ? "dark" : "light";
     localStorage.setItem('theme', theme);
     setTheme(theme);
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
   function setTheme(theme) {
     document.body.classList.remove("theme-light", "theme-dark");
     document.body.classList.add("theme-" + theme);
-    document.getElementById("themeLabel").textContent = themeIcons[theme];
+    document.getElementById("theme-label").textContent = themeIcons[theme];
   }
 });
 

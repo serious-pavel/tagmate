@@ -95,13 +95,13 @@ img.rounded {
   border-radius: 50%;
 }
 
-#themeToggleBtn {
+#theme-toggle-btn {
   background: transparent;
   border: none;
   padding: 0;
   box-shadow: none;
 }
 
-#themeLabel {
+#theme-label {
   font-size: 1.5rem;
 }
