@@ -60,22 +60,27 @@
   height: var(--tab-height);
 }
 
+.tab-btn,
+.list-item,
+.fake-btn {
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--text-muted);
+  background-color: var(--bg-dark);
+  box-shadow: 2px 2px 5px var(--border), inset 1px 1px 4px var(--bg);
+}
+
+.tab-btn,
+.list-item {
+  padding: 5px 1ch;
+}
+
 .tab-btn {
   flex: 1;
   border: none;
   transition: background 0.2s, border-color 0.2s;
   font-size: inherit;
   font-weight: 300;
-}
-
-.list-item,
-.tab-btn {
-  padding: 5px 1ch;
-  border-radius: 5px;
-  cursor: pointer;
-  color: var(--text-muted);
-  background-color: var(--bg-dark);
-  box-shadow: 2px 2px 5px var(--border), inset 1px 1px 4px var(--bg);
 }
 
 .list-item {
@@ -86,6 +91,15 @@
   min-height: 3rem;
   max-height: 3rem;
   line-height: 1.5;
+}
+
+.fake-btn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  translate: -5px -5px;
+  z-index: 2;
 }
 
 .tab-btn.active {
@@ -176,18 +190,6 @@
 .fake-btn:hover path.opacity-layer,
 .fake-btn:active path.opacity-layer {
   fill: var(--bg-dark);
-}
-
-.fake-btn {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: 5px;
-  translate: -5px -5px;
-  z-index: 2;
-  background: var(--bg-dark);
-  box-shadow: 2px 2px 5px var(--border), inset 1px 1px 4px var(--bg);
 }
 
 .fake-btn:hover {
