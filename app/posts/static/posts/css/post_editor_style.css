@@ -412,15 +412,15 @@ input.edit-like-text {
 
 .delete-form {
   position: absolute;
-  right: -23px;
-  bottom: 5px;
+  right: -2rem;
+  top: 0.5rem;
 }
 
 .delete-btn {
   border: none;
   background-image: url(/static/img/remove-round-svgrepo-com.svg);
   background-repeat: no-repeat;
-  width: 20px;
+  height: 20px;
   aspect-ratio: 1;
   background-size: 100%;
   border-radius: 50%;
