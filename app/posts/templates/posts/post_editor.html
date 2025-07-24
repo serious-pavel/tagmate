@@ -60,7 +60,7 @@
                 <button class="create-item-btn">Add New Post</button>
               </label>
             </form>
-            <button class="close-btn" onclick="showItemCreate('post')">x</button>
+            <button class="close-btn" onclick="showItemCreate('post')">X</button>
           </div>
           <div class="list-inner">
             {% for post in user.posts.all|dictsortreversed:"updated_at" %}
@@ -98,7 +98,7 @@
                 <button class="create-item-btn">Add New TagGroup</button>
               </label>
             </form>
-            <button class="close-btn" onclick="showItemCreate('tg')">x</button>
+            <button class="close-btn" onclick="showItemCreate('tg')">X</button>
           </div>
           <div class="list-inner">
             {% for tg in user.tag_groups.all|dictsortreversed:"updated_at" %}
