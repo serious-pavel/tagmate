@@ -87,3 +87,12 @@ input[type="text"]::placeholder {
 input[type="text"] {
   box-shadow: inset 1px 1px 4px var(--border-muted), inset 1px 1px 3px var(--border-light);
 }
+
+button {
+  background-color: var(--primary);
+  box-shadow: 1px 1px 1px 0px var(--primary), inset 0px 0px 1px 1px var(--bg);
+  border: none;
+  border-radius: 5px;
+  font-size: var(--text-size-S);
+  color: var(--primary-inverted);
+}
