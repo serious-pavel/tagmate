@@ -153,7 +153,7 @@
                   <input type="text" name="tags_to_attach" id="post-tags-to-attach"
                          placeholder="Add tags (comma, hashtag or space separated)"
                          value="{{ post_tags_to_attach }}"
-                         {% if submitted_input_id == "post_tags_to_attach" %}autofocus{% endif %}
+                         {% if submitted_input_id == "post-tags-to-attach" %}autofocus{% endif %}
                          required>
                   <button type="submit">Add</button>
 
@@ -221,7 +221,7 @@
                   <input type="text" name="tags_to_attach" id="tg-tags-to-attach"
                          placeholder="Add tags (comma, hashtag or space separated)"
                          value="{{ tg_tags_to_attach }}"
-                         {% if submitted_input_id == "tg_tags_to_attach" %}autofocus{% endif %}
+                         {% if submitted_input_id == "tg-tags-to-attach" %}autofocus{% endif %}
                          required>
                   <button type="submit">Add</button>
                 </label>
