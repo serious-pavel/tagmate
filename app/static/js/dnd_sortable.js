@@ -25,7 +25,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     Sortable.create(list, {
         animation: 150,
+        onStart: () => list.classList.add('dragging'),
+        onChoose: () => list.classList.add('dragging'),
+        onUnchoose: () => list.classList.remove('dragging'),
         onEnd: function (evt) {
+            list.classList.remove('dragging')
             // After drag'n'drop, collect new tag order:
             const tagDivs = list.querySelectorAll(".tag");
             const tagOrder = [];

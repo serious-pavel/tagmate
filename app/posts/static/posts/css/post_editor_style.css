@@ -294,6 +294,13 @@ body.blockL-show-tgs #recent-tgs {
   cursor: move;
 }
 
+.tag-list.dragging,
+.tag-list.dragging .tag,
+.tag-list.dragging .tag.sortable-ghost,
+.tag-list.dragging .tag.sortable-chosen {
+  cursor: grabbing !important;
+}
+
 .tag:nth-child(1n+31) {
   --tag-box-shadow-color: #2e2e2e;
 
