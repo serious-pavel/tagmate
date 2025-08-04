@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 import json
@@ -19,6 +20,7 @@ def redirect_post_editor(request, post_pk=None, tg_pk=None):
     return redirect('index')
 
 
+@login_required(login_url='profile')
 def post_editor(request, post_pk=None, tg_pk=None):
     messages.info(request, '')
     context = dict()
