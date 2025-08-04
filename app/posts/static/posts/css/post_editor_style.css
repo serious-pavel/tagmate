@@ -294,11 +294,19 @@ body.blockL-show-tgs #recent-tgs {
   cursor: move;
 }
 
+.tag:hover button {
+  display:block;
+}
+
 .tag-list.dragging,
 .tag-list.dragging .tag,
 .tag-list.dragging .tag.sortable-ghost,
 .tag-list.dragging .tag.sortable-chosen {
   cursor: grabbing !important;
+}
+
+.tag-list.dragging .tag:hover button {
+  display: none;
 }
 
 .tag:nth-child(1n+31) {
@@ -319,10 +327,6 @@ body.blockL-show-tgs #recent-tgs {
   color: white;
   background: linear-gradient(to bottom, #2332a9 40%, #cdf5f8 40% 60%, #2332a9 60%);
   box-shadow: inset 0 0 3px 2px #2332a9, 0 0 2px 0 #cdf5f8;
-}
-
-.tag:hover button {
-  display:block;
 }
 
 .input-button-group {
