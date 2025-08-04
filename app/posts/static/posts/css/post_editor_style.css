@@ -272,6 +272,7 @@ body.blockL-show-tgs #recent-tgs {
   min-height: 200px;
   padding: 7px;
   border-radius: 10px;
+  user-select: none;
 }
 
 .tag {
@@ -290,6 +291,7 @@ body.blockL-show-tgs #recent-tgs {
   margin: 7px;
   font-size: 14px;
   padding: 5px 7px;
+  cursor: move;
 }
 
 .tag:nth-child(1n+31) {
