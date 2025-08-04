@@ -235,6 +235,11 @@
   font-weight: 600;
 }
 
+/* Choose any sibling regardless the position */
+.fake-btn:active ~ .close-btn {
+  top: 1px
+}
+
 .list-item:hover .close-btn {
   display: block;
   z-index: 1;
