@@ -23,14 +23,14 @@ body {
 .content-main {
   height: calc(100% - 50px);
   width: 100%;
-  background-color: darkgray;
+  background-color: var(--bg-dark);
   overflow: auto;
 }
 
 .content-nested {
   width: 80%;
   margin: auto;
-  background-color: lightgray;
+  background-color: var(--bg);
   padding: 20px;
   box-sizing: border-box; /* to count padding outside, don't need to  */
   min-height: 100%; /* calc(100% - 40px) for 2 paddings by 20px */
