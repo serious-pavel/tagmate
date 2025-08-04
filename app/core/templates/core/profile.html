@@ -5,14 +5,17 @@
 {% block content %}
   {% if user.is_authenticated %}
     <img src="{{ user.profile_picture }}" alt="" class="rounded">
-    <p>You're logged in as {{ user.full_name }} ({{ user.email }})</p>
+    <p>You're signed in as {{ user.full_name }} ({{ user.email }})</p>
     <p>Your uid is {{ social_acc.uid }}</p>
-    <a href="{% url 'account_logout' %}">Logout</a>
     {% if user.is_staff and user.is_superuser %}
-      <a href="{% url 'admin:index' %}">Admin</a>
+      You have access to the <a href="{% url 'admin:index' %}">Admin Panel</a>
     {% endif %}
   {% else %}
     <p>You are not logged in</p>
     <a href="{% url 'google_login' %}">Login</a>
   {% endif %}
+  <p><form method="post" action="{% url 'account_logout' %}">
+    {% csrf_token %}
+    <button>Sign Out</button>
+  </form>
 {% endblock content %}
