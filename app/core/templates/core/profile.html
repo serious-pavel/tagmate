@@ -10,12 +10,13 @@
     {% if user.is_staff and user.is_superuser %}
       You have access to the <a href="{% url 'admin:index' %}">Admin Panel</a>
     {% endif %}
+    <p>
+      <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        <button>Sign Out</button>
+      </form>
   {% else %}
     <p>You are not logged in</p>
     <a href="{% url 'google_login' %}">Login</a>
   {% endif %}
-  <p><form method="post" action="{% url 'account_logout' %}">
-    {% csrf_token %}
-    <button>Sign Out</button>
-  </form>
 {% endblock content %}
