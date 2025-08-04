@@ -16,7 +16,10 @@
         <button>Sign Out</button>
       </form>
   {% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'google_login' %}">Login</a>
+    <p>You are not signed in</p>
+      <form method="post" action="{% url 'google_login' %}">
+        {% csrf_token %}
+        <button>Sign In with Google</button>
+      </form>
   {% endif %}
 {% endblock content %}
