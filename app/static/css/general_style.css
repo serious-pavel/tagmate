@@ -97,4 +97,5 @@ button {
   padding: 5px 1ch;
   height: 2rem;
   color: var(--primary-inverted);
+  cursor: pointer;
 }
