@@ -140,7 +140,12 @@
                 <form method="post" class="delete-form">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="delete_post">
-                  <button type="button" class="delete-btn" data-delete-type="post" title="Delete Post"></button>
+                  <button type="button" class="item-btn delete-btn" data-delete-type="post" title="Delete Post"></button>
+                </form>
+                <form method="post" class="close-item-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="close_current_post">
+                  <button class="item-btn close-item-btn" title="Close Post"></button>
                 </form>
               </div>
             </div>
