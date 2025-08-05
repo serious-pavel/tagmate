@@ -305,6 +305,10 @@ body.blockL-show-tgs #recent-tgs {
   cursor: grabbing !important;
 }
 
+.tag.sortable-ghost {
+  opacity: 0.3;
+}
+
 .tag-list.dragging .tag:hover button {
   display: none;
 }
