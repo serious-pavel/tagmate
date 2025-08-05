@@ -209,7 +209,11 @@
                   </label>
                   <button class="update-btn" id="update-tg-name-btn">Update Name</button>
                 </form>
-
+                <form method="post" class="close-item-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="close_current_tg">
+                  <button class="item-btn close-item-btn" title="Close TagGroup"></button>
+                </form>
                 <form method="post" class="delete-item-form">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="delete_tg">
