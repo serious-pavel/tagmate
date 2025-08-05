@@ -134,6 +134,9 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 messages.success(request, f'Post {current_post.title} deleted')
                 return redirect_post_editor(request, None, tg_pk)
 
+            if action == 'close_current_post':
+                return redirect_post_editor(request, None, tg_pk)
+
         if current_tg:
             if action == 'update_tg':
                 tg_name = request.POST.get('tg_name')
@@ -149,6 +152,9 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
                 current_tg.delete()
                 messages.success(request, f'TagGroup {current_tg.name} deleted')
+                return redirect_post_editor(request, post_pk, None)
+
+            if action == 'close_current_tg':
                 return redirect_post_editor(request, post_pk, None)
 
     # GET (or after redirect)
