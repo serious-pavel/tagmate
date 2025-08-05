@@ -313,6 +313,10 @@ body.blockL-show-tgs #recent-tgs {
   display: none;
 }
 
+.tag-list.dragging .tag:hover button:hover {
+  display: block;
+}
+
 .tag:nth-child(1n+31) {
   --tag-box-shadow-color: #2e2e2e;
 
