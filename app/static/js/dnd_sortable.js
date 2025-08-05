@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     Sortable.create(list, {
         animation: 150,
+        forceFallback : true,
         onStart: () => list.classList.add('dragging'),
         onChoose: () => list.classList.add('dragging'),
         onUnchoose: () => list.classList.remove('dragging'),
