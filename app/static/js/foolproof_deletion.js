@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         default: "Are you sure you want to delete this item?"
     };
 
-    document.querySelectorAll('.delete-btn').forEach(btn => {
+    document.querySelectorAll('.delete-item-btn').forEach(btn => {
         btn.addEventListener('click', function(evt) {
             evt.preventDefault();
             targetForm = btn.closest('form');

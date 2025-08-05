@@ -436,7 +436,7 @@ input.edit-like-text {
   position: relative;
 }
 
-.delete-form {
+.delete-item-form {
   position: absolute;
   right: -4rem;
   top: 0.5rem;
@@ -458,7 +458,7 @@ input.edit-like-text {
   aspect-ratio: 1;
 }
 
-.delete-btn {
+.delete-item-btn {
   border: none;
   background-image: url(/static/img/trash-bin-trash-svgrepo-com.svg);
   background-color: var(--danger);

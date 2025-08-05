@@ -137,10 +137,10 @@
                   <button class="update-btn" id="update-post-title-btn">Update Title</button>
 
                 </form>
-                <form method="post" class="delete-form">
+                <form method="post" class="delete-item-form">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="delete_post">
-                  <button type="button" class="item-btn delete-btn" data-delete-type="post" title="Delete Post"></button>
+                  <button type="button" class="item-btn delete-item-btn" data-delete-type="post" title="Delete Post"></button>
                 </form>
                 <form method="post" class="close-item-form">
                   {% csrf_token %}
@@ -210,10 +210,10 @@
                   <button class="update-btn" id="update-tg-name-btn">Update Name</button>
                 </form>
 
-                <form method="post" class="delete-form">
+                <form method="post" class="delete-item-form">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="delete_tg">
-                  <button type="button" class="delete-btn" data-delete-type="taggroup" title="Delete TagGroup"></button>
+                  <button type="button" class="item-btn delete-item-btn" data-delete-type="taggroup" title="Delete TagGroup"></button>
                 </form>
               </div>
             </div>
