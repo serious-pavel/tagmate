@@ -110,3 +110,7 @@ img.rounded {
 #theme-label:empty::before {
   content: "🌞"; /* Default to light theme icon */
 }
+
+div.profile-actions {
+  display: flex;
+}
