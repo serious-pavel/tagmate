@@ -11,10 +11,18 @@
       You have access to the <a href="{% url 'admin:index' %}">Admin Panel</a>
     {% endif %}
     <p>
+    <div class="profile-actions">
       <form method="post" action="{% url 'account_logout' %}">
         {% csrf_token %}
         <button>Sign Out</button>
       </form>
+      <form method="post" action="{% url 'delete_account' %}" style="display: inline; margin-left: 1rem;"
+            onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone and will delete all your posts, tags, and data.')">
+        {% csrf_token %}
+        <button type="submit" style="background-color: #dc3545; color: white;">Delete Account</button>
+      </form>
+    </div>
+
   {% else %}
     <p>You are not signed in</p>
       <form method="post" action="{% url 'google_login' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">
