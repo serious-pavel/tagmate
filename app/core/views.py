@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.views.decorators.http import require_http_methods
 from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth import logout
 from allauth.socialaccount.providers.google import views as google_views
 from allauth.account.views import LogoutView as AllauthLogoutView
 from django.http import Http404
@@ -41,3 +45,18 @@ class GoogleCallbackView(View):
         else:
             # Block direct access without OAuth parameters
             raise Http404("Page not found")
+
+
+@login_required
+@require_http_methods(["POST"])
+def delete_account(request):
+    """Delete the current user's account and all associated data"""
+    user = request.user
+
+    logout(request)
+
+    # TODO: include clear_tags for both entities here (model level)
+    user.delete()
+
+    messages.success(request, "Your account has been successfully deleted.")
+    return redirect('profile')
