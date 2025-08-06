@@ -1,6 +1,4 @@
 from django.urls import path
-
-from allauth.socialaccount.providers.google import views as google_views
 from allauth.socialaccount.views import (
     ConnectionsView,
     LoginCancelledView,
@@ -12,7 +10,8 @@ from . import views as core_views
 
 urlpatterns = [
     path('google/login/', core_views.GoogleLoginPostOnly.as_view(), name='google_login'),
-    path('google/login/callback/', google_views.oauth2_callback, name='google_callback'),
+    path('google/login/callback/', core_views.GoogleCallbackView.as_view(),
+         name='google_callback'),
     path('logout/', core_views.LogoutPostOnlyView.as_view(), name='account_logout'),
     path('social/connections/', ConnectionsView.as_view(), name='social_connections'),
     # path('social/signup/', SignupView.as_view(), name='social_signup'),

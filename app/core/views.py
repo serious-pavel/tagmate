@@ -31,3 +31,13 @@ class GoogleLoginPostOnly(View):
 class LogoutPostOnlyView(AllauthLogoutView):
     def get(self, request, *args, **kwargs):
         raise Http404("Page not found")
+
+
+class GoogleCallbackView(View):
+    def get(self, request, *args, **kwargs):
+        # Allow the request if it has OAuth parameters (from Google)
+        if 'code' in request.GET or 'error' in request.GET:
+            return google_views.oauth2_callback(request)
+        else:
+            # Block direct access without OAuth parameters
+            raise Http404("Page not found")
