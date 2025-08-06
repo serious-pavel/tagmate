@@ -105,3 +105,8 @@ img.rounded {
 #theme-label {
   font-size: 1.5rem;
 }
+
+/* Fallback for theme label before JavaScript loads */
+#theme-label:empty::before {
+  content: "🌞"; /* Default to light theme icon */
+}
