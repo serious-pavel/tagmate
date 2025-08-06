@@ -17,7 +17,7 @@
       </form>
   {% else %}
     <p>You are not signed in</p>
-      <form method="post" action="{% url 'google_login' %}">
+      <form method="post" action="{% url 'google_login' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">
         {% csrf_token %}
         <button>Sign In with Google</button>
       </form>
