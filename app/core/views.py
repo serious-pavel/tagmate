@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.providers.google import views as google_views
+from allauth.account.views import LogoutView as AllauthLogoutView
+from django.http import Http404
+from django.views import View
 
 
 def profile(request):
@@ -14,3 +18,16 @@ def profile(request):
             context.update({'social_acc': social_acc})
 
     return render(request, template_name='core/profile.html', context=context)
+
+
+class GoogleLoginPostOnly(View):
+    def post(self, request, *args, **kwargs):
+        return google_views.oauth2_login(request)
+
+    def get(self, request, *args, **kwargs):
+        raise Http404("Page not found")
+
+
+class LogoutPostOnlyView(AllauthLogoutView):
+    def get(self, request, *args, **kwargs):
+        raise Http404("Page not found")
