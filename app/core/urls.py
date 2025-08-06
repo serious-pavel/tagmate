@@ -13,6 +13,7 @@ urlpatterns = [
     path('google/login/callback/', core_views.GoogleCallbackView.as_view(),
          name='google_callback'),
     path('logout/', core_views.LogoutPostOnlyView.as_view(), name='account_logout'),
+    path('delete-account/', core_views.delete_account, name='delete_account'),
     path('social/connections/', ConnectionsView.as_view(), name='social_connections'),
     # path('social/signup/', SignupView.as_view(), name='social_signup'),
     path('social/login/cancelled/', LoginCancelledView.as_view(),
