@@ -31,7 +31,7 @@ def post_editor(request, post_pk=None, tg_pk=None):
         context['current_post'] = current_post
 
     if tg_pk is not None:
-        current_tg = TagGroup.objects.filter(pk=tg_pk).first()
+        current_tg = get_object_or_404(TagGroup, pk=tg_pk, user=request.user)
         context['current_tg'] = current_tg
 
     if request.method == 'POST':
