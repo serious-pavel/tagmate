@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from django.contrib.auth import get_user_model
 from django.test import Client
-from posts.models import Post, Tag
+from posts.models import Post, Tag, TagGroup
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
@@ -27,6 +27,7 @@ class TestTagReorderUI(StaticLiveServerTestCase):
         self.tag1 = Tag.objects.create(name="tag_a")
         self.tag2 = Tag.objects.create(name="tag_b")
         self.post.update_tags([self.tag1.id, self.tag2.id])
+        self.tg = TagGroup.objects.create(name="test_tg", user=self.user)
 
     def assert_tag_order(self, tag_list_id, relative_path):
         # Authenticate user and get sessionid (using Django test client)
@@ -127,5 +128,5 @@ class TestTagReorderUI(StaticLiveServerTestCase):
 
     def test_post_tag_reorder_ui_on_post_tg_page(self):
         self.assert_tag_order(
-            POST_TAG_LIST_ID, f'/post/{self.post.id}/tg/{self.tag1.id}'
+            POST_TAG_LIST_ID, f'/post/{self.post.id}/tg/{self.tg.id}'
         )
