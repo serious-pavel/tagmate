@@ -31,6 +31,35 @@ hashtag_validator = RegexValidator(
 )
 
 
+class TagClearMixin(models.Model):
+    """Mixin that provides tag cleanup functionality for Post and TagGroup"""
+
+    class Meta:
+        abstract = True
+
+    def clear_tags(self):
+        """Delete tags that are only used by this Post/TagGroup and nowhere else"""
+        if isinstance(self, Post):
+            # Get only the Tags from this specific Post
+            tags_in_instance = Tag.objects.filter(posttag__post=self)
+        else:  # TagGroup
+            # Get only the Tags from this specific TagGroup
+            tags_in_instance = self.tags.all()
+
+        # Only check these specific tags for orphan status
+        # It's a bit more efficient than filtering through all the Tags
+        tags_to_check = Tag.objects.filter(id__in=tags_in_instance)
+
+        tags_to_check.annotate(
+            pt_count=Count('posttag')
+        ).annotate(
+            tg_count=Count('tag_groups')
+        ).filter(
+            pt_count=1 if isinstance(self, Post) else 0,
+            tg_count=0 if isinstance(self, Post) else 1
+        ).delete()
+
+
 class Tag(models.Model):
     objects: models.Manager['Tag']
 
@@ -47,7 +76,7 @@ class Tag(models.Model):
         return f"#{self.name}"
 
 
-class TagGroup(models.Model):
+class TagGroup(TagClearMixin):
     objects: models.Manager['TagGroup']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tag_groups')
@@ -73,24 +102,8 @@ class TagGroup(models.Model):
             self.name = unique_name
         super().save(*args, **kwargs)
 
-    def clear_tags(self):
-        """ Deleting the Tags that are not used in any other TagGroup or ANY Post"""
-        # It's a bit more efficient than filtering through all the Tags
-        tags_in_tg = self.tags.all()
-        tags_to_check = Tag.objects.filter(id__in=tags_in_tg)
 
-        tags_to_check.annotate(
-            tg_count=Count('tag_groups')
-        ).annotate(
-            pt_count=Count('posttag')
-        ).filter(
-            tg_count=1
-        ).filter(
-            pt_count=0
-        ).delete()
-
-
-class Post(models.Model):
+class Post(TagClearMixin):
     objects: models.Manager['Post']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
@@ -181,22 +194,6 @@ class Post(models.Model):
         current_tag_ids = self.tags.values_list('id', flat=True)
         input_tag_ids = list(current_tag_ids) + list(tag_group_tag_ids)
         self.update_tags(input_tag_ids)
-
-    def clear_tags(self):
-        """ Deleting the Tags that are not used in any other Post or ANY TagGroup"""
-        # It's a bit more efficient than filtering through all the Tags
-        tags_in_post = Tag.objects.filter(posttag__post=self)
-        tags_to_check = Tag.objects.filter(id__in=tags_in_post)
-
-        tags_to_check.annotate(
-            pt_count=Count('posttag')
-        ).annotate(
-            tg_count=Count('tag_groups')
-        ).filter(
-            pt_count=1
-        ).filter(
-            tg_count=0
-        ).delete()
 
 
 class PostTag(models.Model):
