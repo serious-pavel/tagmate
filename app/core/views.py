@@ -55,7 +55,6 @@ def delete_account(request):
 
     logout(request)
 
-    # TODO: include clear_tags for both entities here (model level)
     user.delete()
 
     messages.success(request, "Your account has been successfully deleted.")
