@@ -75,16 +75,18 @@ class TagGroup(models.Model):
 
     def clear_tags(self):
         """ Deleting the Tags that are not used in any other TagGroup or ANY Post"""
-        # TODO seems inefficient, fetches all Tags before Counter
-        Tag.objects.annotate(
+        # It's a bit more efficient than filtering through all the Tags
+        tags_in_tg = self.tags.all()
+        tags_to_check = Tag.objects.filter(id__in=tags_in_tg)
+
+        tags_to_check.annotate(
             tg_count=Count('tag_groups')
         ).annotate(
             pt_count=Count('posttag')
         ).filter(
-            tag_groups=self,
-            tg_count__lte=1
+            tg_count=1
         ).filter(
-            pt_count__lte=0
+            pt_count=0
         ).delete()
 
 
