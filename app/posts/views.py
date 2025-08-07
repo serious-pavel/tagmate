@@ -127,9 +127,6 @@ def post_editor(request, post_pk=None, tg_pk=None):
                     return redirect(request.path)
 
             if action == 'delete_post':
-                # Deleting the Tags that are not used in any other Post or ANY TagGroup
-                current_post.clear_tags()
-
                 current_post.delete()
                 messages.success(request, f'Post {current_post.title} deleted')
                 return redirect_post_editor(request, None, tg_pk)
@@ -147,9 +144,6 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 return redirect(request.path)
 
             if action == 'delete_tg':
-                # Deleting the Tags that are not used in any other TagGroup or ANY Post
-                current_tg.clear_tags()
-
                 current_tg.delete()
                 messages.success(request, f'TagGroup {current_tg.name} deleted')
                 return redirect_post_editor(request, post_pk, None)
