@@ -390,7 +390,7 @@ class TagGroupModelTests(TestCase):
         self.tag_group1.tags.remove(self.tag1)
         self.assertEqual(self.tag_group1.tags.count(), 0)
 
-    def test_delete_tag_group_does_not_delete_tags(self):
+    def test_delete_tag_group_deletes_orphaned_tags(self):
         self.assertTrue(TagGroup.objects.filter(name='Tag Group').exists())
 
         self.tag_group1.tags.add(self.tag1)
@@ -402,9 +402,9 @@ class TagGroupModelTests(TestCase):
         self.tag_group1.delete()
 
         self.assertFalse(TagGroup.objects.filter(name='Tag Group').exists())
-        self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 2)
-        self.assertTrue(Tag.objects.filter(name='tag1').exists())
-        self.assertTrue(Tag.objects.filter(name='tag2').exists())
+        self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 0)
+        self.assertFalse(Tag.objects.filter(name='tag1').exists())
+        self.assertFalse(Tag.objects.filter(name='tag2').exists())
 
     def test_adding_another_users_tag_group_to_post(self):
         """Test that adding a tag group from another user does not change anything"""
