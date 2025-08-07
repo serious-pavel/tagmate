@@ -7,12 +7,20 @@ from posts.models import Tag
 
 
 class Command(BaseCommand):
+    help = 'Delete orphaned tags that are not used by any posts or tag groups'
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--dry-run',
+            action='store_true',
+            help='Show what would be deleted without actually deleting',
+        )
+
     def handle(self, *args, **options):
         def get_orphaned_tags():
             """Get all Tags that are not used anywhere"""
-            return Tag.objects.all().annotate(
-                pt_count=Count('posttag')
-            ).annotate(
+            return Tag.objects.annotate(
+                pt_count=Count('posttag'),
                 tg_count=Count('tag_groups')
             ).filter(
                 pt_count=0,
@@ -20,9 +28,22 @@ class Command(BaseCommand):
             )
 
         orphaned_tags = get_orphaned_tags()
-        count_before = orphaned_tags.count()
+        count = orphaned_tags.count()
 
-        orphaned_tags.delete()
-        count_after = get_orphaned_tags().count()
+        if count == 0:
+            self.stdout.write("No orphaned tags found.")
+            return
 
-        print(f"Deleted {count_before - count_after} orphaned tags")
+        if options['verbosity'] >= 2:
+            tag_names = list(orphaned_tags.values_list('name', flat=True))
+            self.stdout.write(f"Orphaned tags: {', '.join(tag_names)}")
+
+        if options['dry_run']:
+            self.stdout.write(f"Would delete {count} orphaned tags (dry run)")
+        else:
+            orphaned_tags.delete()
+            result = count - get_orphaned_tags().count()
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"Successfully deleted {result} orphaned tags")
+            )
