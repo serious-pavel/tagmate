@@ -4,7 +4,7 @@ from django.db import transaction
 from django.apps import apps
 from django.core.validators import RegexValidator
 from django.db.models import Count
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, pre_delete
 from django.dispatch import receiver
 
 
@@ -222,3 +222,15 @@ def tag_group_tags_changed(sender, instance, action, pk_set, **kwargs):
     """
     if (action in ("post_add", "post_remove") and pk_set) or action == "post_clear":
         instance.save()
+
+
+@receiver(pre_delete, sender=Post)
+def post_pre_delete(sender, instance, **kwargs):
+    """Clean up orphaned tags before Post deletion"""
+    instance.clear_tags()
+
+
+@receiver(pre_delete, sender=TagGroup)
+def taggroup_pre_delete(sender, instance, **kwargs):
+    """Clean up orphaned tags before TagGroup deletion"""
+    instance.clear_tags()
