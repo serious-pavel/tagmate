@@ -261,6 +261,11 @@ body.blockL-show-tgs #recent-tgs {
 
 
 /* app-block-M styles */
+.item-editor {
+  min-height: 17rem;
+  position: relative;
+}
+
 .tag-list {
   display: flex;
   align-content: flex-start;
