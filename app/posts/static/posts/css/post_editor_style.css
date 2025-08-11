@@ -240,7 +240,7 @@
   top: 1px
 }
 
-.list-item:hover .close-btn {
+.fake-btn-wrapper:hover .close-btn {
   display: block;
   z-index: 1;
 }
@@ -261,9 +261,9 @@ body.blockL-show-tgs #recent-tgs {
 
 
 /* app-block-M styles */
-.item-editor {
-  min-height: 17rem;
+.item-editor-wrapper {
   position: relative;
+  min-height: 17rem;
 }
 
 .tag-list {
