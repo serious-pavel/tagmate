@@ -46,7 +46,7 @@
         </div>
         <div id="recent-posts" class="list">
           {% if current_post %}
-            <div class="list-item">
+            <div class="list-item fake-btn-wrapper">
               {% include 'posts/auxiliary/create_post.html' %}
             </div>
           {% endif %}
@@ -72,7 +72,7 @@
 
         <div id="recent-tgs" class="list">
             {% if current_tg %}
-              <div class="list-item">
+              <div class="list-item fake-btn-wrapper">
                 {% include 'posts/auxiliary/create_tg.html' %}
               </div>
             {% endif %}
@@ -100,135 +100,141 @@
       <div class="app-block app-block-M">
 
         <div class="post-editor item-editor">
-          {% if current_post %}
-            <div class="form-wrapper-outer">
-              <div class="form-wrapper-inner">
-                <form method="post" class="update-form">
-                  {% csrf_token %}
-                  <label>
-                    <input type="hidden" name="action" value="update_post_title">
-                    <input type="text" class="edit-like-text submit-on-blur" id="post-title"
-                           name="post_title" placeholder="" value="{{ current_post.title }}" required>
-                  </label>
-                  <button class="update-btn" id="update-post-title-btn">Update Title</button>
+          <div class="item-editor-wrapper fake-btn-wrapper">
+            {% if current_post %}
+              <div class="form-wrapper-outer">
+                <div class="form-wrapper-inner">
+                  <form method="post" class="update-form">
+                    {% csrf_token %}
+                    <label>
+                      <input type="hidden" name="action" value="update_post_title">
+                      <input type="text" class="edit-like-text submit-on-blur" id="post-title"
+                             name="post_title" placeholder="" value="{{ current_post.title }}" required>
+                    </label>
+                    <button class="update-btn" id="update-post-title-btn">Update Title</button>
 
-                </form>
-                <form method="post" class="delete-item-form">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="delete_post">
-                  <button type="button" class="item-btn delete-item-btn" data-delete-type="post" title="Delete Post"></button>
-                </form>
-                <form method="post" class="close-item-form">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="close_current_post">
-                  <button class="item-btn close-item-btn" title="Close Post"></button>
-                </form>
+                  </form>
+                  <form method="post" class="delete-item-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_post">
+                    <button type="button" class="item-btn delete-item-btn" data-delete-type="post" title="Delete Post"></button>
+                  </form>
+                  <form method="post" class="close-item-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="close_current_post">
+                    <button class="item-btn close-item-btn" title="Close Post"></button>
+                  </form>
+                </div>
               </div>
-            </div>
 
-            <div class="tags-editor">
+              <div class="tags-editor">
+                <form method="post">
+                  {% csrf_token %}
+                  <label class="input-button-group">
+                    <input type="hidden" name="action" value="post_attach_tags">
+                    <input type="text" name="tags_to_attach" id="post-tags-to-attach"
+                           placeholder="Add tags (comma, hashtag or space separated)"
+                           value="{{ post_tags_to_attach }}"
+                           {% if submitted_input_id == "post-tags-to-attach" %}autofocus{% endif %}
+                           required>
+                    <button type="submit">Add</button>
+
+                  </label>
+                </form>
+
+                <div id="dnd-list-post" class="tag-list" data-post-id="{{ current_post.id }}">
+                  {% for tag in current_post.ordered_tags %}
+                    <div class="tag" title="{{ tag.name }}">{{ tag.name|truncatechars:25 }}
+                      <form method="post" action="{{ request.path }}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="post_detach_tag">
+                        <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
+                        <button></button>
+                      </form>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% else %}
+              {% include 'posts/auxiliary/create_post.html' %}
+            {% endif %}
+          </div>
+          {% if current_post and current_tg %}
+            <div class="post-tg-intermediate">
               <form method="post">
                 {% csrf_token %}
-                <label class="input-button-group">
-                  <input type="hidden" name="action" value="post_attach_tags">
-                  <input type="text" name="tags_to_attach" id="post-tags-to-attach"
-                         placeholder="Add tags (comma, hashtag or space separated)"
-                         value="{{ post_tags_to_attach }}"
-                         {% if submitted_input_id == "post-tags-to-attach" %}autofocus{% endif %}
-                         required>
-                  <button type="submit">Add</button>
-
-                </label>
+                <input type="hidden" name="action" value="copy_tags_to_tg">
+                <button>Copy Tags to TagGroup ⬇</button>
               </form>
-
-              <div id="dnd-list-post" class="tag-list" data-post-id="{{ current_post.id }}">
-                {% for tag in current_post.ordered_tags %}
-                  <div class="tag" title="{{ tag.name }}">{{ tag.name|truncatechars:25 }}
-                    <form method="post" action="{{ request.path }}">
-                      {% csrf_token %}
-                      <input type="hidden" name="action" value="post_detach_tag">
-                      <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
-                      <button></button>
-                    </form>
-                  </div>
-                {% endfor %}
-              </div>
+              <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="copy_tags_to_post">
+                <button>⬆ Copy Tags to Post</button>
+              </form>
             </div>
-          {% else %}
-            {% include 'posts/auxiliary/create_post.html' %}
           {% endif %}
         </div>
-        {% if current_post and current_tg %}
-          <div class="post-tg-intermediate">
-            <form method="post">
-              {% csrf_token %}
-              <input type="hidden" name="action" value="copy_tags_to_tg">
-              <button>Copy Tags to TagGroup ⬇</button>
-            </form>
-            <form method="post">
-              {% csrf_token %}
-              <input type="hidden" name="action" value="copy_tags_to_post">
-              <button>⬆ Copy Tags to Post</button>
-            </form>
-          </div>
-        {% endif %}
 
         <div class="tg-editor item-editor">
-          {% if current_tg %}
-            <div class="form-wrapper-outer">
-              <div class="form-wrapper-inner">
-                <form method="post" class="update-form">
+          <div class="item-editor-wrapper fake-btn-wrapper">
+            {% if current_tg %}
+              <div class="form-wrapper-outer">
+                <div class="form-wrapper-inner">
+                  <form method="post" class="update-form">
+                    {% csrf_token %}
+                    <label>
+                      <input type="hidden" name="action" value="update_tg">
+                      <input type="text" name="tg_name" placeholder="" value="{{ current_tg.name }}"
+                             id="tg-name" class="edit-like-text submit-on-blur" required>
+                    </label>
+                    <button class="update-btn" id="update-tg-name-btn">Update Name</button>
+                  </form>
+                  <form method="post" class="close-item-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="close_current_tg">
+                    <button class="item-btn close-item-btn" title="Close TagGroup"></button>
+                  </form>
+                  <form method="post" class="delete-item-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_tg">
+                    <button type="button" class="item-btn delete-item-btn" data-delete-type="taggroup" title="Delete TagGroup"></button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="tags-editor">
+                <form method="post">
                   {% csrf_token %}
-                  <label>
-                    <input type="hidden" name="action" value="update_tg">
-                    <input type="text" name="tg_name" placeholder="" value="{{ current_tg.name }}"
-                           id="tg-name" class="edit-like-text submit-on-blur" required>
+                  <label class="input-button-group">
+                    <input type="hidden" name="action" value="tg_attach_tags">
+                    <input type="text" name="tags_to_attach" id="tg-tags-to-attach"
+                           placeholder="Add tags (comma, hashtag or space separated)"
+                           value="{{ tg_tags_to_attach }}"
+                           {% if submitted_input_id == "tg-tags-to-attach" %}autofocus{% endif %}
+                           required>
+                    <button type="submit">Add</button>
                   </label>
-                  <button class="update-btn" id="update-tg-name-btn">Update Name</button>
                 </form>
-                <form method="post" class="close-item-form">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="close_current_tg">
-                  <button class="item-btn close-item-btn" title="Close TagGroup"></button>
-                </form>
-                <form method="post" class="delete-item-form">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="delete_tg">
-                  <button type="button" class="item-btn delete-item-btn" data-delete-type="taggroup" title="Delete TagGroup"></button>
-                </form>
-              </div>
-            </div>
 
-            <div class="tags-editor">
-              <form method="post">
-                {% csrf_token %}
-                <label class="input-button-group">
-                  <input type="hidden" name="action" value="tg_attach_tags">
-                  <input type="text" name="tags_to_attach" id="tg-tags-to-attach"
-                         placeholder="Add tags (comma, hashtag or space separated)"
-                         value="{{ tg_tags_to_attach }}"
-                         {% if submitted_input_id == "tg-tags-to-attach" %}autofocus{% endif %}
-                         required>
-                  <button type="submit">Add</button>
-                </label>
-              </form>
-
-              <div id="dnd-list-tg" class="tag-list">
-                {% for tg_tag in current_tg.tags.all %}
-                  <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
-                    <form method="post">
-                      {% csrf_token %}
-                      <input type="hidden" name="action" value="tg_detach_tag">
-                      <input type="hidden" name="tag_to_detach" value="{{ tg_tag.id }}">
-                      <button></button>
-                    </form>
-                  </div>
-                {% endfor %}
+                <div id="dnd-list-tg" class="tag-list">
+                  {% for tg_tag in current_tg.tags.all %}
+                    <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
+                      <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="tg_detach_tag">
+                        <input type="hidden" name="tag_to_detach" value="{{ tg_tag.id }}">
+                        <button></button>
+                      </form>
+                    </div>
+                  {% endfor %}
+                </div>
               </div>
-            </div>
-          {% else %}
-            {% include 'posts/auxiliary/create_tg.html' %}
-          {% endif %}
+            {% else %}
+              <div class="create-item-big-wrapper">
+                {% include 'posts/auxiliary/create_tg.html' %}
+              </div>
+            {% endif %}
+          </div>
         </div>
       </div>
 
