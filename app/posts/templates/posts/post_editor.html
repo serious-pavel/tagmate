@@ -154,7 +154,8 @@
                 {% endfor %}
               </div>
             </div>
-
+          {% else %}
+            {% include 'posts/auxiliary/create_post.html' %}
           {% endif %}
         </div>
         {% if current_post and current_tg %}
@@ -225,7 +226,8 @@
                 {% endfor %}
               </div>
             </div>
-
+          {% else %}
+            {% include 'posts/auxiliary/create_tg.html' %}
           {% endif %}
         </div>
       </div>
