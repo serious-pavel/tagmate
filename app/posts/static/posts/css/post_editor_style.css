@@ -19,7 +19,7 @@
   gap: var(--gap);
 }
 
-#app-main > .app-block {
+#app-main .app-block {
   padding: var(--padding);
   /* Prevent padding affecting height of block */
   height: calc(100% - calc(var(--padding) * 2));
@@ -27,6 +27,10 @@
   background-color: var(--bg);
   border-radius: 10px;
   box-shadow: 2px 2px 5px var(--border);
+}
+
+.sub-M {
+  padding: 1rem;
 }
 
 #app-main > .app-block-L {
