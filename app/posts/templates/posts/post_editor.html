@@ -102,6 +102,18 @@
         <div class="post-editor item-editor">
           <div class="item-editor-wrapper fake-btn-wrapper">
             {% if current_post %}
+              <div class="block-controls">
+                <form method="post" class="delete-item-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="delete_post">
+                  <button type="button" class="item-btn delete-item-btn" data-delete-type="post" title="Delete Post"></button>
+                </form>
+                <form method="post" class="close-item-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="close_current_post">
+                  <button class="item-btn close-item-btn" title="Close Post"></button>
+                </form>
+              </div>
               <div class="form-wrapper-outer">
                 <div class="form-wrapper-inner">
                   <form method="post" class="update-form">
@@ -114,16 +126,7 @@
                     <button class="update-btn" id="update-post-title-btn">Update Title</button>
 
                   </form>
-                  <form method="post" class="delete-item-form">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="delete_post">
-                    <button type="button" class="item-btn delete-item-btn" data-delete-type="post" title="Delete Post"></button>
-                  </form>
-                  <form method="post" class="close-item-form">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="close_current_post">
-                    <button class="item-btn close-item-btn" title="Close Post"></button>
-                  </form>
+
                 </div>
               </div>
 
