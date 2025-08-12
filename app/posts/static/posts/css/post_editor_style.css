@@ -361,7 +361,7 @@ body.blockL-show-tgs #recent-tgs {
 .input-button-group input[type="text"] {
   flex: 1;
   border: none;
-  padding: 0.5rem;
+  padding: var(--input-text-padding);
   font-size: var(--text-size-L);
   outline: none;
   border-radius: 0;
@@ -374,7 +374,7 @@ body.blockL-show-tgs #recent-tgs {
   background: #1976d2;
   color: #fff;
   font-size: var(--text-size-L);
-  padding: 0.5rem 2rem;
+  padding: var(--input-text-padding) 2rem;
   height: 100%;
   margin-left: 0;
   border-radius: 0;
@@ -402,7 +402,7 @@ body.blockL-show-tgs #recent-tgs {
   border: none;
   background: var(--bg);
   font: inherit;
-  padding: 0.5rem;
+  padding: var(--input-text-padding);
   margin: 0;
   overflow: hidden !important;
   resize: none; /* for textarea */
