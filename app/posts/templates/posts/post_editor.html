@@ -97,8 +97,8 @@
         </div>
       </div>
 
-      <div class="app-block app-block-M">
-
+      <div class="app-block-M">
+        <div class="sub-M-top sub-M app-block">
         <div class="post-editor item-editor">
           <div class="item-editor-wrapper fake-btn-wrapper">
             {% if current_post %}
@@ -160,7 +160,9 @@
             {% endif %}
           </div>
         </div>
+      </div>
 
+      <div class="sub-M">
         {% if current_post and current_tg %}
           <div class="post-tg-intermediate">
             <form method="post">
@@ -175,7 +177,9 @@
             </form>
           </div>
         {% endif %}
+      </div>
 
+        <div class="sub-M-bottom sub-M app-block">
         <div class="tg-editor item-editor">
           <div class="item-editor-wrapper fake-btn-wrapper">
             {% if current_tg %}
@@ -237,6 +241,7 @@
             {% endif %}
           </div>
         </div>
+      </div>
       </div>
 
       <div class="app-block app-block-R post-preview">
