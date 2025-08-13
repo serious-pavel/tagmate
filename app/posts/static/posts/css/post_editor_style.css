@@ -84,9 +84,9 @@
 
 .tab-btn {
   flex: 1;
-  border: none;
   transition: background 0.2s, border-color 0.2s;
   font-size: inherit;
+  height: 2rem;
 }
 
 .list-item {
@@ -149,7 +149,7 @@
 }
 
 .list-item-title {
-  font-size: var(--text-size-M);
+  font-size: var(--text-size-M1);
   color: var(--text-muted);
   overflow: hidden;
   overflow-wrap: break-word;
@@ -315,9 +315,9 @@ body.blockL-show-tgs #recent-tgs {
   height: 25px;
   border-radius: 5px;
   color: white;
-  margin: 7px;
-  font-size: var(--text-size-L);
-  padding: 5px 7px;
+  margin: 0.4rem;
+  font-size: var(--text-size-M2);
+  padding: 0.4rem 1.5ch;
   cursor: grab;
 }
 
@@ -376,7 +376,7 @@ body.blockL-show-tgs #recent-tgs {
   flex: 1;
   border: none;
   padding: var(--input-text-padding);
-  font-size: var(--text-size-L);
+  font-size: var(--text-size-M2);
   outline: none;
   border-radius: 0;
   background: transparent;
@@ -384,10 +384,8 @@ body.blockL-show-tgs #recent-tgs {
 }
 
 .input-button-group button[type="submit"] {
-  border: none;
   background: #1976d2;
   color: #fff;
-  font-size: var(--text-size-L);
   padding: var(--input-text-padding) 2rem;
   height: 100%;
   margin-left: 0;
@@ -434,7 +432,7 @@ body.blockL-show-tgs #recent-tgs {
 textarea.edit-like-text {
   width: calc(100% - 10px);
   min-height: 115px;
-  font-size: var(--text-size-M);
+  font-size: var(--text-size-M1);
 }
 
 input.edit-like-text {
@@ -455,17 +453,16 @@ input.edit-like-text {
 }
 
 .item-btn {
-  border: none;
   box-shadow: none;
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 40%;
-  height: 1.3rem;
+  height: 1.5rem;
   aspect-ratio: 1;
+  font-size: 0;
 }
 
 .delete-item-btn {
-  border: none;
   background-image: url(/static/img/trash-bin-trash-svgrepo-com.svg);
   background-color: var(--danger);
 }
