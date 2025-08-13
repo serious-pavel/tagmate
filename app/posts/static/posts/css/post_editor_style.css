@@ -2,6 +2,8 @@
   --gap: 10px;
   --padding: 10px;
   --tab-height: 2rem;
+  /* Block inner outline width */
+  --block-outline-w: 1px;
 }
 
 .content-nested {
@@ -26,7 +28,7 @@
   overflow: auto;
   background-color: var(--bg);
   border-radius: 10px;
-  box-shadow: 1px 2px 5px var(--border), inset 0 0 1px;
+  box-shadow: 1px 2px 5px var(--border), inset 0 0 var(--block-outline-w);
 }
 
 .sub-M {
@@ -136,9 +138,9 @@
 .list-end {
   position: absolute;
   bottom: 0;
-  left: 1px;
+  left: var(--block-outline-w);
   height: 6rem;
-  width: calc(100% - 1px * 2);
+  width: calc(100% - var(--block-outline-w) * 2);
   background: linear-gradient(to top, var(--bg) 0, transparent 4rem);
   pointer-events: none;
 }
