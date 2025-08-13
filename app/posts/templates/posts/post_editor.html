@@ -114,21 +114,16 @@
                   <button class="item-btn close-item-btn" title="Close Post"></button>
                 </form>
               </div>
-              <div class="form-wrapper-outer">
-                <div class="form-wrapper-inner">
-                  <form method="post" class="update-form">
-                    {% csrf_token %}
-                    <label>
-                      <input type="hidden" name="action" value="update_post_title">
-                      <input type="text" class="edit-like-text submit-on-blur" id="post-title"
-                             name="post_title" placeholder="" value="{{ current_post.title }}" required>
-                    </label>
-                    <button class="update-btn" id="update-post-title-btn">Update Title</button>
 
-                  </form>
-
-                </div>
-              </div>
+              <form method="post" class="update-form">
+                {% csrf_token %}
+                <label>
+                  <input type="hidden" name="action" value="update_post_title">
+                  <input type="text" class="edit-like-text submit-on-blur" id="post-title"
+                         name="post_title" placeholder="" value="{{ current_post.title }}" required>
+                </label>
+                <button class="update-btn" id="update-post-title-btn">Update Title</button>
+              </form>
 
               <div class="tags-editor">
                 <form method="post">
