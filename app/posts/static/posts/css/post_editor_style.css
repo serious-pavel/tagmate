@@ -279,7 +279,7 @@ body.blockL-show-tgs #recent-tgs {
 }
 
 /* app-block-M styles */
-.item-editor-wrapper {
+.item-editor {
   position: relative;
   min-height: 17rem;
 }
