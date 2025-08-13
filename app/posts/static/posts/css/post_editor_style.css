@@ -363,7 +363,6 @@ body.blockL-show-tgs #recent-tgs {
 .input-button-group {
   display: flex;
   width: 97%;
-  margin: 10px;
   border-radius: 5px;
   overflow: hidden;
   background: var(--bg-light);
@@ -470,11 +469,6 @@ input.edit-like-text {
 .close-item-btn {
   background-image: url(/static/img/x-circle-svgrepo-com.svg);
 }
-
-.item-editor .update-form {
-  justify-content: center;
-}
-
 
 /* app-block-R styles */
 #post-preview-tags {
