@@ -134,10 +134,11 @@
 }
 
 .list-end {
-  height: 6rem;
-  width: 100%;
   position: absolute;
   bottom: 0;
+  left: 1px;
+  height: 6rem;
+  width: calc(100% - 1px * 2);
   background: linear-gradient(to top, var(--bg) 0, transparent 4rem);
   pointer-events: none;
 }
