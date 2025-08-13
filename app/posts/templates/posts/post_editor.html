@@ -99,7 +99,7 @@
 
       <div class="app-block-M">
         <div class="sub-M-top sub-M app-block">
-        <div class="post-editor item-editor">
+        <div class="item-editor">
           <div class="item-editor-wrapper fake-btn-wrapper">
             {% if current_post %}
               <div class="block-controls">
@@ -125,33 +125,30 @@
                 <button class="update-btn" id="update-post-title-btn">Update Title</button>
               </form>
 
-              <div class="tags-editor">
-                <form method="post">
-                  {% csrf_token %}
-                  <label class="input-button-group">
-                    <input type="hidden" name="action" value="post_attach_tags">
-                    <input type="text" name="tags_to_attach" id="post-tags-to-attach"
-                           placeholder="Add tags (comma, hashtag or space separated)"
-                           value="{{ post_tags_to_attach }}"
-                           {% if submitted_input_id == "post-tags-to-attach" %}autofocus{% endif %}
-                           required>
-                    <button type="submit">Add</button>
+              <form method="post">
+                {% csrf_token %}
+                <label class="input-button-group">
+                  <input type="hidden" name="action" value="post_attach_tags">
+                  <input type="text" name="tags_to_attach" id="post-tags-to-attach"
+                         placeholder="Add tags (comma, hashtag or space separated)"
+                         value="{{ post_tags_to_attach }}"
+                         {% if submitted_input_id == "post-tags-to-attach" %}autofocus{% endif %}
+                         required>
+                  <button type="submit">Add</button>
+                </label>
+              </form>
 
-                  </label>
-                </form>
-
-                <div id="dnd-list-post" class="tag-list" data-post-id="{{ current_post.id }}">
-                  {% for tag in current_post.ordered_tags %}
-                    <div class="tag" title="{{ tag.name }}">{{ tag.name|truncatechars:25 }}
-                      <form method="post" action="{{ request.path }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="post_detach_tag">
-                        <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
-                        <button></button>
-                      </form>
-                    </div>
-                  {% endfor %}
-                </div>
+              <div id="dnd-list-post" class="tag-list" data-post-id="{{ current_post.id }}">
+                {% for tag in current_post.ordered_tags %}
+                  <div class="tag" title="{{ tag.name }}">{{ tag.name|truncatechars:25 }}
+                    <form method="post" action="{{ request.path }}">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="post_detach_tag">
+                      <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
+                      <button></button>
+                    </form>
+                  </div>
+                {% endfor %}
               </div>
             {% else %}
               {% include 'posts/auxiliary/create_post.html' %}
