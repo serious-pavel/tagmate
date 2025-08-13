@@ -451,16 +451,6 @@ input.edit-like-text {
   justify-content: center;
 }
 
-.form-wrapper-outer {
-  display: flex;
-  justify-content: center;
-}
-
-.form-wrapper-inner {
-  display: inline-block;
-  position: relative;
-}
-
 .item-btn {
   border: none;
   box-shadow: none;
