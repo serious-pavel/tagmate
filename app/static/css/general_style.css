@@ -1,6 +1,7 @@
 :root {
   --text-size-L: 1.2rem;
-  --text-size-M: 1rem;
+  --text-size-M2: 1.1rem;
+  --text-size-M1: 1rem;
   --text-size-S: 0.8rem;
   --border-light: oklch(0.8 0.04 239);
   --input-text-padding: 0.5rem;
@@ -128,9 +129,9 @@ button {
   box-shadow: 1px 1px 1px 0px var(--primary), inset 0px 0px 1px 1px var(--bg);
   border: none;
   border-radius: 5px;
-  font-size: var(--text-size-M);
-  padding: 5px 1ch;
-  height: 2rem;
+  font-size: var(--text-size-M2);
+  padding: 5px 1.5ch;
+  height: 2.5rem;
   color: var(--primary-inverted);
   cursor: pointer;
 }
