@@ -405,7 +405,7 @@ body.blockL-show-tgs #recent-tgs {
   padding: 10px;
   align-items: center;
   justify-content: space-evenly;
-  min-height: calc(2.5rem + 2rem);
+  min-height: calc(var(--button-height) + 2rem);
 }
 
 .edit-like-text {
