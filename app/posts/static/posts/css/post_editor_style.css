@@ -355,10 +355,7 @@ body.blockL-show-tgs #recent-tgs {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  border: none;
-  color: white;
-  background: linear-gradient(to bottom, #2332a9 40%, #cdf5f8 40% 60%, #2332a9 60%);
-  box-shadow: inset 0 0 3px 2px #2332a9, 0 0 2px 0 #cdf5f8;
+  background-image: url(/static/img/minus-circle-svgrepo-com.svg);
 }
 
 .input-button-group {
