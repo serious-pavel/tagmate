@@ -417,7 +417,6 @@ body.blockL-show-tgs #recent-tgs {
   padding: var(--input-text-padding);
   margin: 0;
   overflow: hidden !important;
-  resize: none; /* for textarea */
   box-shadow: inset 1px 1px 4px var(--border-muted), inset 1px 1px 3px var(--border-light);
   border-radius: 5px;
   color: var(--text-muted);
@@ -431,6 +430,7 @@ body.blockL-show-tgs #recent-tgs {
 
 textarea.edit-like-text {
   width: calc(100% - 2 * var(--input-text-padding));
+  resize: none;
   min-height: 115px;
   font-size: var(--text-size-M1);
 }
