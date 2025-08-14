@@ -347,16 +347,6 @@ body.blockL-show-tgs #recent-tgs {
   background-color: gray;
 }
 
-.tag button {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  display: none;
-  height: var(--icon-btn-height);
-  border-radius: 50%;
-  background-image: url(/static/img/minus-circle-svgrepo-com.svg);
-}
-
 .input-button-group {
   display: flex;
   width: 97%;
@@ -454,6 +444,16 @@ input.edit-like-text {
   height: var(--icon-btn-height);
   aspect-ratio: 1;
   font-size: 0;
+}
+
+.tag button {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  display: none;
+  height: var(--icon-btn-height);
+  border-radius: 50%;
+  background-image: url(/static/img/minus-circle-svgrepo-com.svg);
 }
 
 .delete-item-btn {
