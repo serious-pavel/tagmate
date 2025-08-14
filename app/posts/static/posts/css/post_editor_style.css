@@ -352,8 +352,7 @@ body.blockL-show-tgs #recent-tgs {
   top: -2px;
   right: -2px;
   display: none;
-  width: 15px;
-  height: 15px;
+  height: var(--icon-btn-height);
   border-radius: 50%;
   background-image: url(/static/img/minus-circle-svgrepo-com.svg);
 }
@@ -402,7 +401,7 @@ body.blockL-show-tgs #recent-tgs {
   padding: 10px;
   align-items: center;
   justify-content: space-evenly;
-  min-height: calc(var(--button-height) + 2rem);
+  min-height: calc(var(--default-btn-height) + 2rem);
 }
 
 .edit-like-text {
@@ -452,7 +451,7 @@ input.edit-like-text {
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 40%;
-  height: 1.5rem;
+  height: var(--icon-btn-height);
   aspect-ratio: 1;
   font-size: 0;
 }

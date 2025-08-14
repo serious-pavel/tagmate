@@ -5,7 +5,8 @@
   --text-size-S: 0.8rem;
   --border-light: oklch(0.8 0.04 239);
   --input-text-padding: 0.5rem;
-  --button-height: 2.5rem;
+  --default-btn-height: 2.5rem;
+  --icon-btn-height: 1.5rem;
 
   font-size: 16px;
 
@@ -132,7 +133,7 @@ button {
   border-radius: 5px;
   font-size: var(--text-size-M2);
   padding: 5px 1.5ch;
-  height: var(--button-height);
+  height: var(--default-btn-height);
   color: var(--primary-inverted);
   cursor: pointer;
 }
