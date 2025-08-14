@@ -319,6 +319,7 @@ body.blockL-show-tgs #recent-tgs {
   font-size: var(--text-size-M2);
   padding: 0.4rem 1.5ch;
   cursor: grab;
+  font-weight: 350;
 }
 
 .tag:hover button {
