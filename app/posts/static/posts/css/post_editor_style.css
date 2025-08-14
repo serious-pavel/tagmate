@@ -430,7 +430,7 @@ body.blockL-show-tgs #recent-tgs {
 }
 
 textarea.edit-like-text {
-  width: calc(100% - 10px);
+  width: calc(100% - 2 * var(--input-text-padding));
   min-height: 115px;
   font-size: var(--text-size-M1);
 }
