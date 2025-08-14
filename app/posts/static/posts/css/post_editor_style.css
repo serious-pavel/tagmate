@@ -31,10 +31,6 @@
   box-shadow: 1px 2px 5px var(--border), inset 0 0 var(--block-outline-w);
 }
 
-.sub-M {
-  padding: 1rem;
-}
-
 #app-main > .app-block-L {
   padding: var(--padding) 0;
 }
@@ -409,6 +405,7 @@ body.blockL-show-tgs #recent-tgs {
   padding: 10px;
   align-items: center;
   justify-content: space-evenly;
+  min-height: calc(2.5rem + 2rem);
 }
 
 .edit-like-text {
