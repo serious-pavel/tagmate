@@ -144,7 +144,7 @@
                       {% csrf_token %}
                       <input type="hidden" name="action" value="post_detach_tag">
                       <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
-                      <button class="icon-btn"></button>
+                      <button class="remove-tag-btn icon-btn"></button>
                     </form>
                   </div>
                 {% endfor %}
@@ -217,7 +217,7 @@
                       {% csrf_token %}
                       <input type="hidden" name="action" value="tg_detach_tag">
                       <input type="hidden" name="tag_to_detach" value="{{ tg_tag.id }}">
-                      <button class="icon-btn"></button>
+                      <button class="remove-tag-btn icon-btn"></button>
                     </form>
                   </div>
                 {% endfor %}

@@ -446,7 +446,7 @@ input.edit-like-text {
   font-size: 0;
 }
 
-.tag button {
+.remove-tag-btn {
   position: absolute;
   top: calc(var(--icon-btn-height) / 4 * -1);
   right: calc(var(--icon-btn-height) / 4 * -1);
