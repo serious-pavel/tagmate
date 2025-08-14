@@ -40,7 +40,7 @@
 }
 
 .app-block-L {
-  min-width: 15rem;
+  min-width: 16rem;
   width: 15%;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .app-block-R {
-  min-width: 22rem;
+  min-width: 24rem;
   width: 33%;
   overflow-wrap: break-word;
 }
