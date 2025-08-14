@@ -448,8 +448,8 @@ input.edit-like-text {
 
 .tag button {
   position: absolute;
-  top: -2px;
-  right: -2px;
+  top: calc(var(--icon-btn-height) / 4 * -1);
+  right: calc(var(--icon-btn-height) / 4 * -1);
   display: none;
   height: var(--icon-btn-height);
   border-radius: 50%;
