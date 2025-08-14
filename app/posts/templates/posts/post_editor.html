@@ -98,7 +98,7 @@
       </div>
 
       <div class="app-block-M">
-        <div class="sub-M app-block">
+        <div class="app-block">
           <div class="item-editor fake-btn-wrapper">
             {% if current_post %}
               <div class="block-controls">
@@ -156,9 +156,8 @@
           </div>
         </div>
 
-        <div class="sub-M">
+        <div class="post-tg-intermediate">
           {% if current_post and current_tg %}
-            <div class="post-tg-intermediate">
               <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="copy_tags_to_tg">
@@ -169,11 +168,10 @@
                 <input type="hidden" name="action" value="copy_tags_to_post">
                 <button>⬆ Copy Tags to Post</button>
               </form>
-            </div>
           {% endif %}
         </div>
 
-        <div class="sub-M app-block">
+        <div class="app-block">
           <div class="item-editor fake-btn-wrapper">
             {% if current_tg %}
               <div class="block-controls">
