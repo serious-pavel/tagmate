@@ -42,3 +42,31 @@ docker-compose up -d
 docker-compose run --rm app sh -c "python manage.py test"
 docker-compose run --rm app sh -c "flake8"
 ```
+
+## Backup data
+
+```bash
+#!/bin/bash
+# docker_backup.sh
+
+BACKUP_DIR="backups/$(date +%Y%m%d_%H%M%S)_before_tag_refactoring"
+mkdir -p $BACKUP_DIR
+
+echo "Creating backup in $BACKUP_DIR"
+
+# Replace these with your actual container ids
+POSTGRES_CONTAINER="your_postgres_container_id"
+DJANGO_CONTAINER="your_django_container_id"
+# The same as DB_USER and DB_NAME from .env
+DB_USER="your_database_user"
+DB_NAME="your_database_name"
+
+# 1. Django data dump
+echo "Backing up Django data..."
+docker exec -t $DJANGO_CONTAINER python manage.py dumpdata > $BACKUP_DIR/django_data.json
+docker exec -t $DJANGO_CONTAINER python manage.py dumpdata posts > $BACKUP_DIR/posts_data.json
+
+# 2. PostgreSQL backup
+echo "Backing up PostgreSQL database..."
+docker exec -t $POSTGRES_CONTAINER pg_dump -U $DB_USER $DB_NAME > $BACKUP_DIR/database.sql
+```
