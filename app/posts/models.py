@@ -31,7 +31,7 @@ hashtag_validator = RegexValidator(
 )
 
 
-class TagClearMixin(models.Model):
+class TagOperationMixin(models.Model):
     """Mixin that provides tag cleanup functionality for Post and TagGroup"""
 
     class Meta:
