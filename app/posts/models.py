@@ -216,59 +216,6 @@ class Post(TagOperationMixin):
         return list(PostTag.objects.filter(post=self).values_list('tag_id', flat=True))
 
     @transaction.atomic
-    def update_tags_old(self, ordered_tag_ids: list):
-        """Rearrange, add and remove tags in Post if needed"""
-        PostTag = apps.get_model('posts', 'PostTag')
-        post_tags = PostTag.objects.filter(post=self)
-        current_tag_ids = set(post_tags.values_list('tag_id', flat=True))
-
-        # Deduplicate ordered_tag_ids while preserving order
-        seen = set()
-        unique_ordered_tag_ids = []
-        for tag_id in ordered_tag_ids:
-            if tag_id not in seen:
-                unique_ordered_tag_ids.append(tag_id)
-                seen.add(tag_id)
-
-        # Validate ids only before attaching new tags to Post
-        tag_ids_to_attach = set(unique_ordered_tag_ids) - current_tag_ids
-        if tag_ids_to_attach:
-            existing_tag_ids = set(Tag.objects.filter(
-                id__in=ordered_tag_ids
-            ).values_list('id', flat=True))
-
-            invalid_tag_ids = [
-                tag_id for tag_id in ordered_tag_ids if tag_id not in existing_tag_ids
-            ]
-            if invalid_tag_ids:
-                raise ValueError(f"Invalid tag IDs: {invalid_tag_ids}")
-
-        # Remove tags from Post
-        tag_ids_to_detach = current_tag_ids - set(unique_ordered_tag_ids)
-        if tag_ids_to_detach:
-            post_tags.filter(tag_id__in=tag_ids_to_detach).delete()
-
-        # Update tags order and create new ones (through PostTag)
-        post_tag_map = {pt.tag_id: pt for pt in PostTag.objects.filter(post=self)}
-        to_update = []
-        to_create = []
-        for pos, tag_id in enumerate(unique_ordered_tag_ids):
-            pt = post_tag_map.get(tag_id)
-            if pt:
-                if pt.position != pos:
-                    pt.position = pos
-                    to_update.append(pt)
-            else:
-                to_create.append(PostTag(post=self, tag_id=tag_id, position=pos))
-        if to_update:
-            PostTag.objects.bulk_update(to_update, ['position'])
-        if to_create:
-            PostTag.objects.bulk_create(to_create)
-
-        if to_update or to_create or tag_ids_to_attach or tag_ids_to_detach:
-            self.save()
-
-    @transaction.atomic
     def add_tags_from_group(self, tag_group: TagGroup):
         if tag_group.user_id != self.user_id:
             raise PermissionError("Cannot use another user's tag group.")
