@@ -5,6 +5,11 @@ a **Django Framework** application. It includes a **PostgreSQL database**, and *
 
 This application allows only authentication through social accounts (only Google for now), you can't create or use a local account.
 
+## ⚠️ IMPORTANT ⚠️
+
+If you started your project before tag `v0.1-before-tg-tag-ordering`, you need to conduct a transition to the newest version following this [instruction](transition/TRANSITION.md).
+
+
 ## How to Set Up and Run the Project Locally
 
 Follow these steps to copy and run the **TagMate** project on your local development machine.
