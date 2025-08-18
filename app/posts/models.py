@@ -135,7 +135,7 @@ class Tag(models.Model):
         return f"#{self.name}"
 
 
-class TagGroup(TagClearMixin):
+class TagGroup(TagOperationMixin):
     objects: models.Manager['TagGroup']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tag_groups')
@@ -183,7 +183,7 @@ class TagGroupTag(models.Model):
         return f"{self.tag} in {self.tag_group} at {self.position}"
 
 
-class Post(TagClearMixin):
+class Post(TagOperationMixin):
     objects: models.Manager['Post']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
