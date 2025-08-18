@@ -223,16 +223,6 @@ class Post(TagOperationMixin):
     def __str__(self):
         return self.title
 
-    @property
-    def ordered_tags_old(self):
-        """Return ordered list of tags in Post"""
-        return Tag.objects.filter(posttag__post=self).order_by('posttag__position')
-
-    @property
-    def ordered_tag_ids_old(self):
-        """Return ordered list of tag IDs in Post"""
-        return list(PostTag.objects.filter(post=self).values_list('tag_id', flat=True))
-
     @transaction.atomic
     def add_tags_from_group(self, tag_group: TagGroup):
         if tag_group.user_id != self.user_id:
