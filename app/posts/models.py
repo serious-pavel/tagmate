@@ -67,6 +67,16 @@ class TagOperationMixin(models.Model):
             return Tag.objects.filter(taggrouptag__tag_group=self).order_by(
                 'taggrouptag__position')
 
+    @property
+    def ordered_tag_ids(self):
+        if isinstance(self, Post):
+            return list(
+                PostTag.objects.filter(post=self).order_by('position').values_list(
+                    'tag_id', flat=True))
+        else:  # TagGroup
+            return list(TagGroupTag.objects.filter(tag_group=self).order_by(
+                'position').values_list('tag_id', flat=True))
+
     @transaction.atomic
     def update_tags(self, ordered_tag_ids: list):
         """Update tags with new order - works for both Post and TagGroup"""
@@ -219,7 +229,7 @@ class Post(TagOperationMixin):
         return Tag.objects.filter(posttag__post=self).order_by('posttag__position')
 
     @property
-    def ordered_tag_ids(self):
+    def ordered_tag_ids_old(self):
         """Return ordered list of tag IDs in Post"""
         return list(PostTag.objects.filter(post=self).values_list('tag_id', flat=True))
 
