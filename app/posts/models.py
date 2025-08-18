@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from django.apps import apps
 from django.core.validators import RegexValidator
 from django.db.models import Count
 from django.db.models.signals import m2m_changed, pre_delete
