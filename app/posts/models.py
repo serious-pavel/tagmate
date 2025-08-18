@@ -84,9 +84,12 @@ class TagOperationMixin(models.Model):
         # Validate new tag IDs exist
         new_tag_ids = set(unique_ordered_tag_ids) - current_tag_ids
         if new_tag_ids:
-            existing_count = Tag.objects.filter(id__in=new_tag_ids).count()
-            if existing_count != len(new_tag_ids):
-                raise ValueError("Some tag IDs don't exist")
+            existing_new_tag_ids = set(
+                Tag.objects.filter(id__in=new_tag_ids).values_list('id', flat=True)
+            )
+            invalid_tag_ids = new_tag_ids - existing_new_tag_ids
+            if invalid_tag_ids:
+                raise ValueError(f"Tag IDs don't exist: {invalid_tag_ids}")
 
         # Remove old relationships (detach tags from instance)
         to_detach = current_tag_ids - set(unique_ordered_tag_ids)
