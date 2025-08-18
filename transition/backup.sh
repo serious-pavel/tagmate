@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-BACKUP_DIR="$SCRIPT_DIR/backups/$(date +%Y%m%d_%H%M%S)_v0_1_before_tg_tag_ordering"
+BACKUP_DIR="$SCRIPT_DIR/backups/$(date +%Y%m%d_%H%M%S)"
 mkdir -p $BACKUP_DIR
 
 echo "Creating backup in $BACKUP_DIR"
