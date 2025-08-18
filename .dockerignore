@@ -18,3 +18,4 @@ venv/
 temp/
 backups/
 .DS_Store
+transition/
