@@ -59,6 +59,65 @@ class TagClearMixin(models.Model):
             tg_count=0 if isinstance(self, Post) else 1
         ).delete()
 
+    @transaction.atomic
+    def update_tags(self, ordered_tag_ids: list):
+        """Update tags with new order - works for both Post and TagGroup"""
+        if isinstance(self, Post):
+            through_model = PostTag
+            filter_field = 'post'
+        else:  # TagGroup
+            through_model = TagGroupTag
+            filter_field = 'tag_group'
+
+        # Get current tag IDs
+        current_relationships = through_model.objects.filter(**{filter_field: self})
+        current_tag_ids = set(current_relationships.values_list('tag_id', flat=True))
+
+        # Remove duplicates while preserving order
+        seen = set()
+        unique_ordered_tag_ids = []
+        for tag_id in ordered_tag_ids:
+            if tag_id not in seen:
+                unique_ordered_tag_ids.append(tag_id)
+                seen.add(tag_id)
+
+        # Validate new tag IDs exist
+        new_tag_ids = set(unique_ordered_tag_ids) - current_tag_ids
+        if new_tag_ids:
+            existing_count = Tag.objects.filter(id__in=new_tag_ids).count()
+            if existing_count != len(new_tag_ids):
+                raise ValueError("Some tag IDs don't exist")
+
+        # Remove old relationships (detach tags from instance)
+        to_detach = current_tag_ids - set(unique_ordered_tag_ids)
+        if to_detach:
+            current_relationships.filter(tag_id__in=to_detach).delete()
+
+        # Update existing and create new relationships
+        current_map = {rel.tag_id: rel for rel in
+                       through_model.objects.filter(**{filter_field: self})}
+
+        to_update = []
+        to_create = []
+
+        for pos, tag_id in enumerate(unique_ordered_tag_ids):
+            if tag_id in current_map:
+                rel = current_map.get(tag_id)
+                if rel.position != pos:
+                    rel.position = pos
+                    to_update.append(rel)
+            else:
+                to_create.append(through_model(
+                    **{filter_field: self, 'tag_id': tag_id, 'position': pos}))
+
+        if to_update:
+            through_model.objects.bulk_update(to_update, ['position'])
+        if to_create:
+            through_model.objects.bulk_create(to_create)
+
+        if to_update or to_create or to_detach:
+            self.save()  # Update timestamp
+
 
 class Tag(models.Model):
     objects: models.Manager['Tag']
@@ -154,7 +213,7 @@ class Post(TagClearMixin):
         return list(PostTag.objects.filter(post=self).values_list('tag_id', flat=True))
 
     @transaction.atomic
-    def update_tags(self, ordered_tag_ids: list):
+    def update_tags_old(self, ordered_tag_ids: list):
         """Rearrange, add and remove tags in Post if needed"""
         PostTag = apps.get_model('posts', 'PostTag')
         post_tags = PostTag.objects.filter(post=self)
