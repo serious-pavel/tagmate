@@ -83,6 +83,12 @@ class TagGroup(TagClearMixin):
     name = models.CharField(max_length=64)
     tags = models.ManyToManyField(Tag, related_name='tag_groups')
 
+    tags_through = models.ManyToManyField(
+        Tag,
+        through='TagGroupTag',
+        related_name='ordered_tag_groups'
+    )
+
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -101,6 +107,21 @@ class TagGroup(TagClearMixin):
                 unique_name = base_name.format(counter)
             self.name = unique_name
         super().save(*args, **kwargs)
+
+
+class TagGroupTag(models.Model):
+    objects: models.Manager['TagGroupTag']
+
+    tag_group = models.ForeignKey(TagGroup, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    position = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = ('tag_group', 'tag')
+        ordering = ['position']
+
+    def __str__(self):
+        return f"{self.tag} in {self.tag_group} at {self.position}"
 
 
 class Post(TagClearMixin):
