@@ -276,7 +276,9 @@ class TagGroupTagModelTests(TestCase):
         TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
         TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag3, position=1)
         positions = list(
-            TagGroupTag.objects.filter(tag_group=self.tg).values_list('position', flat=True)
+            TagGroupTag.objects.filter(tag_group=self.tg).values_list(
+                'position', flat=True
+            )
         )
         self.assertEqual(positions, [0, 1, 2])
 
@@ -359,13 +361,17 @@ class TagGroupTagModelTests(TestCase):
         TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
         TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=2)
         positions_before = list(
-            TagGroupTag.objects.filter(tag_group=self.tg).values_list('position', flat=True)
+            TagGroupTag.objects.filter(tag_group=self.tg).values_list(
+                'position', flat=True
+            )
         )
         self.assertEqual(positions_before, [0, 2])
 
         self.tg.update_tags([self.tag2.id, self.tag1.id])
         positions_after = list(
-            TagGroupTag.objects.filter(tag_group=self.tg).values_list('position', flat=True)
+            TagGroupTag.objects.filter(tag_group=self.tg).values_list(
+                'position', flat=True
+            )
         )
         self.assertEqual(positions_after, [0, 1])
 
@@ -458,7 +464,7 @@ class TagGroupTagModelTests(TestCase):
             [tag.tag_id for tag in tg_tags], tag_ids_input
         )
         self.assertEqual([tag.position for tag in tg_tags], [0, 1, 2])
-#
+
     def test_update_tags_invalid_tag_id(self):
         """Test invalid Tag raises an error"""
         TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
