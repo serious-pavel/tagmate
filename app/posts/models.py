@@ -161,10 +161,10 @@ class TagGroup(TagOperationMixin):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tag_groups')
     name = models.CharField(max_length=64)
 
-    tags_through = models.ManyToManyField(
+    tags = models.ManyToManyField(
         Tag,
         through='TagGroupTag',
-        related_name='ordered_tag_groups'
+        related_name='tag_groups'
     )
 
     updated_at = models.DateTimeField(auto_now=True)
