@@ -211,7 +211,7 @@
               </form>
 
               <div id="dnd-list-tg" class="tag-list">
-                {% for tg_tag in current_tg.tags.all %}
+                {% for tg_tag in current_tg.ordered_tags %}
                   <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
                     <form method="post">
                       {% csrf_token %}
