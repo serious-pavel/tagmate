@@ -3,7 +3,7 @@ import time
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
-from posts.models import Post, Tag, PostTag, TagGroup
+from posts.models import Post, Tag, PostTag, TagGroup, TagGroupTag
 
 User = get_user_model()
 
@@ -244,6 +244,244 @@ class PostTagModelTests(TestCase):
 
         self.post.refresh_from_db()
         self.assertEqual(self.post.ordered_tag_ids, original_tag_ids)
+
+
+class TagGroupTagModelTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(email='u@example.com', password='pw')
+        self.tg = TagGroup.objects.create(user=self.user, name='Test')
+        self.tag1 = Tag.objects.create(name='tag1')
+        self.tag2 = Tag.objects.create(name='tag2')
+        self.tag3 = Tag.objects.create(name='tag3')
+
+    def test_unique_together_constraint(self):
+        """Test attempt to create duplicates raises IntegrityError"""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        with self.assertRaises(IntegrityError):
+            TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=1)
+
+    def test_cascade_delete_post(self):
+        """Test TagGroupTag is deleted when the TagGroup is deleted"""
+        tgt = TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        self.tg.delete()
+        self.assertFalse(TagGroupTag.objects.filter(pk=tgt.pk).exists())
+
+    def test_str_representation(self):
+        tgt = TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=2)
+        expected = f'{tgt.tag} in {tgt.tag_group} at {tgt.position}'
+        self.assertEqual(str(tgt), expected)
+
+    def test_ordering_by_position(self):
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=2)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag3, position=1)
+        positions = list(
+            TagGroupTag.objects.filter(tag_group=self.tg).values_list('position', flat=True)
+        )
+        self.assertEqual(positions, [0, 1, 2])
+
+    # Tests for properties ordered_tag_ids and ordered_tags
+    def test_ordered_tag_ids_sorts_as_post_tag_model(self):
+        """Test that get_tag_id returns the correct Tag id"""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=1)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=2)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag3, position=0)
+
+        tg_tag_ids = list(
+            TagGroupTag.objects.filter(
+                tag_group=self.tg
+            ).order_by('position').values_list('tag_id', flat=True)
+        )
+        self.assertEqual(self.tg.ordered_tag_ids, tg_tag_ids)
+
+    def test_ordered_tag_ids_returns_correct_list(self):
+        """Test that ordered_tag_ids returns a properly ordered list of Tag ids"""
+        tgt1 = TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        tgt2 = TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=1)
+        tgt3 = TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag3, position=2)
+        self.assertEqual(
+            self.tg.ordered_tag_ids,
+            [self.tag1.id, self.tag2.id, self.tag3.id]
+        )
+
+        tgt1.position = 1
+        tgt1.save()
+        tgt2.position = 0
+        tgt2.save()
+
+        self.assertEqual(
+            self.tg.ordered_tag_ids,
+            [self.tag2.id, self.tag1.id, self.tag3.id]
+        )
+
+        self.tg.tags.remove(self.tag2)
+
+        # Mind the gap in tag positions if sorted manually (1, 2)
+        self.assertEqual(
+            self.tg.ordered_tag_ids,
+            [self.tag1.id, self.tag3.id]
+        )
+
+        tgt3.position = 0
+        tgt3.save()
+
+        self.assertEqual(
+            self.tg.ordered_tag_ids,
+            [self.tag3.id, self.tag1.id]
+        )
+
+        self.tg.tags.clear()
+        self.assertEqual(self.tg.ordered_tag_ids, [])
+
+    def test_ordered_tags_returns_same_tags_as_ordered_tag_ids(self):
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag3, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=1)
+
+        ids_by_ordered_tags = list(self.tg.ordered_tags.values_list('id', flat=True))
+        self.assertEqual(
+            self.tg.ordered_tag_ids,
+            ids_by_ordered_tags
+        )
+
+    # Tests for method update_tags
+    def test_update_tags_adds_tags_and_orders_them(self):
+        """Test that update_tags correctly adds and orders Tags."""
+        self.tg.update_tags([self.tag3.id, self.tag1.id])
+
+        tg_tags = list(TagGroupTag.objects.filter(tag_group=self.tg))
+        self.assertEqual(
+            [tag.tag_id for tag in tg_tags], [self.tag3.id, self.tag1.id]
+        )
+        self.assertEqual([tag.position for tag in tg_tags], [0, 1])
+
+    def test_update_tags_corrects_position_gap(self):
+        """Test that update_tags corrects position gaps."""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=2)
+        positions_before = list(
+            TagGroupTag.objects.filter(tag_group=self.tg).values_list('position', flat=True)
+        )
+        self.assertEqual(positions_before, [0, 2])
+
+        self.tg.update_tags([self.tag2.id, self.tag1.id])
+        positions_after = list(
+            TagGroupTag.objects.filter(tag_group=self.tg).values_list('position', flat=True)
+        )
+        self.assertEqual(positions_after, [0, 1])
+
+    def test_update_tags_removes_unlisted_tags(self):
+        """Test that update_tags removes Tags not in the given list."""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=1)
+
+        self.tg.update_tags([self.tag1.id])
+
+        tg_tags = list(TagGroupTag.objects.filter(tag_group=self.tg))
+        self.assertEqual(
+            [tag.tag_id for tag in tg_tags], [self.tag1.id]
+        )
+        self.assertEqual([tag.position for tag in tg_tags], [0])
+
+    def test_update_tags_reorders_existing_tags(self):
+        """Test that update_tags changes the order of existing Tags."""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=1)
+
+        self.tg.update_tags([self.tag2.id, self.tag1.id])
+
+        tg_tags = list(TagGroupTag.objects.filter(tag_group=self.tg))
+        self.assertEqual(
+            [tag.tag_id for tag in tg_tags], [self.tag2.id, self.tag1.id]
+        )
+        self.assertEqual([tag.position for tag in tg_tags], [0, 1])
+
+    def test_update_tags_idempotent_when_order_and_tags_unchanged(self):
+        """Calling update_tags with the current order does not change anything."""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=1)
+
+        self.tg.update_tags([self.tag1.id, self.tag2.id])
+
+        tg_tags = list(TagGroupTag.objects.filter(tag_group=self.tg))
+        self.assertEqual(
+            [tag.tag_id for tag in tg_tags], [self.tag1.id, self.tag2.id]
+        )
+        self.assertEqual([tag.position for tag in tg_tags], [0, 1])
+
+    def test_update_tags_combined_operation(self):
+        """Test that add, remove and rearrange operations work together"""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=1)
+
+        self.tag4 = Tag.objects.create(name='tag4')
+        tag_ids_input = [self.tag3.id, self.tag1.id, self.tag4.id]
+
+        self.tg.update_tags(tag_ids_input)
+
+        tg_tags = list(TagGroupTag.objects.filter(tag_group=self.tg))
+        self.assertEqual(
+            [tag.tag_id for tag in tg_tags], tag_ids_input
+        )
+        self.assertEqual([tag.position for tag in tg_tags], [0, 1, 2])
+
+    def test_update_tags_empty_list_clears_tags_from_post(self):
+        """Test that an empty list removes tags from a TagGroup"""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=1)
+
+        tag_ids_input = []
+        self.tg.update_tags(tag_ids_input)
+
+        tg_tags = list(TagGroupTag.objects.filter(tag_group=self.tg))
+
+        self.assertEqual(
+            [tag.tag_id for tag in tg_tags], tag_ids_input
+        )
+
+    def test_update_tags_duplicate_input(self):
+        """Test that duplicated Tags in input don't cause inconsistencies"""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+
+        tag_ids_input = [
+            self.tag1.id, self.tag2.id, self.tag2.id, self.tag3.id
+        ]
+
+        self.tg.update_tags(tag_ids_input)
+
+        tg_tags = list(TagGroupTag.objects.filter(tag_group=self.tg))
+
+        self.assertEqual(
+            [tag.tag_id for tag in tg_tags],
+            [self.tag1.id, self.tag2.id, self.tag3.id]
+        )
+        self.assertNotEqual(
+            [tag.tag_id for tag in tg_tags], tag_ids_input
+        )
+        self.assertEqual([tag.position for tag in tg_tags], [0, 1, 2])
+#
+    def test_update_tags_invalid_tag_id(self):
+        """Test invalid Tag raises an error"""
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag1, position=0)
+        TagGroupTag.objects.create(tag_group=self.tg, tag=self.tag2, position=1)
+
+        tag_ids_input = [self.tag1.id, self.tag2.id, 9999]
+        with self.assertRaises(ValueError):
+            self.tg.update_tags(tag_ids_input)
+
+    def test_update_tags_transaction_rollback_on_error(self):
+        from unittest.mock import patch
+
+        self.tg.update_tags([self.tag1.id])
+        original_tag_ids = self.tg.ordered_tag_ids
+
+        # Patch bulk_create to raise error on second call
+        with patch('posts.models.TagGroupTag.objects.bulk_create',
+                   side_effect=Exception('DB error')):
+            with self.assertRaises(Exception):
+                self.tg.update_tags([self.tag1.id, self.tag2.id])
+
+        self.tg.refresh_from_db()
+        self.assertEqual(self.tg.ordered_tag_ids, original_tag_ids)
 
 
 class TagModelTests(TestCase):
