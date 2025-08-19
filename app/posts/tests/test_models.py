@@ -743,14 +743,6 @@ class TagGroupSignalTests(TestCase):
         self.time_delta = 0.1
         self.longer_time_delta = 2 * self.time_delta
 
-
-
-
-
-
-
-
-
     def test_updated_at_on_bulk_add(self):
         old_updated_at = self.tag_group1.updated_at
         time.sleep(self.longer_time_delta)
