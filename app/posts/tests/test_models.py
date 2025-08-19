@@ -546,10 +546,7 @@ class TagModelTests(TestCase):
 class TagGroupModelTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(email='user@example.com', password='pw')
-        self.post = Post.objects.create(user=self.user, title='Test Post')
         self.tag1 = Tag.objects.create(name='tag1')
-        self.tag2 = Tag.objects.create(name='tag2')
-        self.tag3 = Tag.objects.create(name='tag3')
         self.tag_group1 = TagGroup.objects.create(user=self.user, name='Tag Group')
         self.time_delta = 0.1
         self.longer_time_delta = 2 * self.time_delta
