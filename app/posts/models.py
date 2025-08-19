@@ -43,7 +43,7 @@ class TagOperationMixin(models.Model):
             tags_in_instance = Tag.objects.filter(posttag__post=self)
         else:  # TagGroup
             # Get only the Tags from this specific TagGroup
-            tags_in_instance = self.tags.all()
+            tags_in_instance = Tag.objects.filter(taggrouptag__tag_group=self)
 
         # Only check these specific tags for orphan status
         # It's a bit more efficient than filtering through all the Tags
@@ -52,7 +52,7 @@ class TagOperationMixin(models.Model):
         tags_to_check.annotate(
             pt_count=Count('posttag')
         ).annotate(
-            tg_count=Count('tag_groups')
+            tg_count=Count('taggrouptag')
         ).filter(
             pt_count=1 if isinstance(self, Post) else 0,
             tg_count=0 if isinstance(self, Post) else 1
