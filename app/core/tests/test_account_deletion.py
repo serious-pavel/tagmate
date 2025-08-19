@@ -61,13 +61,13 @@ class DeleteAccountTests(TestCase):
             user=self.user,
             name='My TagGroup'
         )
-        self.user_taggroup.tags.add(self.tg_tag, self.orphan_tag)
+        self.user_taggroup.update_tags([self.tg_tag.id, self.orphan_tag.id])
 
         self.other_user_taggroup = TagGroup.objects.create(
             user=self.other_user,
             name='Other TagGroup'
         )
-        self.other_user_taggroup.tags.add(self.shared_tag)
+        self.other_user_taggroup.update_tags([self.shared_tag.id])
 
         # Create Posts
         self.user_post = Post.objects.create(
