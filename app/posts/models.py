@@ -221,6 +221,7 @@ class Post(TagOperationMixin):
     def __str__(self):
         return self.title
 
+    # TODO this function is not used anywhere, use or delete
     @transaction.atomic
     def add_tags_from_group(self, tag_group: TagGroup):
         if tag_group.user_id != self.user_id:
