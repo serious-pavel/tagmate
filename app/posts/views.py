@@ -103,12 +103,14 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 return redirect(request.path)
 
         if action == 'copy_tags_to_tg' and current_post and current_tg:
-            current_tg.tags.add(*current_post.ordered_tag_ids)
+            current_tg.update_tags(
+                current_tg.ordered_tag_ids + current_post.ordered_tag_ids
+            )
 
         if action == 'copy_tags_to_post' and current_tg and current_post:
-            tg_tags = Tag.objects.filter(tag_groups=current_tg)
-            tg_tag_ids = list(tg_tags.values_list('id', flat=True))
-            current_post.update_tags(current_post.ordered_tag_ids + tg_tag_ids)
+            current_post.update_tags(
+                current_post.ordered_tag_ids + current_tg.ordered_tag_ids
+            )
 
         if current_post:
             if action == 'update_post_title':
