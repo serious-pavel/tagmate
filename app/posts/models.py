@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.core.validators import RegexValidator
 from django.db.models import Count
-from django.db.models.signals import m2m_changed, pre_delete
+from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
 
@@ -246,20 +246,6 @@ class PostTag(models.Model):
 
     def __str__(self):
         return f"{self.tag} in {self.post} at {self.position}"
-
-
-@receiver(m2m_changed, sender=TagGroup.tags.through)
-def tag_group_tags_changed(sender, instance, action, pk_set, **kwargs):
-    """
-    Update TagGroup.updated_at when tags are modified.
-
-    Handles "post_add" and "post_remove" if pk_set is not empty (actual changes),
-    and always on "post_clear" (all tags removed).
-    Ensures updated_at only changes on real relation updates.
-    See: https://docs.djangoproject.com/en/stable/ref/signals/#m2m-changed
-    """
-    if (action in ("post_add", "post_remove") and pk_set) or action == "post_clear":
-        instance.save()
 
 
 @receiver(pre_delete, sender=Post)
