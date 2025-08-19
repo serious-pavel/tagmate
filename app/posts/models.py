@@ -138,6 +138,13 @@ class TagOperationMixin(models.Model):
         if to_update or to_create or to_detach:
             self.save()  # Update timestamp
 
+    @transaction.atomic
+    def copy_tags_from_other_instance(self, other_instance):
+        """Copy tags from another instance of TagOperationMixin"""
+        if not isinstance(other_instance, type(self)):
+            raise TypeError(f"Cannot copy tags from {type(other_instance)}")
+        self.update_tags(self.ordered_tag_ids + other_instance.ordered_tag_ids)
+
 
 class Tag(models.Model):
     objects: models.Manager['Tag']
