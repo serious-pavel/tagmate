@@ -551,25 +551,61 @@ class TagGroupModelTests(TestCase):
         self.tag2 = Tag.objects.create(name='tag2')
         self.tag3 = Tag.objects.create(name='tag3')
         self.tag_group1 = TagGroup.objects.create(user=self.user, name='Tag Group')
+        self.time_delta = 0.1
+        self.longer_time_delta = 2 * self.time_delta
 
     def test_str_representation(self):
         self.assertEqual(str(self.tag_group1), 'Tag Group')
 
-    def test_ordering_tags_by_name(self):
-        self.tag_group1.tags.add(self.tag3)
-        self.tag_group1.tags.add(self.tag2)
+    def test_updated_at_on_creation(self):
+        self.assertIsNotNone(self.tag_group1.updated_at)
 
-        grouped_tags = list(self.tag_group1.tags.all().values_list('name', flat=True))
+    def test_updated_at_on_update(self):
+        old_updated_at = self.tag_group1.updated_at
+        time.sleep(self.longer_time_delta)
+        self.tag_group1.name = 'New Name'
+        self.tag_group1.save()
+        self.assertNotAlmostEqual(
+            self.tag_group1.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=self.time_delta
+        )
 
-        self.assertEqual(grouped_tags, ['tag2', 'tag3'])
+    def test_updated_at_on_add_tags(self):
+        old_updated_at = self.tag_group1.updated_at
+        time.sleep(self.longer_time_delta)
+        self.tag_group1.update_tags([self.tag1.id])
+        self.assertNotAlmostEqual(
+            self.tag_group1.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=self.time_delta
+        )
 
-    def test_idempotent_add_tag_to_group(self):
-        """Test that adding a tag to a group twice does not change anything"""
-        self.tag_group1.tags.add(self.tag3)
-        self.assertEqual(self.tag_group1.tags.count(), 1)
-        self.tag_group1.tags.add(self.tag3)
-        self.assertEqual(self.tag_group1.tags.count(), 1)
+    def test_updated_at_on_remove_tags(self):
+        self.tag_group1.update_tags([self.tag1.id])
+        old_updated_at = self.tag_group1.updated_at
+        time.sleep(self.longer_time_delta)
+        self.tag_group1.update_tags([])
+        self.assertNotAlmostEqual(
+            self.tag_group1.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=self.time_delta
+        )
 
+    def test_updated_at_on_repeated_operation(self):
+        """Test that updated_at is not updated when operation didn't cause changes"""
+        self.tag_group1.update_tags([self.tag1.id])
+        old_updated_at = self.tag_group1.updated_at
+        time.sleep(self.longer_time_delta)
+        self.tag_group1.update_tags([self.tag1.id])
+        self.assertAlmostEqual(
+            self.tag_group1.updated_at.timestamp(),
+            old_updated_at.timestamp(),
+            delta=self.time_delta
+        )
+
+
+class MixinTests(TestCase):
     def test_add_group_to_empty_post(self):
         """Test that adding a tag group to an empty post works"""
         self.assertEqual(self.post.tags.count(), 0)
@@ -710,52 +746,13 @@ class TagGroupSignalTests(TestCase):
         self.time_delta = 0.1
         self.longer_time_delta = 2 * self.time_delta
 
-    def test_updated_at_on_creation(self):
-        self.assertIsNotNone(self.tag_group1.updated_at)
 
-    def test_updated_at_on_update(self):
-        old_updated_at = self.tag_group1.updated_at
-        time.sleep(self.longer_time_delta)
-        self.tag_group1.name = 'New Name'
-        self.tag_group1.save()
-        self.assertNotAlmostEqual(
-            self.tag_group1.updated_at.timestamp(),
-            old_updated_at.timestamp(),
-            delta=self.time_delta
-        )
 
-    def test_updated_at_on_add_tags(self):
-        old_updated_at = self.tag_group1.updated_at
-        time.sleep(self.longer_time_delta)
-        self.tag_group1.tags.add(self.tag1)
-        self.assertNotAlmostEqual(
-            self.tag_group1.updated_at.timestamp(),
-            old_updated_at.timestamp(),
-            delta=self.time_delta
-        )
 
-    def test_updated_at_on_remove_tags(self):
-        self.tag_group1.tags.add(self.tag1)
-        old_updated_at = self.tag_group1.updated_at
-        time.sleep(self.longer_time_delta)
-        self.tag_group1.tags.remove(self.tag1)
-        self.assertNotAlmostEqual(
-            self.tag_group1.updated_at.timestamp(),
-            old_updated_at.timestamp(),
-            delta=self.time_delta
-        )
 
-    def test_updated_at_on_repeated_operation(self):
-        """Test that updated_at is not updated when operation didn't cause changes"""
-        self.tag_group1.tags.add(self.tag1)
-        old_updated_at = self.tag_group1.updated_at
-        time.sleep(self.longer_time_delta)
-        self.tag_group1.tags.add(self.tag1)
-        self.assertAlmostEqual(
-            self.tag_group1.updated_at.timestamp(),
-            old_updated_at.timestamp(),
-            delta=self.time_delta
-        )
+
+
+
 
     def test_updated_at_on_bulk_add(self):
         old_updated_at = self.tag_group1.updated_at
