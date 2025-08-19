@@ -87,7 +87,8 @@ def post_editor(request, post_pk=None, tg_pk=None):
                         current_post.update_tags(input_tag_ids)
                         return redirect(request.path)
                     if action == 'tg_attach_tags' and current_tg is not None:
-                        current_tg.tags.add(*tag_ids)
+                        input_tag_ids = current_tg.ordered_tag_ids + tag_ids
+                        current_tg.update_tags(input_tag_ids)
                         return redirect(request.path)
 
         tag_to_detach = request.POST.get('tag_to_detach')
