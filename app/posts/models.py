@@ -141,8 +141,11 @@ class TagOperationMixin(models.Model):
     @transaction.atomic
     def copy_tags_from_other_instance(self, other_instance):
         """Copy tags from another instance of TagOperationMixin"""
-        if not isinstance(other_instance, type(self)):
-            raise TypeError(f"Cannot copy tags from {type(other_instance)}")
+        if not (isinstance(self, TagOperationMixin) and
+                isinstance(other_instance, TagOperationMixin)):
+            raise TypeError("Both instances must inherit from TagOperationMixin")
+        if self.user != other_instance.user:
+            raise PermissionError("Cannot use another user's instance.")
         self.update_tags(self.ordered_tag_ids + other_instance.ordered_tag_ids)
 
 
@@ -227,17 +230,6 @@ class Post(TagOperationMixin):
 
     def __str__(self):
         return self.title
-
-    # TODO this function is not used anywhere, use or delete
-    @transaction.atomic
-    def add_tags_from_group(self, tag_group: TagGroup):
-        if tag_group.user_id != self.user_id:
-            raise PermissionError("Cannot use another user's tag group.")
-
-        tag_group_tag_ids = tag_group.tags.values_list('id', flat=True)
-        current_tag_ids = self.tags.values_list('id', flat=True)
-        input_tag_ids = list(current_tag_ids) + list(tag_group_tag_ids)
-        self.update_tags(input_tag_ids)
 
 
 class PostTag(models.Model):
