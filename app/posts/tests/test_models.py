@@ -866,8 +866,7 @@ class PostClearTagsTests(TestCase):
         self.other_post.update_tags([self.tag_both_posts.id, self.tag_other_post.id])
 
         # Attach tags to other_tg
-        self.other_tg.tags.add(self.tag_other_tg)
-        self.other_tg.tags.add(self.tag_this_post_other_tg)
+        self.other_tg.update_tags([self.tag_other_tg.id, self.tag_this_post_other_tg.id])
 
     def test_clear_tags_deletes_exclusive_tag(self):
         self.this_post.clear_tags()
