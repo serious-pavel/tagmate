@@ -649,6 +649,22 @@ class MixinTests(TestCase):
             self.post.ordered_tag_ids, old_post_tags_list + old_tg_tags_list
         )
 
+    def test_idempotent_copy_tags(self):
+        """Test that repeated operation changes nothing"""
+        self.tg.copy_tags_from_other_instance(self.post)
+
+        new_tg_tags_list = self.tg.ordered_tag_ids
+        new_updated_at = self.tg.updated_at
+
+        self.tg.copy_tags_from_other_instance(self.post)
+        self.assertEqual(
+            self.tg.ordered_tag_ids, new_tg_tags_list
+        )
+
+        self.assertEqual(
+            self.tg.updated_at, new_updated_at
+        )
+
 
 class TempTests(TestCase):
     def test_add_group_to_empty_post(self):
