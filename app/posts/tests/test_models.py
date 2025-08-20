@@ -722,22 +722,54 @@ class MixinTests(TestCase):
         with self.assertRaises(PermissionError):
             self.post.copy_tags_from_other_instance(self.other_post)
 
-class TempTests(TestCase):
+
+class SignalTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(email='u@example.com', password='pw')
+        self.post = Post.objects.create(
+            user=self.user, title='Test Post', description='Test Post Description'
+        )
+        self.tg = TagGroup.objects.create(user=self.user, name='Test TagGroup')
+        self.tg_tag1 = Tag.objects.create(name='tg_tag1')
+        self.tg_tag2 = Tag.objects.create(name='tg_tag2')
+        self.post_tag1 = Tag.objects.create(name='post_tag1')
+        self.post_tag2 = Tag.objects.create(name='post_tag2')
+
+        self.post.update_tags([self.post_tag1.id, self.post_tag2.id])
+        self.tg.update_tags([self.tg_tag1.id, self.tg_tag2.id])
+
     def test_delete_tag_group_deletes_orphaned_tags(self):
-        self.assertTrue(TagGroup.objects.filter(name='Tag Group').exists())
+        self.assertTrue(TagGroup.objects.filter(name='Test TagGroup').exists())
+        self.assertEqual(self.tg.tags.count(), 2)
 
-        self.tag_group1.tags.add(self.tag1)
-        self.tag_group1.tags.add(self.tag2)
+        tag_ids = self.tg.ordered_tag_ids
+        self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 2)
+        self.assertTrue(Tag.objects.filter(name='tg_tag1').exists())
+        self.assertTrue(Tag.objects.filter(name='tg_tag2').exists())
 
-        self.assertEqual(self.tag_group1.tags.count(), 2)
+        self.tg.delete()
 
-        tag_ids = list(self.tag_group1.tags.values_list('id', flat=True))
-        self.tag_group1.delete()
-
-        self.assertFalse(TagGroup.objects.filter(name='Tag Group').exists())
+        self.assertFalse(TagGroup.objects.filter(name='Test TagGroup').exists())
         self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 0)
-        self.assertFalse(Tag.objects.filter(name='tag1').exists())
-        self.assertFalse(Tag.objects.filter(name='tag2').exists())
+        self.assertFalse(Tag.objects.filter(name='tg_tag1').exists())
+        self.assertFalse(Tag.objects.filter(name='tg_tag2').exists())
+
+    def test_delete_post_deletes_orphaned_tags(self):
+        self.assertTrue(Post.objects.filter(title='Test Post').exists())
+        self.assertEqual(self.post.tags.count(), 2)
+
+        tag_ids = self.post.ordered_tag_ids
+
+        self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 2)
+        self.assertTrue(Tag.objects.filter(name='post_tag1').exists())
+        self.assertTrue(Tag.objects.filter(name='post_tag2').exists())
+
+        self.post.delete()
+
+        self.assertFalse(Post.objects.filter(title='Test Post').exists())
+        self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 0)
+        self.assertFalse(Tag.objects.filter(name='post_tag1').exists())
+        self.assertFalse(Tag.objects.filter(name='post_tag2').exists())
 
 
 class TagGroupSignalTests(TestCase):
