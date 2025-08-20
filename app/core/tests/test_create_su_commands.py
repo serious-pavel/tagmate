@@ -4,7 +4,6 @@ Tests for create superuser commands
 from io import StringIO
 from unittest.mock import patch
 from django.core.management import call_command
-from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
 
 import os
