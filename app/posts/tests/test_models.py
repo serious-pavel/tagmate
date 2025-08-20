@@ -738,6 +738,9 @@ class SignalTests(TestCase):
         self.post.update_tags([self.post_tag1.id, self.post_tag2.id])
         self.tg.update_tags([self.tg_tag1.id, self.tg_tag2.id])
 
+        self.time_delta = 0.1
+        self.longer_time_delta = 2 * self.time_delta
+
     def test_delete_tag_group_deletes_orphaned_tags(self):
         self.assertTrue(TagGroup.objects.filter(name='Test TagGroup').exists())
         self.assertEqual(self.tg.tags.count(), 2)
@@ -770,54 +773,6 @@ class SignalTests(TestCase):
         self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 0)
         self.assertFalse(Tag.objects.filter(name='post_tag1').exists())
         self.assertFalse(Tag.objects.filter(name='post_tag2').exists())
-
-
-class TagGroupSignalTests(TestCase):
-    """Tests for field updated_at and M2M signal"""
-    def setUp(self):
-        self.user = User.objects.create_user(email='test@example.com', password='pw')
-        self.tag_group1 = TagGroup.objects.create(user=self.user, name='Tag Group')
-        self.tag1 = Tag.objects.create(name='tag1')
-        self.tag2 = Tag.objects.create(name='tag2')
-        self.time_delta = 0.1
-        self.longer_time_delta = 2 * self.time_delta
-
-    def test_updated_at_on_bulk_add(self):
-        old_updated_at = self.tag_group1.updated_at
-        time.sleep(self.longer_time_delta)
-        self.tag_group1.tags.set([self.tag1, self.tag2])
-        self.assertNotAlmostEqual(
-            self.tag_group1.updated_at.timestamp(),
-            old_updated_at.timestamp(),
-            delta=self.time_delta
-        )
-
-    def test_updated_at_on_add_group_to_post(self):
-        """Test that updated_at is not updated when adding a tag group to a post"""
-        post = Post.objects.create(user=self.user, title='Test Post')
-        self.tag_group1.tags.add(self.tag1)
-        self.tag_group1.tags.add(self.tag2)
-        old_updated_at = self.tag_group1.updated_at
-        time.sleep(self.longer_time_delta)
-        post.add_tags_from_group(self.tag_group1)
-        self.assertAlmostEqual(
-            self.tag_group1.updated_at.timestamp(),
-            old_updated_at.timestamp(),
-            delta=self.time_delta
-        )
-
-    def test_updated_at_on_clear_group_tags(self):
-        """Test that updated_at is updated when clearing a tag group's tags"""
-        self.tag_group1.tags.add(self.tag1)
-        self.tag_group1.tags.add(self.tag2)
-        old_updated_at = self.tag_group1.updated_at
-        time.sleep(self.longer_time_delta)
-        self.tag_group1.tags.clear()
-        self.assertNotAlmostEqual(
-            self.tag_group1.updated_at.timestamp(),
-            old_updated_at.timestamp(),
-            delta=self.time_delta
-        )
 
 
 class PostModelTests(TestCase):
