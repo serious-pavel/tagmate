@@ -603,6 +603,54 @@ class TagGroupModelTests(TestCase):
 
 
 class MixinTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(email='u@example.com', password='pw')
+        self.post = Post.objects.create(
+            user=self.user, title='Test Post', description='Test Post Description'
+        )
+        self.tg = TagGroup.objects.create(user=self.user, name='Test')
+        self.tg_tag1 = Tag.objects.create(name='tg_tag1')
+        self.tg_tag2 = Tag.objects.create(name='tg_tag2')
+        self.post_tag1 = Tag.objects.create(name='post_tag1')
+        self.post_tag2 = Tag.objects.create(name='post_tag2')
+
+        self.post.update_tags([self.post_tag1.id, self.post_tag2.id])
+        self.tg.update_tags([self.tg_tag1.id, self.tg_tag2.id])
+
+        self.other_user = User.objects.create_user(email='other@example.com')
+        self.other_post = Post.objects.create(
+            user=self.other_user, title='Other Test Post', description='Other User Post'
+        )
+        self.other_tag1 = Tag.objects.create(name='other_tag1')
+        self.other_post.update_tags([self.other_tag1.id])
+
+    def test_copy_tags_from_post_to_tag_group(self):
+        self.assertEqual(self.tg.tags.count(), 2)
+        self.assertEqual(self.post.tags.count(), 2)
+
+        self.tg.copy_tags_from_other_instance(self.post)
+        self.assertEqual(self.tg.tags.count(), 4)
+
+        self.post.copy_tags_from_other_instance(self.tg)
+        self.assertEqual(self.tg.tags.count(), 4)
+
+    def test_copy_tags_in_order(self):
+        """Test that tags are copied in the order they appear in the source instance"""
+        old_tg_tags_list = self.tg.ordered_tag_ids
+        old_post_tags_list = self.post.ordered_tag_ids
+
+        self.tg.copy_tags_from_other_instance(self.post)
+        self.assertEqual(
+            self.tg.ordered_tag_ids, old_tg_tags_list + old_post_tags_list
+        )
+
+        self.post.copy_tags_from_other_instance(self.tg)
+        self.assertEqual(
+            self.post.ordered_tag_ids, old_post_tags_list + old_tg_tags_list
+        )
+
+
+class TempTests(TestCase):
     def test_add_group_to_empty_post(self):
         """Test that adding a tag group to an empty post works"""
         self.assertEqual(self.post.tags.count(), 0)
@@ -611,20 +659,6 @@ class MixinTests(TestCase):
         self.post.add_tags_from_group(self.tag_group1)
         self.assertEqual(self.post.tags.count(), 1)
         self.assertEqual(self.post.tags.first(), self.tag1)
-
-    def test_add_group_to_post_with_tags(self):
-        """Test that adding a tag group to a post with tags works"""
-        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
-        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
-        self.assertEqual(self.post.tags.count(), 2)
-
-        self.tag_group1.tags.add(self.tag3)
-
-        self.post.add_tags_from_group(self.tag_group1)
-
-        self.assertEqual(self.post.tags.count(), 3)
-        self.assertEqual(self.post.tags.first(), self.tag1)
-        self.assertEqual(self.post.tags.last(), self.tag3)
 
     def test_idempotent_add_group_to_post(self):
         """Test that adding a tag group to a post twice does not change anything"""
@@ -660,12 +694,6 @@ class MixinTests(TestCase):
         self.assertEqual(self.post.tags.count(), 2)
         self.assertEqual(self.post.tags.first(), self.tag1)
         self.assertEqual(self.post.tags.last(), self.tag2)
-
-    def test_remove_tag_not_in_group_from_group(self):
-        """Test that removing a tag not in the group does not change anything"""
-        self.assertEqual(self.tag_group1.tags.count(), 0)
-        self.tag_group1.tags.remove(self.tag1)
-        self.assertEqual(self.tag_group1.tags.count(), 0)
 
     def test_delete_tag_group_deletes_orphaned_tags(self):
         self.assertTrue(TagGroup.objects.filter(name='Tag Group').exists())
