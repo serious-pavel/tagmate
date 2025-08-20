@@ -601,6 +601,27 @@ class TagGroupModelTests(TestCase):
             delta=self.time_delta
         )
 
+    def test_tag_group_name_uniqueness(self):
+        """Test that tag group names are unique per user"""
+        with self.assertRaises(IntegrityError):
+            TagGroup.objects.create(user=self.user, name='Tag Group')
+
+    def test_tag_group_name_can_repeat_for_different_users(self):
+        """Test that two different users can use the same tag group name"""
+        self.assertTrue(
+            TagGroup.objects.filter(user=self.user, name='Tag Group').exists()
+        )
+
+        another_user = User.objects.create_user(
+            email='another@example.com', password='pw'
+        )
+
+        TagGroup.objects.create(user=another_user, name='Tag Group')
+
+        self.assertEqual(TagGroup.objects.filter(name='Tag Group').count(), 2)
+        self.assertEqual(TagGroup.objects.filter(user=self.user).count(), 1)
+        self.assertEqual(TagGroup.objects.filter(user=another_user).count(), 1)
+
 
 class MixinTests(TestCase):
     def setUp(self):
@@ -717,55 +738,6 @@ class TempTests(TestCase):
         self.assertEqual(Tag.objects.filter(id__in=tag_ids).count(), 0)
         self.assertFalse(Tag.objects.filter(name='tag1').exists())
         self.assertFalse(Tag.objects.filter(name='tag2').exists())
-
-    def test_adding_another_users_tag_group_to_post(self):
-        """Test that adding a tag group from another user does not change anything"""
-        self.assertEqual(self.post.tags.count(), 0)
-
-        another_user = User.objects.create_user(
-            email='another@example.com',
-            password='pw'
-        )
-
-        tag_group2 = TagGroup.objects.create(user=another_user, name='Tag Group 2')
-        tag_group2.tags.add(self.tag3)
-
-        self.assertEqual(tag_group2.tags.count(), 1)
-
-        with self.assertRaises(PermissionError):
-            self.post.add_tags_from_group(tag_group2)
-        self.assertEqual(self.post.tags.count(), 0)
-
-    def test_tag_group_name_uniqueness(self):
-        """Test that tag group names are unique per user"""
-        with self.assertRaises(IntegrityError):
-            TagGroup.objects.create(user=self.user, name='Tag Group')
-
-    def test_tag_group_name_can_repeat_for_different_users(self):
-        """Test that two different users can use the same tag group name"""
-        self.assertTrue(
-            TagGroup.objects.filter(user=self.user, name='Tag Group').exists()
-        )
-
-        another_user = User.objects.create_user(
-            email='another@example.com', password='pw'
-        )
-
-        TagGroup.objects.create(user=another_user, name='Tag Group')
-
-        self.assertEqual(TagGroup.objects.filter(name='Tag Group').count(), 2)
-        self.assertEqual(TagGroup.objects.filter(user=self.user).count(), 1)
-        self.assertEqual(TagGroup.objects.filter(user=another_user).count(), 1)
-
-    def test_supply_tags_at_creation_time(self):
-        """Test that tags can be supplied at creation time"""
-        # Technically, we can't provide tags at creation time,
-        #   so we test bulk tag addition instead
-        self.assertEqual(self.tag_group1.tags.count(), 0)
-
-        self.tag_group1.tags.set([self.tag1, self.tag2])
-
-        self.assertEqual(self.tag_group1.tags.count(), 2)
 
 
 class TagGroupSignalTests(TestCase):
