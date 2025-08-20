@@ -27,7 +27,7 @@ class ClearOrphanedTagsCommandTest(TestCase):
             user=self.user,
             name='Test Group'
         )
-        self.tag_group.tags.add(self.tg_tag, self.shared_tag)
+        self.tag_group.update_tags([self.tg_tag.id, self.shared_tag.id])
 
     def test_deletes_orphaned_tags_only(self):
         """Test that only truly orphaned tags are deleted"""
