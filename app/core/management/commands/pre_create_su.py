@@ -1,7 +1,6 @@
 """
 Django command for pre-creating superusers
 """
-from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand
 
 from django.contrib.auth import get_user_model
@@ -19,9 +18,10 @@ class Command(BaseCommand):
         email = os.getenv('SU_EMAIL')
 
         if not uid or not email:
-            raise ImproperlyConfigured(
-                "Env vars SU_UID and SU_EMAIL must be set"
-            )
+            self.stdout.write(self.style.WARNING(
+                'Missing environment variables SU_UID and SU_EMAIL. The step is skipped.'
+            ))
+            return
 
         User = get_user_model()
 
