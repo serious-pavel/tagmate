@@ -624,7 +624,7 @@ class MixinTests(TestCase):
         self.other_tag1 = Tag.objects.create(name='other_tag1')
         self.other_post.update_tags([self.other_tag1.id])
 
-    def test_copy_tags_from_post_to_tag_group(self):
+    def test_copy_tags_between_instances(self):
         self.assertEqual(self.tg.tags.count(), 2)
         self.assertEqual(self.post.tags.count(), 2)
 
