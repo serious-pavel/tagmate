@@ -929,13 +929,14 @@ class TagGroupClearTagsTests(TestCase):
         self.tag_unrelated = Tag.objects.create(name='unrelated')
 
         # Attach tags to this_tg
-        self.this_tg.tags.add(self.tag_this_tg_only)
-        self.this_tg.tags.add(self.tag_both_tgs)
-        self.this_tg.tags.add(self.tag_this_tg_other_post)
+        self.this_tg.update_tags([
+            self.tag_this_tg_only.id,
+            self.tag_both_tgs.id,
+            self.tag_this_tg_other_post.id
+        ])
 
         # Attach tags to other_tg
-        self.other_tg.tags.add(self.tag_both_tgs)
-        self.other_tg.tags.add(self.tag_other_tg_only)
+        self.other_tg.update_tags([self.tag_both_tgs.id, self.tag_other_tg_only.id])
 
         # Attach tags to other_post
         self.other_post.update_tags(
