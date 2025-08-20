@@ -665,52 +665,43 @@ class MixinTests(TestCase):
             self.tg.updated_at, new_updated_at
         )
 
+    def test_empty_copy_tags(self):
+        """Test that empty copy operation doesn't change anything"""
+        old_updated_at = self.tg.updated_at
+        old_tg_tags_list = self.tg.ordered_tag_ids
+        empty_post = Post.objects.create(
+            user=self.user, title='Empty Test Post', description='Empty Test Post'
+        )
+        self.tg.copy_tags_from_other_instance(empty_post)
+
+        self.assertEqual(
+            self.tg.ordered_tag_ids, old_tg_tags_list
+        )
+        self.assertEqual(
+            self.tg.updated_at, old_updated_at
+        )
+
+    def test_copy_tags_between_two_posts(self):
+        """Test that tags are copied between two posts"""
+        new_post = Post.objects.create(
+            user=self.user, title='New Test Post', description='New Test Post'
+        )
+        new_post_tag = Tag.objects.create(name='new_post_tag')
+        new_post.update_tags([new_post_tag.id])
+        self.post.copy_tags_from_other_instance(new_post)
+
+        expected_post_tags_list = [self.post_tag1.id, self.post_tag2.id, new_post_tag.id]
+
+        self.assertEqual(
+            self.post.ordered_tag_ids, expected_post_tags_list
+        )
+
+    def test_copy_tags_from_another_user_instance(self):
+        """Test that tags copying tags from another user instance raises an error"""
+        with self.assertRaises(PermissionError):
+            self.post.copy_tags_from_other_instance(self.other_post)
 
 class TempTests(TestCase):
-    def test_add_group_to_empty_post(self):
-        """Test that adding a tag group to an empty post works"""
-        self.assertEqual(self.post.tags.count(), 0)
-        self.tag_group1.tags.add(self.tag1)
-
-        self.post.add_tags_from_group(self.tag_group1)
-        self.assertEqual(self.post.tags.count(), 1)
-        self.assertEqual(self.post.tags.first(), self.tag1)
-
-    def test_idempotent_add_group_to_post(self):
-        """Test that adding a tag group to a post twice does not change anything"""
-        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
-        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
-        self.assertEqual(self.post.tags.count(), 2)
-
-        self.tag_group1.tags.add(self.tag3)
-        self.post.add_tags_from_group(self.tag_group1)
-
-        self.assertEqual(self.post.tags.count(), 3)
-        self.assertEqual(self.post.tags.first(), self.tag1)
-        self.assertEqual(self.post.tags.last(), self.tag3)
-
-        self.post.add_tags_from_group(self.tag_group1)
-
-        self.assertEqual(self.post.tags.count(), 3)
-        self.assertEqual(self.post.tags.first(), self.tag1)
-        self.assertEqual(self.post.tags.last(), self.tag3)
-
-    def test_add_empty_tag_group_to_post(self):
-        """Test that adding an empty tag group to a post does not change anything"""
-        PostTag.objects.create(post=self.post, tag=self.tag1, position=0)
-        PostTag.objects.create(post=self.post, tag=self.tag2, position=1)
-        self.assertEqual(self.post.tags.count(), 2)
-
-        self.tag_group1.tags.clear()
-
-        self.assertEqual(self.tag_group1.tags.count(), 0)
-
-        self.post.add_tags_from_group(self.tag_group1)
-
-        self.assertEqual(self.post.tags.count(), 2)
-        self.assertEqual(self.post.tags.first(), self.tag1)
-        self.assertEqual(self.post.tags.last(), self.tag2)
-
     def test_delete_tag_group_deletes_orphaned_tags(self):
         self.assertTrue(TagGroup.objects.filter(name='Tag Group').exists())
 
