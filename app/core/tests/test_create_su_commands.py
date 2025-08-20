@@ -1,6 +1,7 @@
 """
 Tests for create superuser commands
 """
+from io import StringIO
 from unittest.mock import patch
 from django.core.management import call_command
 from django.core.exceptions import ImproperlyConfigured
@@ -113,8 +114,15 @@ class PreCreateCommandTests(TestCase):
 
     @patch.dict(os.environ, {}, clear=True)
     def test_missing_env_vars(self):
-        with self.assertRaises(ImproperlyConfigured):
-            call_command('pre_create_su')
+        out = StringIO()
+        call_command("pre_create_su", stdout=out)
+
+        output = out.getvalue().strip()
+
+        self.assertIn(
+            "Missing environment variables SU_UID and SU_EMAIL. The step is skipped.",
+            output
+        )
 
     @patch.dict(os.environ, {'SU_EMAIL': SU_EMAIL, 'SU_UID': SU_UID})
     def test_idempotency(self):
