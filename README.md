@@ -7,8 +7,7 @@ This application allows only authentication through social accounts (only Google
 
 ## ⚠️ IMPORTANT ⚠️
 
-If you started your project before tag `v0.1-before-tg-tag-ordering`, you need to conduct a transition to the newest version following this [instruction](transition/TRANSITION.md).
-
+If you started your project before any `tag` that is presented in the project, you need to conduct a transition to the newest version following this [instruction](#transition-to-the-newest-version).
 
 ## How to Set Up and Run the Project Locally
 
@@ -62,8 +61,11 @@ docker-compose up -d
 docker-compose run --rm app sh -c "python manage.py test"
 docker-compose run --rm app sh -c "flake8"
 ```
+## Transition to the newest version
 
-## Backup data
+### 1. Backup data
+
+This step is **recommended**.
 
 Run `backup.sh` script with parameters from `transition` folder.
 
@@ -73,4 +75,23 @@ You can take your db_user and db_name from .env file.
 
 ```bash
 sh transition/backup.sh <postgres_container_id> <app_container_id> <db_user> <db_name> [tag/mark]
+```
+
+### 2. Run migration
+
+This is a **MANDATORY** step.
+
+Technically, you’ll only need to run a `migrate` command after updating the project code to the latest state. However, if you want to run it as clean as possible, you should remove the existing containers and run a full deployment with build. The data will still be preserved on the volume.
+
+#### Fast migration
+
+```bash
+docker-compose run --rm app sh -c "python manage.py migrate"
+```
+
+#### Clean migration
+
+```bash
+docker-compose down --remove-orphans
+docker-compose up --build
 ```
