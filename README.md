@@ -73,6 +73,8 @@ You can take your container ids from `docker ps` output.
 
 You can take your db_user and db_name from .env file.
 
+You can tag\mark your backup folder with additional text.
+
 ```bash
 sh transition/backup.sh <postgres_container_id> <app_container_id> <db_user> <db_name> [tag/mark]
 ```
