@@ -5,6 +5,7 @@ from django.core.validators import RegexValidator
 from django.db.models import Count
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
+from posts.fields import StrippedCharField
 
 
 User = get_user_model()
@@ -169,7 +170,7 @@ class TagGroup(TagOperationMixin):
     objects: models.Manager['TagGroup']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tag_groups')
-    name = models.CharField(max_length=64)
+    name = StrippedCharField(max_length=64)
 
     tags = models.ManyToManyField(
         Tag,
