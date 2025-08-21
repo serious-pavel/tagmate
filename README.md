@@ -25,15 +25,30 @@ Edit the .env file and update variables if needed.
 ```sh
 cat .env.test > .env
 ```
-All the parameters presented in the file are required. You can leave `DB_NAME` `DB_USER` `DB_PASS` `SECRET_KEY` with default values for the local development needs.
+###### Database and application parameters
+**Required**.
+
+You can leave `DB_NAME` `DB_USER` `DB_PASS` `SECRET_KEY` with default values for the local development needs. Please change for productive deployment.
+
+The new SECRET KEY could be generated with the following command:
+
+```python
+from django.core.management.utils import get_random_secret_key  
+get_random_secret_key()
+```
 ###### Google OAuth Application
+**Required**.
+
 `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are secrets for Google's OAuth service, you can create your own authentication application or use credentials for existing one.
 ###### Admin Panel Access
+**Optional**.
+
 `SU_EMAIL` and `SU_UID` are credentials for a superuser that is created during deployment.
 `SU_EMAIL` is your gmail. `SU_UID` is an ID for your Google account in Google's OAuth service Application, unique for every Application.
-This gives you access to the Admin panel and other superuser features.
+This gives you access to the Admin panel and other superuser features. If you don't need it skip the step.
 
 You can build and deploy all containers, start a Django app, find your uid in the Profile tab (http://127.0.0.1:8000/profile). Set it as `SU_UID` and re-deploy docker app container. This should update your user and grant it superuser rights.
+
 ### Build and Start the Containers
 ```sh
 docker-compose build
