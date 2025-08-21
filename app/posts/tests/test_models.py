@@ -1021,3 +1021,7 @@ class StrippedCharFieldTests(TestCase):
     def test_stripped_char_field_strips_whitespace_tg_name(self):
         tg = TagGroup.objects.create(user=self.user, name='   Tag Group   ')
         self.assertEqual(tg.name, 'Tag Group')
+
+    def test_stripped_char_field_strips_whitespace_post(self):
+        post = Post.objects.create(user=self.user, title='   Post Title   ')
+        self.assertEqual(post.title, 'Post Title')
