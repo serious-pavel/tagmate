@@ -1012,3 +1012,12 @@ class UniqueConstraintOnCreationTests(TestCase):
         self.assertEqual(TagGroup.objects.count(), 3)
         self.assertTrue(TagGroup.objects.filter(name='Untitled TagGroup 1').exists())
         self.assertTrue(TagGroup.objects.filter(name='Untitled TagGroup 3').exists())
+
+
+class StrippedCharFieldTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(email='test_fields@example.com')
+
+    def test_stripped_char_field_strips_whitespace_tg(self):
+        tg = TagGroup.objects.create(user=self.user, name='   Tag Group   ')
+        self.assertEqual(tg.name, 'Tag Group')
