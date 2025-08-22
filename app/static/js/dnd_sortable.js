@@ -15,36 +15,34 @@ function getCookie(name) {
     return cookieValue;
 }
 
-// ---- Drag and Drop Sorting ----
-document.addEventListener("DOMContentLoaded", function() {
-    // Make sure SortableJS is loaded
-    if (typeof Sortable === "undefined") return;
-
-    const list = document.getElementById("dnd-list-post");
+// Generalized Drag and Drop Sorting
+function setupDndSortable(config) {
+    const list = document.getElementById(config.listId);
     if (!list) return;
+
+    const tagSelector = ".tag";
+    const inputSelector = 'input[name="tag_to_detach"]';
 
     Sortable.create(list, {
         animation: 150,
-        forceFallback : true,
+        forceFallback: true,
         onStart: () => list.classList.add('dragging'),
         onChoose: () => list.classList.add('dragging'),
         onUnchoose: () => list.classList.remove('dragging'),
         onEnd: function (evt) {
-            list.classList.remove('dragging')
-            // After drag'n'drop, collect new tag order:
-            const tagDivs = list.querySelectorAll(".tag");
+            list.classList.remove('dragging');
+            const tagDivs = list.querySelectorAll(tagSelector);
             const tagOrder = [];
             tagDivs.forEach(div => {
-                // Get tag id from hidden input
-                const input = div.querySelector('input[name="tag_to_detach"]');
+                const input = div.querySelector(inputSelector);
                 if (input) tagOrder.push(input.value);
             });
 
-            // Build data for AJAX POST
+            // Prepare data for AJAX POST
             const csrftoken = getCookie('csrftoken');
-            const postId = list.dataset.postId;
+            const objectId = list.dataset[config.dataIdKey];
 
-            fetch(`/posts/api/${postId}/reorder_tags`, {
+            fetch(config.ajaxUrl(objectId), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -58,9 +56,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     showMessage("Failed to update tag order: " + (data.error || ""));
                 } else {
                     showMessage("Tag order saved!", "success");
-                    const preview = document.getElementById("post-preview-tags");
-                    if (preview && data.tag_text) {
-                        preview.textContent = data.tag_text;
+                    if (config.previewId && data.tag_text) {
+                        const preview = document.getElementById(config.previewId);
+                        if (preview) preview.textContent = data.tag_text;
                     }
                 }
             })
@@ -68,5 +66,25 @@ document.addEventListener("DOMContentLoaded", function() {
                 showMessage("AJAX error: " + error, "error");
             });
         }
+    });
+}
+
+// Setup both lists once DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+    if (typeof Sortable === "undefined") return;
+    
+    // Posts
+    setupDndSortable({
+        listId: "dnd-list-post",
+        dataIdKey: "postId", // will correspond to data-post-id
+        ajaxUrl: postId => `/posts/api/${postId}/reorder_tags`,
+        previewId: "post-preview-tags"
+    });
+
+    // For TagGroups
+    setupDndSortable({
+        listId: "dnd-list-tg",
+        dataIdKey: "tgID", // will correspond to data-tg-id
+        ajaxUrl: tgId => `/tags/api/${tgId}/reorder_tags`
     });
 });
