@@ -169,27 +169,32 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
 
 @require_POST
-def reorder_tags(request, post_pk):
+def reorder_tags(request):
     if not request.user.is_authenticated:
         return JsonResponse({"success": False, "error": "Not authenticated"})
 
     data = json.loads(request.body)
+    item_type = data.get("item_type")
+    if item_type == "post":
+        item_model = Post
+    else:
+        item_model = TagGroup
+    try:
+        item = item_model.objects.get(id=data.get("item_id"), user=request.user)
+    except item_model.DoesNotExist:
+        return JsonResponse({"success": False, "error": "Item not found"})
+
     tag_order = [int(tid) for tid in data.get("tag_order", [])]
 
     try:
-        post = Post.objects.get(id=post_pk, user=request.user)
-    except Post.DoesNotExist:
-        return JsonResponse({"success": False, "error": "Post not found"})
-
-    try:
-        post.update_tags(tag_order)
+        item.update_tags(tag_order)
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)})
 
+    response_data = {"success": True}
     # Get the current list of tag names as a single string (e.g., "#tag1 #tag2 ...")
-    tag_text = " ".join(f"#{tag.name}" for tag in post.ordered_tags)
+    if item_type == "post":
+        tag_text = " ".join(f"#{tag.name}" for tag in item.ordered_tags)
+        response_data["tag_text"] = tag_text
 
-    return JsonResponse({
-        "success": True,
-        "tag_text": tag_text
-    })
+    return JsonResponse(response_data)
