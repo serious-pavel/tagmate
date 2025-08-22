@@ -22,6 +22,7 @@ function setupDndSortable(config) {
 
     const tagSelector = ".tag";
     const inputSelector = 'input[name="tag_to_detach"]';
+    const dataIdKey = 'itemId' // will correspond to data-item-id
 
     Sortable.create(list, {
         animation: 150,
@@ -40,7 +41,7 @@ function setupDndSortable(config) {
 
             // Prepare data for AJAX POST
             const csrftoken = getCookie('csrftoken');
-            const objectId = list.dataset[config.dataIdKey];
+            const objectId = list.dataset[dataIdKey];
 
             fetch(config.ajaxUrl(objectId), {
                 method: "POST",
@@ -72,11 +73,10 @@ function setupDndSortable(config) {
 // Setup both lists once DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
     if (typeof Sortable === "undefined") return;
-    
+
     // Posts
     setupDndSortable({
         listId: "dnd-list-post",
-        dataIdKey: "postId", // will correspond to data-post-id
         ajaxUrl: postId => `/posts/api/${postId}/reorder_tags`,
         previewId: "post-preview-tags"
     });
@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // For TagGroups
     setupDndSortable({
         listId: "dnd-list-tg",
-        dataIdKey: "tgID", // will correspond to data-tg-id
         ajaxUrl: tgId => `/tags/api/${tgId}/reorder_tags`
     });
 });
