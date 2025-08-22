@@ -210,7 +210,7 @@
                 </label>
               </form>
 
-              <div id="dnd-list-tg" class="tag-list">
+              <div id="dnd-list-tg" class="tag-list" data-item-id="{{ current_tg.id }}">
                 {% for tg_tag in current_tg.ordered_tags %}
                   <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
                     <form method="post">
