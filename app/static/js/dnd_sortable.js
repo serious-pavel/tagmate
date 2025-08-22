@@ -23,6 +23,7 @@ function setupDndSortable(config) {
     const tagSelector = ".tag";
     const inputSelector = 'input[name="tag_to_detach"]';
     const dataIdKey = 'itemId' // will correspond to data-item-id
+    const ajaxUrl = "/posts/api/reorder_tags";
 
     Sortable.create(list, {
         animation: 150,
@@ -43,13 +44,13 @@ function setupDndSortable(config) {
             const csrftoken = getCookie('csrftoken');
             const objectId = list.dataset[dataIdKey];
 
-            fetch(config.ajaxUrl(objectId), {
+            fetch(ajaxUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "X-CSRFToken": csrftoken,
                 },
-                body: JSON.stringify({ tag_order: tagOrder }),
+                body: JSON.stringify({ tag_order: tagOrder, item_type: config.objectType, item_id: objectId }),
             })
             .then(response => response.json())
             .then(data => {
@@ -77,13 +78,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // Posts
     setupDndSortable({
         listId: "dnd-list-post",
-        ajaxUrl: postId => `/posts/api/${postId}/reorder_tags`,
+        objectType: "post",
         previewId: "post-preview-tags"
     });
 
     // For TagGroups
     setupDndSortable({
         listId: "dnd-list-tg",
-        ajaxUrl: tgId => `/tags/api/${tgId}/reorder_tags`
+        objectType: "tg"
     });
 });
