@@ -1,4 +1,4 @@
-Django~=5.1.7
+Django~=5.2.5
 psycopg2~=2.9.10
 django-allauth~=65.7.0
 requests~=2.32.3
