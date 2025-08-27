@@ -25,7 +25,6 @@ services:
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - SU_UID=${SU_UID}
       - SU_EMAIL=${SU_EMAIL}
-      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
     depends_on:
       - db
 
