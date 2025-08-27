@@ -4,5 +4,7 @@ django-allauth~=65.7.0
 requests~=2.32.3
 pyjwt~=2.10.1
 cryptography~=44.0.2
+django-storages[s3]~=1.14.6
+boto3~=1.40.18
 #requests-oauthlib~=2.0.0
 #python3-openid~=3.2.0
