@@ -29,6 +29,7 @@ DEBUG = os.getenv('DEBUG', '0') == '1'
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
+IS_PRODUCTION = os.getenv('IS_PRODUCTION', '0') == '1'
 
 # Application definition
 
@@ -47,6 +48,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',  # Enable Google authentication
     'posts',
 ]
+
+# Add storages only in production
+if IS_PRODUCTION:
+    INSTALLED_APPS.append('storages')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,6 +132,23 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+if IS_PRODUCTION:
+    STORAGES = {
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
+                "access_key": os.getenv("AWS_ACCESS_KEY_ID"),
+                "secret_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
+                "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME"),
+                "default_acl": "public-read",
+                "querystring_auth": False,
+                "location": "tagmate/static",
+                "file_overwrite": True,
+                "region_name": f"{os.getenv('AWS_REGION')}",
+            },
+        },
+    }
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
