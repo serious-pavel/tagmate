@@ -4,12 +4,15 @@ LABEL maintainer="serious-pavel"
 
 ENV PYTHONUNBUFFERED=1
 
+WORKDIR /app
+
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
-COPY ./app /app
-WORKDIR /app
-EXPOSE 8000
 
+COPY ./app /app
+RUN chmod +x /app/entrypoint.sh
+
+EXPOSE 8000
 
 ARG DEV=false
 RUN python -m venv /py && \
@@ -34,3 +37,9 @@ RUN python -m venv /py && \
 ENV PATH="/py/bin:$PATH"
 
 USER django-user
+
+# Set entrypoint
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+
+# Default command
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
