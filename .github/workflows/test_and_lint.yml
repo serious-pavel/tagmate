@@ -83,21 +83,37 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Update ECS service
+        env:
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
         run: |
-          # Update task definition with new image
           aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} \
             --query 'taskDefinition' > task-definition.json
 
-          # Update the image in task definition
           cat task-definition.json | jq --arg IMAGE "${{ needs.build-and-push.outputs.image }}" \
-            '.containerDefinitions[0].image = $IMAGE' | \
+            '.containerDefinitions[0].image = $IMAGE |
+             .containerDefinitions[0].environment = [
+               {"name": "DJANGO_SECRET_KEY", "value": env.DJANGO_SECRET_KEY},
+               {"name": "DB_PASS", "value": env.DB_PASS},
+               {"name": "DB_USER", "value": env.DB_USER},
+               {"name": "DB_NAME", "value": env.DB_NAME},
+               {"name": "DB_HOST", "value": env.DB_HOST},
+               {"name": "AWS_ACCESS_KEY_ID", "value": env.AWS_ACCESS_KEY_ID},
+               {"name": "AWS_SECRET_ACCESS_KEY", "value": env.AWS_SECRET_ACCESS_KEY},
+               {"name": "AWS_STORAGE_BUCKET_NAME", "value": env.AWS_STORAGE_BUCKET_NAME}
+             ]' | \
             jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .placementConstraints, .compatibilities, .registeredAt, .registeredBy)' \
             > updated-task-definition.json
 
-          # Register new task definition
           aws ecs register-task-definition --cli-input-json file://updated-task-definition.json
 
-          # Update ECS service
           aws ecs update-service \
             --cluster ${{ env.ECS_CLUSTER }} \
             --service ${{ env.ECS_SERVICE }} \
