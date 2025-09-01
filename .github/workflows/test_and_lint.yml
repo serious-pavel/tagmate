@@ -109,7 +109,7 @@ jobs:
                {"name": "AWS_ACCESS_KEY_ID", "value": env.AWS_ACCESS_KEY_ID},
                {"name": "AWS_SECRET_ACCESS_KEY", "value": env.AWS_SECRET_ACCESS_KEY},
                {"name": "AWS_STORAGE_BUCKET_NAME", "value": env.AWS_STORAGE_BUCKET_NAME},
-               {"name": "IS_PRODUCTION", "value": env.IS_PRODUCTION},
+               {"name": "IS_PRODUCTION", "value": env.IS_PRODUCTION}
              ]' | \
             jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .placementConstraints, .compatibilities, .registeredAt, .registeredBy)' \
             > updated-task-definition.json
