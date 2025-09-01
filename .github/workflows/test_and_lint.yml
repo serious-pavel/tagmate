@@ -1,7 +1,9 @@
 ---
 name: Test, Lint and Deploy
 
-on: [push]
+on:
+  push:
+  workflow_dispatch:
 
 env:
   ECR_REPOSITORY: tagmate
