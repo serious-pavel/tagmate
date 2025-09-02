@@ -27,5 +27,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('core.urls')),
     path('', include('posts.urls')),
-    path('health-check', core_views.health_check, name='health_check')
+    path('health-check/', core_views.health_check, name='health_check')
 ]
