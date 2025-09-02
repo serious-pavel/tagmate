@@ -42,4 +42,4 @@ USER django-user
 ENTRYPOINT ["sh", "/app/entrypoint.sh"]
 
 # Default command
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "app.wsgi:application", "--bind", "0.0.0.0:8000"]
