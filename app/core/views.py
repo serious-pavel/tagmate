@@ -6,7 +6,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import logout
 from allauth.socialaccount.providers.google import views as google_views
 from allauth.account.views import LogoutView as AllauthLogoutView
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.views import View
 
 
@@ -59,3 +59,7 @@ def delete_account(request):
 
     messages.success(request, "Your account has been successfully deleted.")
     return redirect('profile')
+
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})
