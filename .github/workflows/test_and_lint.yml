@@ -7,9 +7,10 @@ on:
 
 env:
   ECR_REPOSITORY: tagmate
-  ECS_CLUSTER: serious-cluster
-  ECS_SERVICE: tagmate-task-service-v6eama7t
-  ECS_TASK_DEFINITION: tagmate-task
+  ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
+  ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
+  ECS_TASK_DEFINITION: ${{ vars.ECS_TASK_DEFINITION }}
+  IS_PRODUCTION: 1
 
 jobs:
   test-lint:
@@ -95,7 +96,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
           AWS_REGION: ${{ vars.AWS_REGION }}
-          IS_PRODUCTION: ${{ vars.IS_PRODUCTION }}
         run: |
           aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} \
             --query 'taskDefinition' > task-definition.json
