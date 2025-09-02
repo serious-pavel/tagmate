@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+import core.views as core_views
 
 from allauth.account.decorators import secure_admin_login
 
@@ -26,4 +27,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('core.urls')),
     path('', include('posts.urls')),
+    path('health-check', core_views.health_check, name='health_check')
 ]
