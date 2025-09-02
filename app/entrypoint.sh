@@ -8,7 +8,7 @@ python manage.py pre_create_su
 python manage.py clear_orphaned_tags
 
 # Collect static files only in production
-if [ "$ENVIRONMENT" = "production" ]; then
+if [ "$IS_PRODUCTION" = "1" ]; then
     echo "️ Collecting static files to S3..."
     python manage.py collectstatic --noinput
     echo "✅ Static files collected successfully!"
