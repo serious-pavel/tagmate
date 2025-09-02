@@ -10,7 +10,8 @@ env:
   ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
   ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
   ECS_TASK_DEFINITION: ${{ vars.ECS_TASK_DEFINITION }}
-  IS_PRODUCTION: 1
+  IS_PRODUCTION: ${{ vars.IS_PRODUCTION }}
+  DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
 
 jobs:
   test-lint:
@@ -111,7 +112,8 @@ jobs:
                {"name": "AWS_ACCESS_KEY_ID", "value": env.AWS_ACCESS_KEY_ID},
                {"name": "AWS_SECRET_ACCESS_KEY", "value": env.AWS_SECRET_ACCESS_KEY},
                {"name": "AWS_STORAGE_BUCKET_NAME", "value": env.AWS_STORAGE_BUCKET_NAME},
-               {"name": "IS_PRODUCTION", "value": env.IS_PRODUCTION}
+               {"name": "IS_PRODUCTION", "value": env.IS_PRODUCTION},
+               {"name": "DJANGO_ALLOWED_HOSTS", "value": env.DJANGO_ALLOWED_HOSTS}
              ]' | \
             jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .placementConstraints, .compatibilities, .registeredAt, .registeredBy)' \
             > updated-task-definition.json
