@@ -99,7 +99,7 @@ jobs:
           AWS_REGION: ${{ vars.AWS_REGION }}
           DEBUG: ${{ vars.DEBUG }}
           GOOGLE_WEBAPP_CLIENT_ID: ${{ secrets.GOOGLE_WEBAPP_CLIENT_ID }}
-          GOOGLE_WEBAPP_CLIENT_SECRET: ${{ secrets.GOOGLE_WEBAPP_CLIENT_ID }}
+          GOOGLE_WEBAPP_CLIENT_SECRET: ${{ secrets.GOOGLE_WEBAPP_CLIENT_SECRET }}
         run: |
           aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} \
             --query 'taskDefinition' > task-definition.json
@@ -117,7 +117,9 @@ jobs:
                {"name": "AWS_STORAGE_BUCKET_NAME", "value": env.AWS_STORAGE_BUCKET_NAME},
                {"name": "IS_PRODUCTION", "value": env.IS_PRODUCTION},
                {"name": "DJANGO_ALLOWED_HOSTS", "value": env.DJANGO_ALLOWED_HOSTS},
-               {"name": "DEBUG", "value": env.DEBUG}
+               {"name": "DEBUG", "value": env.DEBUG},
+               {"name": "GOOGLE_WEBAPP_CLIENT_ID", "value": env.GOOGLE_WEBAPP_CLIENT_ID},
+               {"name": "GOOGLE_WEBAPP_CLIENT_SECRET", "value": env.GOOGLE_WEBAPP_CLIENT_SECRET}
              ]' | \
             jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .placementConstraints, .compatibilities, .registeredAt, .registeredBy)' \
             > updated-task-definition.json
