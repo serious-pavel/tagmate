@@ -38,7 +38,7 @@ get_random_secret_key()
 ###### Google OAuth Application
 **Required**.
 
-`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are secrets for Google's OAuth service, you can create your own authentication application or use credentials for existing one.
+`GOOGLE_WEBAPP_CLIENT_ID` and `GOOGLE_WEBAPP_CLIENT_SECRET` are secrets for Google's OAuth service, you can create [your own authentication application](https://console.cloud.google.com/auth/clients) or use credentials for existing one.
 ###### Admin Panel Access
 **Optional**.
 
