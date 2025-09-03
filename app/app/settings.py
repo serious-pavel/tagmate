@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
-from socket import gethostname, gethostbyname_ex
+import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +30,9 @@ DEBUG = os.getenv('DEBUG', '0') == '1'
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 # Allow running health checks locally
-ALLOWED_HOSTS = ALLOWED_HOSTS + list(set(gethostbyname_ex(gethostname())[2]))
+hostname = socket.gethostname()
+container_ip = socket.gethostbyname(hostname)
+ALLOWED_HOSTS.append(container_ip)
 
 IS_PRODUCTION = os.getenv('IS_PRODUCTION', '0') == '1'
 
