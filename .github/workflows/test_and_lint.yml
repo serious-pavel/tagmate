@@ -100,6 +100,8 @@ jobs:
           DEBUG: ${{ vars.DEBUG }}
           GOOGLE_WEBAPP_CLIENT_ID: ${{ secrets.GOOGLE_WEBAPP_CLIENT_ID }}
           GOOGLE_WEBAPP_CLIENT_SECRET: ${{ secrets.GOOGLE_WEBAPP_CLIENT_SECRET }}
+          SU_UID: ${{ secrets.SU_UID }}
+          SU_EMAIL: ${{ secrets.SU_EMAIL }}
         run: |
           aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} \
             --query 'taskDefinition' > task-definition.json
@@ -119,7 +121,9 @@ jobs:
                {"name": "DJANGO_ALLOWED_HOSTS", "value": env.DJANGO_ALLOWED_HOSTS},
                {"name": "DEBUG", "value": env.DEBUG},
                {"name": "GOOGLE_WEBAPP_CLIENT_ID", "value": env.GOOGLE_WEBAPP_CLIENT_ID},
-               {"name": "GOOGLE_WEBAPP_CLIENT_SECRET", "value": env.GOOGLE_WEBAPP_CLIENT_SECRET}
+               {"name": "GOOGLE_WEBAPP_CLIENT_SECRET", "value": env.GOOGLE_WEBAPP_CLIENT_SECRET},
+               {"name": "SU_UID", "value": env.SU_UID},
+               {"name": "SU_EMAIL", "value": env.SU_EMAIL}
              ]' | \
             jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .placementConstraints, .compatibilities, .registeredAt, .registeredBy)' \
             > updated-task-definition.json
