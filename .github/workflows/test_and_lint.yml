@@ -97,6 +97,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
           AWS_REGION: ${{ vars.AWS_REGION }}
+          DEBUG: ${{ vars.DEBUG }}
         run: |
           aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} \
             --query 'taskDefinition' > task-definition.json
@@ -113,7 +114,8 @@ jobs:
                {"name": "AWS_SECRET_ACCESS_KEY", "value": env.AWS_SECRET_ACCESS_KEY},
                {"name": "AWS_STORAGE_BUCKET_NAME", "value": env.AWS_STORAGE_BUCKET_NAME},
                {"name": "IS_PRODUCTION", "value": env.IS_PRODUCTION},
-               {"name": "DJANGO_ALLOWED_HOSTS", "value": env.DJANGO_ALLOWED_HOSTS}
+               {"name": "DJANGO_ALLOWED_HOSTS", "value": env.DJANGO_ALLOWED_HOSTS},
+               {"name": "DEBUG", "value": env.DEBUG}
              ]' | \
             jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .placementConstraints, .compatibilities, .registeredAt, .registeredBy)' \
             > updated-task-definition.json
