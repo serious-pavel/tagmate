@@ -297,6 +297,7 @@ body.blockL-show-tgs #recent-tgs {
   border-radius: 10px;
   user-select: none;
   position: relative;
+  margin: 0.2rem 0 0.2rem 0;
 }
 
 .tag-counter {
