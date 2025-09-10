@@ -1,6 +1,6 @@
 :root {
-  --gap: 10px;
-  --padding: 10px;
+  --gap: 0.8rem;
+  --padding: 0.8rem;
   --tab-height: 2rem;
   /* Block inner outline width */
   --block-outline-w: 1px;
@@ -296,6 +296,21 @@ body.blockL-show-tgs #recent-tgs {
   padding: 7px;
   border-radius: 10px;
   user-select: none;
+  position: relative;
+}
+
+.tag-counter {
+    position: absolute;
+    left: calc(50% - 1ch);
+    top: -0.5rem;
+    font-size: var(--text-size-S);
+    background: gray;
+    min-width: 4ch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: var(--primary-inverted);
 }
 
 .tag {
