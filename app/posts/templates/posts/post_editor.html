@@ -212,6 +212,7 @@
               </form>
 
               <div id="dnd-list-tg" class="tag-list" data-item-id="{{ current_tg.id }}">
+                <div class="tag-counter">{{ current_tg.ordered_tags.count }}</div>
                 {% for tg_tag in current_tg.ordered_tags %}
                   <div class="tag" title="{{ tg_tag.name }}">{{ tg_tag.name|truncatechars:25 }}
                     <form method="post">
