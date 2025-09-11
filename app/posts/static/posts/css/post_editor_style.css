@@ -305,13 +305,13 @@ body.blockL-show-tgs #recent-tgs {
     left: calc(50% - 1ch);
     top: -0.5rem;
     font-size: var(--text-size-S);
-    background: gray;
     min-width: 4ch;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    color: var(--primary-inverted);
+    color: var(--border-muted);
+    background: var(--highlight);
 }
 
 .tag {
