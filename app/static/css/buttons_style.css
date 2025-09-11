@@ -116,7 +116,7 @@ button {
   display: none;
   height: var(--icon-btn-height);
   border-radius: 50%;
-  background-image: url(./../../img/minus-circle-svgrepo-com.svg);
+  background-image: url(./../img/minus-circle-svgrepo-com.svg);
 }
 
 /* delete item */
@@ -126,5 +126,5 @@ button {
 
 /* close item */
 .close-item-btn {
-  background-image: url(./../../img/x-circle-svgrepo-com.svg);
+  background-image: url(./../img/x-circle-svgrepo-com.svg);
 }
