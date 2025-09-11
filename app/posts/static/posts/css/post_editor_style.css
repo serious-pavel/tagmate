@@ -480,7 +480,6 @@ input.edit-like-text {
 }
 
 .delete-item-btn {
-  background-image: url(./../../img/trash-bin-trash-svgrepo-com.svg);
   background-color: var(--danger);
 }
 
