@@ -99,7 +99,7 @@ button {
   height: var(--icon-btn-height);
   aspect-ratio: 1;
   font-size: 0;
-  padding: 0;
+  padding: 0.1rem;
 }
 
 .icon-btn svg {
