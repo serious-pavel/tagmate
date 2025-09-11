@@ -95,14 +95,6 @@
   line-height: 1.5;
 }
 
-.fake-btn {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 2;
-}
-
 .list-item .fake-btn {
   translate: -1ch -5px; /* Should be opposite of parent (list-item) padding */
 }
@@ -162,44 +154,6 @@
   padding: 0.3rem 0.3rem 0 3.5rem;
 }
 
-.fake-btn path.stroke {
-  stroke: var(--primary-inverted);
-}
-
-.fake-btn:hover path.stroke {
-  stroke: var(--primary);
-}
-
-.fake-btn:active path.stroke {
-  stroke: var(--primary-inverted);
-}
-
-.fake-btn path.circle {
-  stroke: var(--primary);
-}
-
-.fake-btn:active path.circle {
-  stroke: var(--primary-inverted);
-}
-
-.fake-btn path.opacity-layer {
-  fill: var(--bg-light);
-}
-
-.fake-btn:hover path.opacity-layer,
-.fake-btn:active path.opacity-layer {
-  fill: var(--bg-dark);
-}
-
-.fake-btn:hover {
-  background: var(--bg);
-}
-
-.fake-btn:active {
-  background: var(--bg-light);
-  transform: translate(1px, 1px);
-}
-
 .list-item label {
   display: flex;
   justify-content: center;
@@ -222,32 +176,6 @@
   min-width: 0;
   border-radius: 5px;
   text-align: center;
-}
-
-.close-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 0 5px;
-  border: none;
-  display: none;
-  opacity: 0.7;
-  height: 1rem;
-  aspect-ratio: 1;
-  padding: 0;
-  font-size: var(--text-size-S);
-  box-shadow: inset 0 0 1px var(--bg);
-  font-weight: 600;
-}
-
-/* Choose any sibling regardless the position */
-.fake-btn:active ~ .close-btn {
-  top: 1px
-}
-
-.fake-btn-wrapper:hover .close-btn {
-  display: block;
-  z-index: 1;
 }
 
 #recent-posts,
@@ -442,49 +370,10 @@ input.edit-like-text {
   font-size: var(--text-size-L);
 }
 
-.update-btn {
-  display: none;
-}
-
 .item-editor form {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.icon-btn {
-  box-shadow: none;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  border-radius: 40%;
-  height: var(--icon-btn-height);
-  aspect-ratio: 1;
-  font-size: 0;
-  padding: 0;
-}
-
-.icon-btn svg {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
-
-.remove-tag-btn {
-  position: absolute;
-  top: calc(var(--icon-btn-height) / 4 * -1);
-  right: calc(var(--icon-btn-height) / 4 * -1);
-  display: none;
-  height: var(--icon-btn-height);
-  border-radius: 50%;
-  background-image: url(./../../img/minus-circle-svgrepo-com.svg);
-}
-
-.delete-item-btn {
-  background-color: var(--danger);
-}
-
-.close-item-btn {
-  background-image: url(./../../img/x-circle-svgrepo-com.svg);
 }
 
 /* app-block-R styles */
