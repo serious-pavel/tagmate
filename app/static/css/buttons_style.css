@@ -124,7 +124,7 @@ button {
   background-color: var(--danger);
 }
 
-.delete-item-btn .full-image {
+.icon-btn .full-image {
   stroke: var(--bg-dark);
 }
 
