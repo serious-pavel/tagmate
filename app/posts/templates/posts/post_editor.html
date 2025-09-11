@@ -112,7 +112,9 @@
                 <form method="post" class="close-item-form">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="close_current_post">
-                  <button class="icon-btn close-item-btn" title="Close Post"></button>
+                  <button class="icon-btn close-item-btn" title="Close Post">
+                    {% include 'posts/buttons/x-circle-svgrepo-com.svg' %}
+                  </button>
                 </form>
               </div>
 
@@ -147,7 +149,9 @@
                       {% csrf_token %}
                       <input type="hidden" name="action" value="post_detach_tag">
                       <input type="hidden" name="tag_to_detach" value="{{ tag.id }}">
-                      <button class="remove-tag-btn icon-btn"></button>
+                      <button class="remove-tag-btn icon-btn">
+                        {% include 'posts/buttons/minus-circle-svgrepo-com.svg' %}
+                      </button>
                     </form>
                   </div>
                 {% endfor %}
@@ -188,7 +192,9 @@
                 <form method="post" class="close-item-form">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="close_current_tg">
-                  <button class="icon-btn close-item-btn" title="Close TagGroup"></button>
+                  <button class="icon-btn close-item-btn" title="Close TagGroup">
+                    {% include 'posts/buttons/x-circle-svgrepo-com.svg' %}
+                  </button>
                 </form>
               </div>
 
@@ -223,7 +229,9 @@
                       {% csrf_token %}
                       <input type="hidden" name="action" value="tg_detach_tag">
                       <input type="hidden" name="tag_to_detach" value="{{ tg_tag.id }}">
-                      <button class="remove-tag-btn icon-btn"></button>
+                      <button class="remove-tag-btn icon-btn">
+                        {% include 'posts/buttons/minus-circle-svgrepo-com.svg' %}
+                      </button>
                     </form>
                   </div>
                 {% endfor %}
