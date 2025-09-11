@@ -246,24 +246,26 @@
 
       <div class="app-block app-block-R post-preview">
         Post <span class="highlighted-text">{{ current_post.title }}</span> preview:
-        <div class="post-preview-text">
-          <form method="post" class="update-form">
-            {% csrf_token %}
-            <button id="update-post-desc-btn" class="update-btn">Save!</button>
-            <label>
-              <input type="hidden" name="action" value="update_post_desc">
-              <textarea type="text" class="edit-like-text submit-on-blur" oninput="auto_grow(this)" id="post-desc"
-                        name="post_desc" placeholder="">{{ current_post.description }}</textarea>
-            </label>
-          </form>
+        {% if current_post %}
+          <div class="post-preview-text">
+            <form method="post" class="update-form">
+              {% csrf_token %}
+              <button id="update-post-desc-btn" class="update-btn">Save!</button>
+              <label>
+                <input type="hidden" name="action" value="update_post_desc">
+                <textarea type="text" class="edit-like-text submit-on-blur" oninput="auto_grow(this)" id="post-desc"
+                          name="post_desc" placeholder="">{{ current_post.description }}</textarea>
+              </label>
+            </form>
 
-          <div id="post-preview-tags">
-            {% for tag in current_post.ordered_tags %}
-              {{ tag }}
-            {% endfor %}
+            <div id="post-preview-tags">
+              {% for tag in current_post.ordered_tags %}
+                {{ tag }}
+              {% endfor %}
+            </div>
           </div>
-        </div>
-        <button type="button" onclick="copyPreviewText()">Copy as Plain Text</button>
+          <button type="button" onclick="copyPreviewText()">Copy as Plain Text</button>
+        {% endif %}
       </div>
 
     </div>
