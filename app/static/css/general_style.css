@@ -116,6 +116,42 @@ body.theme-dark {
   --info: oklch(0.7 0.05 260);
 }
 
+@media (2560px < width) {
+  :root {
+    font-size: 24px;
+  }
+}
+
+@media (2304px < width <= 2560px) {
+  :root {
+    font-size: 20px;
+  }
+}
+
+@media (1920px < width <= 2304px) {
+  :root {
+    font-size: 18px;
+  }
+}
+
+@media (1440px < width <= 1920px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media (1280px < width <= 1440px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+@media (width <= 1280px) {
+  :root {
+    font-size: 12px;
+  }
+}
+
 * {
   color: var(--text-muted);
 }
