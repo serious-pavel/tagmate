@@ -28,7 +28,18 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
     if post_pk is not None:
         current_post = get_object_or_404(Post, pk=post_pk, user=request.user)
-        context['current_post'] = current_post
+        request.session['opened_post_id'] = current_post.id
+    else:
+        opened_post_id = request.session.get('opened_post_id')
+        if opened_post_id and str(opened_post_id).isdigit():
+            opened_post = Post.objects.filter(
+                user=request.user,
+                pk=int(opened_post_id)
+            ).first()
+            if opened_post:
+                current_post = opened_post
+
+    context['current_post'] = current_post
 
     if tg_pk is not None:
         current_tg = get_object_or_404(TagGroup, pk=tg_pk, user=request.user)
@@ -131,10 +142,12 @@ def post_editor(request, post_pk=None, tg_pk=None):
 
             if action == 'delete_post':
                 current_post.delete()
+                request.session.pop('opened_post_id')
                 messages.success(request, f'Post {current_post.title} deleted')
                 return redirect_post_editor(request, None, tg_pk)
 
             if action == 'close_current_post':
+                request.session.pop('opened_post_id')
                 return redirect_post_editor(request, None, tg_pk)
 
         if current_tg:
