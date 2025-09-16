@@ -134,13 +134,13 @@ body.theme-dark {
   }
 }
 
-@media (1440px < width <= 1920px) {
+@media (1540px < width <= 1920px) {
   :root {
     font-size: 16px;
   }
 }
 
-@media (1280px < width <= 1440px) {
+@media (1280px < width <= 1540px) {
   :root {
     font-size: 14px;
   }
