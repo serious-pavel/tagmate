@@ -51,8 +51,10 @@
   min-width: 24rem;
   width: 33%;
   overflow-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
 
 /* app-block-L styles */
 .tabs {
@@ -378,10 +380,11 @@ input.edit-like-text {
 #post-preview-tags {
   overflow: hidden;
   font-size: var(--text-size-S);
+  margin: var(--gap) 0;
 }
 
-.post-preview-text .update-form {
-  margin: 10px 0;
+.post-preview-text .update-form label {
+  display: flex;
 }
 
 
