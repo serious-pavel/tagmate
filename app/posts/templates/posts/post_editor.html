@@ -245,7 +245,6 @@
       </div>
 
       <div class="app-block app-block-R post-preview">
-        Post <span class="highlighted-text">{{ current_post.title }}</span> preview:
         {% if current_post %}
           <div class="post-preview-text">
             <form method="post" class="update-form">
@@ -265,6 +264,8 @@
             </div>
           </div>
           <button type="button" onclick="copyPreviewText()">Copy as Plain Text</button>
+        {% else %}
+          <span class="highlighted-text">Post preview</span> will appear here
         {% endif %}
       </div>
 
