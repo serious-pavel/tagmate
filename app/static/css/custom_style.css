@@ -124,3 +124,21 @@ img.rounded {
 div.profile-actions {
   display: flex;
 }
+
+#theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  height: 25px;
+  width: 25px;
+}
+
+#theme-label {
+  display: flex;
+  align-items: center;
+  transform: translate(-0, 1px);
+  font-size: 27px;
+}
+
+.header-right img {
+  height: 25px;
+}
