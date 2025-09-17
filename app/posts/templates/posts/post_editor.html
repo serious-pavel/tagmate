@@ -49,6 +49,12 @@
             <div class="list-item fake-btn-wrapper">
               {% include 'posts/auxiliary/create_post.html' %}
             </div>
+          {% else %}
+            {% if not user.posts.all.count %}
+              <div class="empty-state-text">
+                <span class="highlighted-text">Post list</span> will appear here
+              </div>
+            {% endif %}
           {% endif %}
           <div class="list-inner">
             {% for post in user.posts.all|dictsortreversed:"updated_at" %}
