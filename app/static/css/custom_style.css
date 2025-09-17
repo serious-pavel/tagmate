@@ -52,6 +52,7 @@ body {
   display: flex;
   padding: 0 30px;
   justify-content: space-between;
+  font-size: var(--text-size-L);
 }
 
 .header-left {
@@ -68,17 +69,18 @@ body {
 }
 
 .header a {
-  word-spacing: -5px;
+  word-spacing: -0.3rem;
   text-decoration: none;
   color: #bcbaba;
+  font-size: var(--text-size-L);
 }
 
 .header-left a:not(:last-child) {
-  margin-right: 16px;
+  margin-right: 1.2rem;
 }
 
 .header-right :not(:last-child) {
-  margin-left: 16px;
+  margin-left: 1.2rem;
 }
 
 .header a.nav-active {
@@ -89,6 +91,7 @@ body {
 .header-logo {
   color: white;
   font-weight: 600;
+  display: flex;
 }
 
 img.rounded {
