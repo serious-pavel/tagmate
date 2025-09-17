@@ -77,11 +77,17 @@
         </div>
 
         <div id="recent-tgs" class="list">
-            {% if current_tg %}
-              <div class="list-item fake-btn-wrapper">
-                {% include 'posts/auxiliary/create_tg.html' %}
+          {% if current_tg %}
+            <div class="list-item fake-btn-wrapper">
+              {% include 'posts/auxiliary/create_tg.html' %}
+            </div>
+          {% else %}
+            {% if not user.tag_groups.all.count %}
+              <div class="empty-state-text">
+                <span class="highlighted-text">TagGroup list</span> will appear here
               </div>
             {% endif %}
+          {% endif %}
           <div class="list-inner">
             {% for tg in user.tag_groups.all|dictsortreversed:"updated_at" %}
               <a class="list-item{% if tg.id == current_tg.id %} active{% endif %}" href=
