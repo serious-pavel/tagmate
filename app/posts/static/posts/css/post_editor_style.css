@@ -383,6 +383,10 @@ input.edit-like-text {
   margin: var(--gap) 0;
 }
 
+.post-preview-text {
+  width: 100%;
+}
+
 .post-preview-text .update-form label {
   display: flex;
 }
