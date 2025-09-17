@@ -432,4 +432,5 @@ input.edit-like-text {
   height: calc(100% - var(--padding) * 2);
   width: calc(100% - var(--padding) * 2);
   padding: 0 var(--padding);
+  gap: calc(var(--gap) / 2);
 }
