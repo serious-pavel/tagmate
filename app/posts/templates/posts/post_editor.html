@@ -31,6 +31,7 @@
 
     <div id="delete-modal-bg" class="modal-bg" style="display:none;">
       <div class="modal-window">
+        <div class="highlighted-text" id="delete-item-name">Item deletion</div>
         <p id="delete-modal-text">Are you sure you want to delete this item?</p>
         <button id="confirm-delete-btn" class="highlighted">Yes, Delete</button>
         <button id="cancel-delete-btn">Cancel</button>
@@ -117,7 +118,9 @@
                 <form method="post" class="delete-item-form">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="delete_post">
-                  <button type="button" class="icon-btn delete-item-btn" data-delete-type="post" title="Delete Post">
+                  <button type="button" class="icon-btn delete-item-btn"
+                          data-item-name="{{ current_post.title }}"
+                          data-delete-type="post" title="Delete Post">
                     {% include 'posts/buttons/trash-bin-trash-svgrepo-com.svg' %}
                   </button>
                 </form>
@@ -197,7 +200,9 @@
                 <form method="post" class="delete-item-form">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="delete_tg">
-                  <button type="button" class="icon-btn delete-item-btn" data-delete-type="taggroup" title="Delete TagGroup">
+                  <button type="button" class="icon-btn delete-item-btn"
+                          data-item-name="{{ current_tg.name }}"
+                          data-delete-type="taggroup" title="Delete TagGroup">
                     {% include 'posts/buttons/trash-bin-trash-svgrepo-com.svg' %}
                   </button>
                 </form>
