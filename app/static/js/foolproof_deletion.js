@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Optionally, set default messages per type
     const MESSAGES = {
-        post: "Are you sure you want to delete this post?",
+        post: "Are you sure you want to delete this Post?",
         taggroup: "Are you sure you want to delete this TagGroup?",
         default: "Are you sure you want to delete this item?"
     };
