@@ -5,11 +5,23 @@ document.addEventListener('DOMContentLoaded', function() {
     let modalText = document.getElementById('generic-modal-text');
     let targetForm = null;
 
-    // Optionally, set default messages per type
     const MESSAGES = {
         post: "Create Post",
         taggroup: "Create TagGroup",
         default: "Create item"
+    };
+
+    const PLACEHOLDERS = {
+        post: "Title (optional)",
+        taggroup: "Name (optional)",
+        default: "Title/Name (optional)"
+    };
+
+    // action hidden input field
+    const ACTIONS = {
+        post: "create_post",
+        taggroup: "create_tg",
+        default: "create_item"
     };
 
     document.querySelectorAll('.new-create-item-btn').forEach(btn => {
@@ -18,12 +30,24 @@ document.addEventListener('DOMContentLoaded', function() {
             // targetForm = btn.closest('form');
             modalBg.style.display = 'flex';
 
-            targetForm = document.getElementById('create-item-form');
-
             // Look for a custom message or type
             let type = btn.getAttribute('data-item-type');
             let custom = modalText.textContent;
             modalText.textContent = MESSAGES[type] || custom || MESSAGES.default;
+
+            targetForm = document.getElementById('create-item-form');
+            // Change hidden action input value
+            if (targetForm) {
+                let actionInput = targetForm.querySelector('input[name="action"]');
+                if (actionInput) {
+                    actionInput.value = ACTIONS[type] || ACTIONS.default;
+                }
+                // Change placeholder
+                let titleInput = targetForm.querySelector('input[name="new_item_name"]');
+                if (titleInput) {
+                    titleInput.placeholder = PLACEHOLDERS[type] || PLACEHOLDERS.default;
+                }
+            }
         });
     });
 
