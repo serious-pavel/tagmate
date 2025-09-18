@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let confirmBtn = document.getElementById('confirm-delete-btn');
     let cancelBtn = document.getElementById('cancel-delete-btn');
     let modalText = document.getElementById('delete-modal-text');
+    let itemName = document.getElementById('delete-item-name');
     let targetForm = null;
 
     // Optionally, set default messages per type
@@ -16,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', function(evt) {
             evt.preventDefault();
             targetForm = btn.closest('form');
+
+            itemName.textContent = btn.getAttribute('data-item-name');
 
             // Look for a custom message or type
             let type = btn.getAttribute('data-delete-type');
