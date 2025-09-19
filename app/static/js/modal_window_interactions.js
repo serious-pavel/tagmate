@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     cancelBtn.addEventListener('click', function() {
         modalBg.style.display = 'none';
+        targetForm.reset();
         targetForm = null;
     });
 
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     modalBg.addEventListener('mousedown', function(evt) {
         if (evt.target === modalBg) {
             modalBg.style.display = 'none';
+            targetForm.reset();
             targetForm = null;
         }
     });
@@ -72,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', function(e) {
         if (modalBg.style.display !== 'none' && e.key === "Escape") {
             modalBg.style.display = 'none';
+            targetForm.reset();
             targetForm = null;
         }
     });
