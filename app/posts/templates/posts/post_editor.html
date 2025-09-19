@@ -64,7 +64,8 @@
         <div id="recent-posts" class="list">
           {% if current_post %}
             <div class="list-item fake-btn-wrapper">
-              {% include 'posts/auxiliary/create_post.html' %}
+              <button type="button" class="new-create-item-btn"
+                      data-item-type="post" title="Create Post">Create Post</button>
             </div>
           {% else %}
             {% if not user.posts.all.count %}
@@ -96,7 +97,8 @@
         <div id="recent-tgs" class="list">
           {% if current_tg %}
             <div class="list-item fake-btn-wrapper">
-              {% include 'posts/auxiliary/create_tg.html' %}
+              <button type="button" class="new-create-item-btn"
+                      data-item-type="taggroup" title="Create TagGroup">Create TagGroup</button>
             </div>
           {% else %}
             {% if not user.tag_groups.all.count %}
@@ -189,7 +191,8 @@
               </div>
 
             {% else %}
-              {% include 'posts/auxiliary/create_post.html' %}
+              <button type="button" class="new-create-item-btn"
+                      data-item-type="post" title="Create Post">Create Post</button>
             {% endif %}
           </div>
         </div>
@@ -271,7 +274,8 @@
               </div>
 
             {% else %}
-              {% include 'posts/auxiliary/create_tg.html' %}
+              <button type="button" class="new-create-item-btn"
+                      data-item-type="taggroup" title="Create TagGroup">Create TagGroup</button>
             {% endif %}
           </div>
         </div>
