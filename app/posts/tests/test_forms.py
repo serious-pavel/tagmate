@@ -324,13 +324,13 @@ class CreateObjectsTests(TestCase):
         data = {'action': action}
         parent_id = None
         if action == 'create_post':
-            data['new_post_title'] = new_item_title
+            data['new_item_name'] = new_item_title
             parent_id = 'recent-posts'
             self.assertFalse(
                 Post.objects.filter(title=new_item_title, user=self.user).exists()
             )
         elif action == 'create_tg':
-            data['new_tg_name'] = new_item_title
+            data['new_item_name'] = new_item_title
             parent_id = 'recent-tgs'
             self.assertFalse(
                 TagGroup.objects.filter(name=new_item_title, user=self.user).exists()
