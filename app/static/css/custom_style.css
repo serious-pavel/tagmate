@@ -142,7 +142,3 @@ div.profile-actions {
 .header-right img {
   height: 25px;
 }
-
-#delete-item-name {
-  font-size: var(--text-size-M2);
-}
