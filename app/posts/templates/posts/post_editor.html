@@ -46,7 +46,7 @@
           {% csrf_token %}
           <input type="hidden" name="action" value="none">
           <label>
-            <input type="text" name="new_item_name" placeholder="Title/Name (optional)">
+            <input type="text" name="new_item_name" placeholder="Title/Name (optional)" class="edit-like-text">
           </label>
         </form>
         <button type="submit" id="modal-confirm-btn" form="create-item-form" class="highlighted">Confirm</button>
@@ -155,7 +155,7 @@
                 {% csrf_token %}
                 <label>
                   <input type="hidden" name="action" value="update_post_title">
-                  <input type="text" class="edit-like-text submit-on-blur" id="post-title"
+                  <input type="text" class="edit-like-text submit-on-blur shrinkable-input" id="post-title"
                          name="post_title" placeholder="" value="{{ current_post.title }}" required>
                 </label>
                 <button class="update-btn" id="update-post-title-btn">Update Title</button>
@@ -239,7 +239,7 @@
                 <label>
                   <input type="hidden" name="action" value="update_tg">
                   <input type="text" name="tg_name" placeholder="" value="{{ current_tg.name }}"
-                         id="tg-name" class="edit-like-text submit-on-blur" required>
+                         id="tg-name" class="edit-like-text shrinkable-input submit-on-blur" required>
                 </label>
                 <button class="update-btn" id="update-tg-name-btn">Update Name</button>
               </form>
