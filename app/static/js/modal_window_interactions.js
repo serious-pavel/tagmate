@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Change placeholder
                 let titleInput = targetForm.querySelector('input[name="new_item_name"]');
                 if (titleInput) {
+                    titleInput.focus();
                     titleInput.placeholder = PLACEHOLDERS[type] || PLACEHOLDERS.default;
                 }
             }
