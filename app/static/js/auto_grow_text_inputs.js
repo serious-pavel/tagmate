@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         input.style.width = "2ch"; // reset to minimum
         input.style.width = (input.value.length + 1) + "ch";
     }
-    document.querySelectorAll('.edit-like-text').forEach(input => {
+    document.querySelectorAll('.shrinkable-input').forEach(input => {
         autoResizeInput(input);
         input.addEventListener('input', function () {
             autoResizeInput(input);
