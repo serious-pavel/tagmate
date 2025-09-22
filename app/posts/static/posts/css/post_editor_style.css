@@ -394,11 +394,6 @@ input.edit-like-text {
 
 
 /* common styles */
-.highlighted {
-  background-color: rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 0 3px 2px red ;
-}
-
 .active {
   font-weight: 400;
   background-color: var(--bg-light);
@@ -413,11 +408,6 @@ input.edit-like-text {
 
 .list-item.active > .list-item-title {
   color: var(--text);
-}
-
-.highlighted-text {
-  color: var(--text-dimmed);
-  font-weight: 500;
 }
 
 .empty-state-text {
