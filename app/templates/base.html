@@ -84,7 +84,8 @@
           {% csrf_token %}
           <input type="hidden" name="action" value="none">
           <label>
-            <input type="text" name="new_item_name" placeholder="Title/Name (optional)" class="edit-like-text modal-window-body">
+            <input type="text" name="new_item_name" placeholder="Title/Name (optional)"
+                   class="edit-like-text modal-window-body" enterkeyhint="send">
           </label>
         </form>
         <div>
