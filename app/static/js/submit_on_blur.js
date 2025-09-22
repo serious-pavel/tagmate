@@ -18,5 +18,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         });
+
+        field.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                field.value = field.dataset.initialValue;
+                field.blur();
+                e.preventDefault();
+            }
+        });
     });
 });
