@@ -103,6 +103,7 @@ body {
 
 img.rounded {
   border-radius: 50%;
+  width: 7rem;
 }
 
 #theme-toggle-btn {
