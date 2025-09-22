@@ -14,10 +14,12 @@
   {% endblock links %}
   <script>{% block script %}{% endblock script %}</script>
   <script src="{% static 'js/show_messages.js' %}"></script>
-  <script src="{% static 'js/show_resolution.js' %}"></script>
   <script src="{% static 'js/toggle_theme.js' %}"></script>
   <script src="{% static 'js/foolproof_deletion.js' %}"></script>
   <script src="{% static 'js/modal_window_interactions.js' %}"></script>
+  {% if user.is_superuser %}
+    <script src="{% static 'js/show_resolution.js' %}"></script>
+  {% endif %}
   {% block scripts %}
   {% endblock scripts %}
   <title>TagMate - {% block title %}{% endblock title %}</title>
@@ -53,7 +55,9 @@
                                                                     alt=""></a>
       <a href="https://www.linkedin.com/in/pavel-makhnev/"><img src="{% static 'img/linkedin-fill-svgrepo-com.svg' %}"
                                                                 alt=""></a>
-    <span id="resolutionWidget" style="font-size: small; color: #888;"></span>
+      {% if user.is_superuser %}
+        <span id="resolutionWidget" style="font-size: small; color: #888;"></span>
+      {% endif %}
     {% endblock %}
   </div>
 </div>
