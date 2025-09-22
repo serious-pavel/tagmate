@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const MESSAGES = {
         post: "Are you sure you want to delete this Post?",
         taggroup: "Are you sure you want to delete this TagGroup?",
+        account: "Are you sure you want to delete this Account?",
         default: "Are you sure you want to delete this item?"
     };
 
