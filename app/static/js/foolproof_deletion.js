@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const MESSAGES = {
         post: "Are you sure you want to delete this Post?",
         taggroup: "Are you sure you want to delete this TagGroup?",
-        account: "Are you sure you want to delete this Account?",
+        account: "Are you sure you want to delete this Account? This action cannot be undone and will permanently delete all your Posts, TagGroups, and other data.",
         default: "Are you sure you want to delete this item?"
     };
 
