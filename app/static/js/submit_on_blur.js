@@ -24,7 +24,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 field.value = field.dataset.initialValue;
                 field.blur();
                 e.preventDefault();
+            } else if (
+                field.tagName.toLowerCase() === 'textarea' &&
+                e.key === "Enter" && e.shiftKey
+            ) {
+                // Submit on Shift+Enter ONLY for textarea fields
+                let btn = document.getElementById(`update-${field.id}-btn`);
+                if (btn) {
+                    btn.click();
+                } else if (field.form) {
+                    field.form.submit();
+                }
+                // Prevent inserting a newline
+                e.preventDefault();
             }
+
         });
     });
 });
