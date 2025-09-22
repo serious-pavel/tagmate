@@ -4,12 +4,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
   <link rel="shortcut icon" href="{% static 'img/hashtag-square-svgrepo-com.svg' %}" sizes="any">
   <link rel="stylesheet" href="{% static 'css/general_style.css' %}">
   <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
   <link rel="stylesheet" href="{% static 'css/messaging_style.css' %}">
   <link rel="stylesheet" href="{% static 'css/buttons_style.css' %}">
   <link rel="stylesheet" href="{% static 'css/modal_window_style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/mobile_style.css' %}">
   {% block links %}
   {% endblock links %}
   <script>{% block script %}{% endblock script %}</script>
@@ -17,6 +19,7 @@
   <script src="{% static 'js/toggle_theme.js' %}"></script>
   <script src="{% static 'js/foolproof_deletion.js' %}"></script>
   <script src="{% static 'js/modal_window_interactions.js' %}"></script>
+  <script src="{% static 'js/mobile_layout.js' %}"></script>
   {% if user.is_superuser %}
     <script src="{% static 'js/show_resolution.js' %}"></script>
   {% endif %}
@@ -32,18 +35,19 @@
   })();
 </script>
 <div class="header">
+  <button id="mobile-posts-toggle" class="mobile-only">Post | TG</button>
   <div class="header-left">
     {% with request.resolver_match.url_name as url_name %}
       <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt=""
                                            loading="lazy"></a>
-      <a href="{% url 'index' %}" class="{% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">Post
+      <a href="{% url 'index' %}" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">Post
         Editor</a>
       {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}" class="{% if url_name == 'profile' %}nav-active{% endif %}">Profile</a>
+        <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}">Profile</a>
       {% endif %}
     {% endwith %}
   </div>
-  TagMate
+  <span id="tag-mate-title">TagMate</span>
   <div class="header-right">
     <div class="theme-toggle">
       <button id="theme-toggle-btn" aria-label="Toggle theme">
