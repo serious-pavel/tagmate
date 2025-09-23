@@ -36,7 +36,7 @@
         </div>
         <div id="recent-posts" class="list">
           {% if current_post %}
-            <div class="list-item fake-btn-wrapper">
+            <div class="list-item create-item-wrapper">
               <button type="button" class="new-create-item-btn"
                       data-item-type="post" title="Create Post">Create Post</button>
             </div>
@@ -69,7 +69,7 @@
 
         <div id="recent-tgs" class="list">
           {% if current_tg %}
-            <div class="list-item fake-btn-wrapper">
+            <div class="list-item create-item-wrapper">
               <button type="button" class="new-create-item-btn"
                       data-item-type="taggroup" title="Create TagGroup">Create TagGroup</button>
             </div>
@@ -103,7 +103,7 @@
 
       <div class="app-block-M">
         <div class="app-block">
-          <div class="item-editor fake-btn-wrapper">
+          <div class="item-editor">
             {% if current_post %}
               <div class="block-controls">
                 <form method="post" class="delete-item-form">
@@ -169,8 +169,10 @@
               </div>
 
             {% else %}
-              <button type="button" class="new-create-item-btn"
-                      data-item-type="post" title="Create Post">Create Post</button>
+              <div class="create-item-wrapper">
+                <button type="button" class="new-create-item-btn"
+                        data-item-type="post" title="Create Post">Create Post</button>
+              </div>
             {% endif %}
           </div>
         </div>
@@ -191,7 +193,7 @@
         </div>
 
         <div class="app-block">
-          <div class="item-editor fake-btn-wrapper">
+          <div class="item-editor">
             {% if current_tg %}
               <div class="block-controls">
                 <form method="post" class="delete-item-form">
@@ -253,8 +255,10 @@
               </div>
 
             {% else %}
-              <button type="button" class="new-create-item-btn"
-                      data-item-type="taggroup" title="Create TagGroup">Create TagGroup</button>
+              <div class="create-item-wrapper">
+                <button type="button" class="new-create-item-btn"
+                        data-item-type="taggroup" title="Create TagGroup">Create TagGroup</button>
+              </div>
             {% endif %}
           </div>
         </div>
