@@ -11,6 +11,8 @@
   font-size: 16px;
 
   /* Default theme variables (fallback to light theme) */
+  --primary-inverted-darker: rgb(146 199 243);
+  --primary-inverted-darkest: rgb(187 221 249);
   /* hsl (fallback color) */
   --bg-dark: hsl(205 45% 90%);
   --bg: hsl(205 93% 95%);
@@ -46,6 +48,8 @@
 }
 
 body.theme-light {
+  --primary-inverted-darker: rgb(146 199 243);
+  --primary-inverted-darkest: rgb(187 221 249);
   /* hsl (fallback color) */
   --bg-dark: hsl(205 45% 90%);
   --bg: hsl(205 93% 95%);
@@ -81,6 +85,8 @@ body.theme-light {
   --info: oklch(0.5 0.05 260);
 }
 body.theme-dark {
+  --primary-inverted-darker: rgb(6 62 109);
+  --primary-inverted-darkest: rgb(11 42 68);
   /* hsl (fallback color) */
   --bg-dark: hsl(213 92% 2%);
   --bg: hsl(206 63% 4%);
