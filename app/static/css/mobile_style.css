@@ -1,0 +1,79 @@
+@media (width <= 812px) {
+  .mobile-only {
+    display: block;
+  }
+
+  #app-main > .app-block-L,
+  #app-main > .app-block-R {
+    display: none;
+  }
+
+  #app-main {
+    position: relative;
+  }
+
+  #app-main,
+  #app-main > .app-block-M {
+    width: 100%;
+    min-width: unset;
+  }
+
+  #app-main > .app-block-L.visible,
+  #app-main > .app-block-R.visible {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  #app-main > .app-block-L.visible {
+    display: block;
+  }
+
+  #app-main > .app-block-R.visible {
+    display: flex;
+    gap: var(--gap);
+  }
+
+  .post-preview .block-controls {
+    top: var(--padding);
+    right: var(--padding);
+  }
+
+  #preview-toggle,
+  #tags-toggle {
+    display: block;
+    position: absolute;
+  }
+
+  #tags-toggle {
+    left: 10px;
+  }
+
+  #resolutionWidget {
+    display: none;
+  }
+
+  #tag-mate-title,
+  .nav-link {
+    display: none;
+  }
+
+  button#mobile-posts-toggle {
+    display: block;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+  }
+
+  label.input-button-group {
+    width: 100%;
+  }
+
+  button.switch.on {
+    background-color: var(--primary);
+    color: var(--primary-inverted);
+  }
+}
