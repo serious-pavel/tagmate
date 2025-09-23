@@ -11,6 +11,14 @@ button {
   cursor: pointer;
 }
 
+button:hover:not(.tab-btn, .icon-btn) {
+  background-color: var(--primary-inverted-darker);
+}
+
+button:active:not(.tab-btn, .icon-btn) {
+  background-color: var(--primary-inverted-darkest);
+}
+
 /* fake */
 .fake-btn {
   position: absolute;
