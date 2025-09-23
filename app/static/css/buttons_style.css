@@ -9,6 +9,7 @@ button {
   height: var(--default-btn-height);
   color: var(--primary);
   cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 button:hover:not(.tab-btn, .icon-btn) {
@@ -17,6 +18,10 @@ button:hover:not(.tab-btn, .icon-btn) {
 
 button:active:not(.tab-btn, .icon-btn) {
   background-color: var(--primary-inverted-darkest);
+}
+
+button:active {
+  transform: translate(0px, 1px);
 }
 
 /* fake */
