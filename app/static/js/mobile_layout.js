@@ -34,9 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
   setPreviewStateFromLocalStorage(postPreview, 'preview');
 
   postsMenuToggle.addEventListener('click', function () {
-    if (postPreview.classList.contains('visible')) {
-      toggleVisibleElement(postPreview, 'preview');
-    }
     togglePostsMenu(postsMenu, postsMenuToggle, defaultText);
   });
 

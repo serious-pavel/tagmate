@@ -35,19 +35,23 @@
   })();
 </script>
 <div class="header">
-  <button id="mobile-posts-toggle" class="small-screen-only">Post | TG</button>
   <div class="header-left">
     {% with request.resolver_match.url_name as url_name %}
-      <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt=""
-                                           loading="lazy"></a>
-      <a href="{% url 'index' %}" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">Post
+      <div id="nav-icons" class="small-screen-only">
+        <button id="mobile-posts-toggle" class="small-screen-only"><div class="icon-placeholder"></div></button>
+        <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt=""
+                                            loading="lazy"></a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}"><div class="icon-placeholder"></div></a>
+        {% endif %}
+      </div>
+      <a href="{% url 'index' %}" id="nav-link-editor" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">Post
         Editor</a>
       {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}">Profile</a>
+        <a href="{% url 'profile' %}" id="nav-link-profile" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}">Profile</a>
       {% endif %}
     {% endwith %}
   </div>
-  <span id="tag-mate-title">TagMate</span>
   <div class="header-right">
     <div class="theme-toggle">
       <button id="theme-toggle-btn" aria-label="Toggle theme">
