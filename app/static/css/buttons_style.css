@@ -12,6 +12,10 @@ button {
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
+svg path {
+  transition: stroke 0.2s, fill 0.2s;
+}
+
 button:hover:not(.tab-btn, .icon-btn) {
   background-color: var(--primary-inverted-darker);
 }
