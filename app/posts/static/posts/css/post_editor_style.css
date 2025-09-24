@@ -434,4 +434,5 @@ input.edit-like-text {
   font-size: var(--text-size-L);
   color: var(--text-dimmed);
   font-weight: 500;
+  gap: 0 0.3rem;
 }
