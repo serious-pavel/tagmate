@@ -152,7 +152,7 @@ button:active {
 }
 
 /* create-item-btn */
-button.new-create-item-btn {
+button.create-item-btn {
   height: 5rem;
   padding: 0;
   border-radius: 50%;
@@ -160,42 +160,42 @@ button.new-create-item-btn {
   box-shadow: none;
 }
 
-button.new-create-item-btn svg {
+button.create-item-btn svg {
   display: inline-block;
   width: 100%;
   height: 100%;
 }
 
-button.new-create-item-btn path.plus {
+button.create-item-btn path.plus {
   stroke: var(--primary-inverted);
 }
 
-button.new-create-item-btn:hover path.plus {
+button.create-item-btn:hover path.plus {
   stroke: var(--primary);
 }
 
-button.new-create-item-btn:active path.plus {
+button.create-item-btn:active path.plus {
   stroke: var(--primary-inverted);
 }
 
-button.new-create-item-btn path.circle {
+button.create-item-btn path.circle {
   stroke: var(--primary);
 }
 
-button.new-create-item-btn:active path.circle {
+button.create-item-btn:active path.circle {
   stroke: var(--primary-inverted);
 }
 
-button.new-create-item-btn path.bg-layer {
+button.create-item-btn path.bg-layer {
   fill: var(--bg-dark);
 }
 
-button.new-create-item-btn:hover,
-button.new-create-item-btn:active {
+button.create-item-btn:hover,
+button.create-item-btn:active {
   background: none;
 }
 
-.list-item button.new-create-item-btn {
+.list-item button.create-item-btn {
   height: 4rem;
   width: 8ch;
 }

@@ -37,7 +37,7 @@
         <div id="recent-posts" class="list">
           {% if current_post %}
             <div class="list-item create-item-wrapper">
-              <button type="button" class="new-create-item-btn" data-item-type="post" title="Create Post">
+              <button type="button" class="create-item-btn" data-item-type="post" title="Create Post">
                 {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
               </button>
               <div class="create-item-label">
@@ -75,7 +75,7 @@
         <div id="recent-tgs" class="list">
           {% if current_tg %}
             <div class="list-item create-item-wrapper">
-              <button type="button" class="new-create-item-btn" data-item-type="taggroup" title="Create TagGroup">
+              <button type="button" class="create-item-btn" data-item-type="taggroup" title="Create TagGroup">
                 {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
               </button>
               <div class="create-item-label">
@@ -180,7 +180,7 @@
 
             {% else %}
               <div class="create-item-wrapper">
-                <button type="button" class="new-create-item-btn" data-item-type="post" title="Create Post">
+                <button type="button" class="create-item-btn" data-item-type="post" title="Create Post">
                   {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
                 </button>
                 Create Post
@@ -268,7 +268,7 @@
 
             {% else %}
               <div class="create-item-wrapper">
-                <button type="button" class="new-create-item-btn" data-item-type="taggroup" title="Create TagGroup">
+                <button type="button" class="create-item-btn" data-item-type="taggroup" title="Create TagGroup">
                   {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
                 </button>
                 Create TagGroup

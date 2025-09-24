@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         default: "create_item"
     };
 
-    document.querySelectorAll('.new-create-item-btn').forEach(btn => {
+    document.querySelectorAll('.create-item-btn').forEach(btn => {
         btn.addEventListener('click', function(evt) {
             evt.preventDefault();
             // targetForm = btn.closest('form');
