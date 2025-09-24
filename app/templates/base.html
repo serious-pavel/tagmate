@@ -38,7 +38,9 @@
   <div class="header-left">
     {% with request.resolver_match.url_name as url_name %}
       <div id="nav-icons" class="small-screen-only">
-        <button id="mobile-posts-toggle" class="small-screen-only"><div class="icon-placeholder"></div></button>
+        {% if url_name != 'profile' %}
+          <button id="mobile-posts-toggle" class="small-screen-only"><div class="icon-placeholder"></div></button>
+        {% endif %}
         <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt=""
                                             loading="lazy"></a>
         {% if user.is_authenticated %}

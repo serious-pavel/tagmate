@@ -33,9 +33,9 @@
     z-index: 10;
     height: 100%;
     box-sizing: border-box;
-    width: 20rem;
-    min-width: 20rem;
-    left: -20rem;
+    width: 16rem;
+    min-width: 16rem;
+    left: -16rem;
     border-radius: 0;
     top: 50px;
     transition: left var(--dur) ease;
@@ -46,7 +46,7 @@
   }
 }
 
-@media (width <= 812px) {
+@media (width <= 800px) {
   .header {
     padding: 0 var(--gap);
   }

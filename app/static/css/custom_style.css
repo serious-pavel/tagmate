@@ -159,7 +159,7 @@ div.profile-actions {
 
 .icon-placeholder {
   height: 100%;
-  min-height: 30px;
+  min-height: var(--default-btn-height);
   aspect-ratio: 1 / 1;
   background-color: var(--bg-light);
 }

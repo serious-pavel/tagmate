@@ -146,9 +146,15 @@ body.theme-dark {
   }
 }
 
-@media (width <= 1540px) {
+@media (800px < width <= 1540px) {
   :root {
     font-size: 14px;
+  }
+}
+
+@media (width <= 800px) {
+  :root {
+    font-size: 12px;
   }
 }
 
