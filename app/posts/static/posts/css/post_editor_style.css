@@ -431,4 +431,7 @@ input.edit-like-text {
   justify-content: center;
   flex-direction: column;
   flex: 1;
+  font-size: var(--text-size-L);
+  color: var(--text-dimmed);
+  font-weight: 500;
 }
