@@ -170,8 +170,10 @@
 
             {% else %}
               <div class="create-item-wrapper">
-                <button type="button" class="new-create-item-btn"
-                        data-item-type="post" title="Create Post">Create Post</button>
+                <button type="button" class="new-create-item-btn" data-item-type="post" title="Create Post">
+                  {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
+                </button>
+                Create Post
               </div>
             {% endif %}
           </div>
