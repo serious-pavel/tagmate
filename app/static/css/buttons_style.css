@@ -194,3 +194,26 @@ button.new-create-item-btn:hover,
 button.new-create-item-btn:active {
   background: none;
 }
+
+.list-item button.new-create-item-btn {
+  height: 4rem;
+  width: 8ch;
+}
+
+.list-item.create-item-wrapper {
+  flex-direction: row;
+  font-size: var(--text-size-M1);
+}
+
+.create-item-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 8ch;
+}
+
+.create-item-label span {
+  font-size: var(--text-size-M1);
+  color: var(--text-dimmed);
+}
