@@ -129,6 +129,7 @@ button.create-item-btn:active {
 .list-item.create-item-wrapper {
   flex-direction: row;
   font-size: var(--text-size-M1);
+  cursor: auto;
 }
 
 .create-item-label {
