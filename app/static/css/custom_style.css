@@ -12,7 +12,7 @@ html {
 
 html,
 body {
-  height: 100vh;
+  height: 100%;
 }
 
 body {
@@ -154,6 +154,7 @@ div.profile-actions {
   box-shadow: inset 0 0 3px 2px red ;
 }
 
-.mobile-only {
+.mobile-only,
+.small-screen-only {
   display: none;
 }

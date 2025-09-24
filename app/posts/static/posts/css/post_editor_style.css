@@ -144,6 +144,9 @@
   color: var(--text-muted);
   overflow: hidden;
   overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .list-item-date {
@@ -371,12 +374,6 @@ input.edit-like-text {
   font-size: var(--text-size-L);
 }
 
-.item-editor form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* app-block-R styles */
 #post-preview-tags {
   overflow: hidden;
@@ -390,6 +387,10 @@ input.edit-like-text {
 
 .post-preview-text .update-form label {
   display: flex;
+}
+
+.post-preview-header {
+  width: 100%;
 }
 
 
@@ -436,3 +437,19 @@ input.edit-like-text {
   font-weight: 500;
   gap: 0 0.3rem;
 }
+
+.item-editor form,
+.name-update-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name-update-form label {
+  max-width: calc(100% - 140px - 2 * var(--gap));
+}
+
+.name-update-form label input[type="text"] {
+  max-width: 100%;
+}
+
