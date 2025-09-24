@@ -37,8 +37,13 @@
         <div id="recent-posts" class="list">
           {% if current_post %}
             <div class="list-item create-item-wrapper">
-              <button type="button" class="new-create-item-btn"
-                      data-item-type="post" title="Create Post">Create Post</button>
+              <button type="button" class="new-create-item-btn" data-item-type="post" title="Create Post">
+                {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
+              </button>
+              <div class="create-item-label">
+                <span>Create</span>
+                <span>Post</span>
+              </div>
             </div>
           {% else %}
             {% if not user.posts.all.count %}
@@ -70,8 +75,13 @@
         <div id="recent-tgs" class="list">
           {% if current_tg %}
             <div class="list-item create-item-wrapper">
-              <button type="button" class="new-create-item-btn"
-                      data-item-type="taggroup" title="Create TagGroup">Create TagGroup</button>
+              <button type="button" class="new-create-item-btn" data-item-type="taggroup" title="Create TagGroup">
+                {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
+              </button>
+              <div class="create-item-label">
+                <span>Create</span>
+                <span>TagGroup</span>
+              </div>
             </div>
           {% else %}
             {% if not user.tag_groups.all.count %}
