@@ -258,8 +258,10 @@
 
             {% else %}
               <div class="create-item-wrapper">
-                <button type="button" class="new-create-item-btn"
-                        data-item-type="taggroup" title="Create TagGroup">Create TagGroup</button>
+                <button type="button" class="new-create-item-btn" data-item-type="taggroup" title="Create TagGroup">
+                  {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
+                </button>
+                Create TagGroup
               </div>
             {% endif %}
           </div>
