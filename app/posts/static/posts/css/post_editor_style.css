@@ -37,7 +37,7 @@
 }
 
 .app-block-L {
-  min-width: 16rem;
+  min-width: var(--block-L-min-width);
   width: 15%;
 }
 

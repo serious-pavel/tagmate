@@ -7,6 +7,9 @@
   --input-text-padding: 0.5rem;
   --default-btn-height: 2.5rem;
   --icon-btn-height: 1.5rem;
+  --header-gap: 0.8rem;
+  --block-L-min-width: 16rem;
+  --content-nested-padding: 1.25rem;
 
   font-size: 16px;
 
