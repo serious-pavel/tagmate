@@ -311,7 +311,7 @@ body.blockL-show-tgs #recent-tgs {
   min-width: 0;
 }
 
-.input-button-group button[type="submit"] {
+.add-tags-btn {
   padding: var(--input-text-padding) 2rem;
   height: 100%;
   border-radius: 0 5px 5px 0;
@@ -320,7 +320,7 @@ body.blockL-show-tgs #recent-tgs {
   align-items: center;
 }
 
-.input-button-group button[type="submit"]:active {
+.add-tags-btn:active {
   transform: scale(0.97);
 }
 
