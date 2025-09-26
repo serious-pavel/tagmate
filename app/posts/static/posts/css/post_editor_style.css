@@ -311,9 +311,10 @@ body.blockL-show-tgs #recent-tgs {
   padding: var(--input-text-padding);
   font-size: var(--text-size-M2);
   outline: none;
-  border-radius: 0;
+  border-radius: 5px 0 0 5px;
   background: transparent;
   min-width: 0;
+  box-shadow: inset 0 0 0 var(--block-outline-w)  var(--border-muted);
 }
 
 .post-tg-intermediate {
