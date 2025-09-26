@@ -233,7 +233,7 @@ body.blockL-show-tgs #recent-tgs {
 .tag-counter {
     position: absolute;
     left: calc(50% - 1ch);
-    top: 6rem;
+    top: 6.25rem;
     font-size: var(--text-size-S);
     min-width: 4ch;
     display: flex;
