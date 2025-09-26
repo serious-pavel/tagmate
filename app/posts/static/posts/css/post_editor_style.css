@@ -312,8 +312,12 @@ body.blockL-show-tgs #recent-tgs {
   font-size: var(--text-size-M2);
   outline: none;
   border-radius: 5px 0 0 5px;
-  background: transparent;
+  background: oklch(0.72 0.05 298.58 / 0.09);
   min-width: 0;
+}
+
+input.add-tags-input:focus {
+  background: transparent;
 }
 
 .post-tg-intermediate {
