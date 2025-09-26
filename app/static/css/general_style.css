@@ -3,12 +3,13 @@
   --text-size-M2: 1.1rem;
   --text-size-M1: 1rem;
   --text-size-S: 0.8rem;
-  --border-light: oklch(0.8 0.04 239);
   --input-text-padding: 0.5rem;
   --default-btn-height: 2.5rem;
   --icon-btn-height: 1.5rem;
 
   font-size: 16px;
+
+  --border-light: oklch(0.75 0.11 239.74);
 
   /* Default theme variables (fallback to light theme) */
   --primary-inverted-darker: rgb(146 199 243);
