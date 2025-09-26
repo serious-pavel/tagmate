@@ -221,7 +221,7 @@ body.blockL-show-tgs #recent-tgs {
   justify-content: flex-start;
   flex-wrap: wrap;
   box-shadow: 0 0 0 0.075rem var(--border);
-  padding: 0.9rem 0.6rem;
+  padding: 0.9rem 0.8rem;
   border-radius: 10px;
   user-select: none;
   margin: 0.2rem 0 0.2rem 0;
@@ -253,12 +253,12 @@ body.blockL-show-tgs #recent-tgs {
   align-items: center;
   justify-content: center;
   background-color: #1554a0;
-  min-width: 3.5rem;
+  min-width: 3.4rem;
   height: 2rem;
   border-radius: 5px;
   color: #e8e8e8;
   font-size: var(--text-size-M2);
-  padding: 0.4rem 1ch;
+  padding: 0.4rem 1.2ch;
   cursor: grab;
   font-weight: 350;
 }
