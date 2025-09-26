@@ -155,7 +155,7 @@
                   <input type="hidden" name="action" value="post_attach_tags">
                   <input type="text" name="tags_to_attach" id="post-tags-to-attach"
                          placeholder="Add tags (comma, hashtag or space separated)"
-                         value="{{ post_tags_to_attach }}"
+                         value="{{ post_tags_to_attach }}" class="add-tags-input"
                          {% if submitted_input_id == "post-tags-to-attach" %}autofocus{% endif %}
                          required>
                   <button class="add-tags-btn" type="submit">Add</button>
@@ -248,7 +248,7 @@
                   <input type="hidden" name="action" value="tg_attach_tags">
                   <input type="text" name="tags_to_attach" id="tg-tags-to-attach"
                          placeholder="Add tags (comma, hashtag or space separated)"
-                         value="{{ tg_tags_to_attach }}"
+                         value="{{ tg_tags_to_attach }}" class="add-tags-input"
                          {% if submitted_input_id == "tg-tags-to-attach" %}autofocus{% endif %}
                          required>
                   <button class="add-tags-btn" type="submit">Add</button>

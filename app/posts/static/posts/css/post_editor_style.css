@@ -305,7 +305,7 @@ body.blockL-show-tgs #recent-tgs {
   background: var(--bg-light);
 }
 
-.input-button-group input[type="text"] {
+.add-tags-input {
   flex: 1;
   border: none;
   padding: var(--input-text-padding);
