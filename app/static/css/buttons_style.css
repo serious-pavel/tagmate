@@ -151,3 +151,16 @@ button.big-icon-btn:active {
 .copy-tags-btn {
   height: 3.3rem;
 }
+
+.add-tags-btn {
+  padding: var(--input-text-padding) 2rem;
+  height: 100%;
+  border-radius: 0 5px 5px 0;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.add-tags-btn:active {
+  transform: scale(0.97);
+}

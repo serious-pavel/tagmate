@@ -311,19 +311,6 @@ body.blockL-show-tgs #recent-tgs {
   min-width: 0;
 }
 
-.add-tags-btn {
-  padding: var(--input-text-padding) 2rem;
-  height: 100%;
-  border-radius: 0 5px 5px 0;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-}
-
-.add-tags-btn:active {
-  transform: scale(0.97);
-}
-
 .post-tg-intermediate {
   display: flex;
   gap: calc(1.5 * var(--gap));
