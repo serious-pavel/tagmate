@@ -27,7 +27,7 @@
   height: calc(100% - calc(var(--padding) * 2));
   overflow: auto;
   background-color: var(--bg);
-  border-radius: 10px;
+  border-radius: var(--border-radius-L);
   box-shadow: inset 0 0 var(--block-outline-w) var(--block-outline-w) var(--border-muted);
   position: relative;
 }
@@ -68,7 +68,7 @@
 .tab-btn,
 .list-item,
 .fake-btn {
-  border-radius: 5px;
+  border-radius: var(--border-radius-S);
   cursor: pointer;
   color: var(--text-muted);
   background-color: var(--bg-dark);
@@ -177,7 +177,7 @@
   outline: none;
   background: var(--bg-light);
   min-width: 0;
-  border-radius: 5px;
+  border-radius: var(--border-radius-S);
   text-align: center;
 }
 
@@ -222,7 +222,7 @@ body.blockL-show-tgs #recent-tgs {
   flex-wrap: wrap;
   box-shadow: 0 0 0 0.075rem var(--border);
   padding: 0.9rem 0.8rem;
-  border-radius: 10px;
+  border-radius: var(--border-radius-M);
   user-select: none;
   margin: 0.2rem 0 0.2rem 0;
   overflow: auto;
@@ -239,7 +239,7 @@ body.blockL-show-tgs #recent-tgs {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: var(--border-radius-M);
     color: var(--text-muted);
     background: var(--border-muted);
     z-index: 5;
@@ -255,7 +255,7 @@ body.blockL-show-tgs #recent-tgs {
   background-color: #1554a0;
   min-width: 3.4rem;
   height: 2rem;
-  border-radius: 5px;
+  border-radius: var(--border-radius-S);
   color: #e8e8e8;
   font-size: var(--text-size-M2);
   padding: 0.4rem 1.2ch;
@@ -300,7 +300,7 @@ body.blockL-show-tgs #recent-tgs {
 .input-button-group {
   display: flex;
   width: 97%;
-  border-radius: 5px;
+  border-radius: var(--border-radius-S);
   overflow: hidden;
   background: var(--bg-light);
 }
@@ -311,7 +311,7 @@ body.blockL-show-tgs #recent-tgs {
   padding: var(--input-text-padding);
   font-size: var(--text-size-M2);
   outline: none;
-  border-radius: 5px 0 0 5px;
+  border-radius: var(--border-radius-S) 0 0 var(--border-radius-S);
   background: oklch(0.72 0.05 298.58 / 0.09);
   min-width: 0;
 }
@@ -345,7 +345,7 @@ input.add-tags-input:focus {
   padding: var(--input-text-padding);
   margin: 0;
   overflow: hidden !important;
-  border-radius: 5px;
+  border-radius: var(--border-radius-S);
   color: var(--text-muted);
 }
 

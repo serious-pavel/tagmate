@@ -3,12 +3,13 @@
   --text-size-M2: 1.1rem;
   --text-size-M1: 1rem;
   --text-size-S: 0.8rem;
+  --border-radius-S: 10px;
+  --border-radius-M: calc(var(--border-radius-S) * 1.5);
+  --border-radius-L: calc(var(--border-radius-M) * 1.5);
   --input-text-padding: 0.5rem;
   --default-btn-height: 2.5rem;
   --icon-btn-height: 1.5rem;
-
   font-size: 16px;
-
   --border-light: oklch(0.75 0.11 239.74);
 
   /* Default theme variables (fallback to light theme) */
