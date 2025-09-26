@@ -95,27 +95,27 @@ button.big-icon-btn {
   box-shadow: none;
 }
 
-button.big-icon-btn path.plus {
+button.big-icon-btn .inner-element {
   stroke: var(--primary-inverted);
 }
 
-button.big-icon-btn:hover path.plus {
+button.big-icon-btn:hover .inner-element {
   stroke: var(--primary);
 }
 
-button.big-icon-btn:active path.plus {
+button.big-icon-btn:active .inner-element {
   stroke: var(--primary-inverted);
 }
 
-button.big-icon-btn path.circle {
+button.big-icon-btn .outer-element {
   stroke: var(--primary);
 }
 
-button.big-icon-btn:active path.circle {
+button.big-icon-btn:active .outer-element {
   stroke: var(--primary-inverted);
 }
 
-button.big-icon-btn path.bg-layer {
+button.big-icon-btn .bg-layer {
   fill: var(--bg-dark);
 }
 
