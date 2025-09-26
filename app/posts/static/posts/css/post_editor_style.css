@@ -245,7 +245,7 @@ body.blockL-show-tgs #recent-tgs {
     z-index: 5;
     box-shadow: 0 0 0 0.075rem var(--border);
 }
-
+.tag.sortable-ghost,
 .tag {
   position: relative;
   box-shadow: 0 0 0 var(--block-outline-w) var(--primary);
@@ -263,9 +263,15 @@ body.blockL-show-tgs #recent-tgs {
   font-weight: 350;
 }
 
+.tag.sortable-ghost:nth-child(1n+31),
 .tag:nth-child(1n+31) {
   background-color: #5f5d5d;
   box-shadow: 0 0 0 var(--block-outline-w) var(--primary);
+}
+
+.tag.sortable-chosen {
+  background-color: #134481;
+  box-shadow: 0 0 0 var(--block-outline-w) #e8e8e8;
 }
 
 .tag:hover button {
