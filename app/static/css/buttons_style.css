@@ -4,12 +4,13 @@ button {
   box-shadow: inset 0 0 1px 1px var(--primary);
   border: none;
   border-radius: 5px;
-  font-size: var(--text-size-M2);
+  font-size: var(--text-size-M1);
   padding: 5px 1.5ch;
   height: var(--default-btn-height);
   color: var(--primary);
   cursor: pointer;
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  font-weight: bold;
 }
 
 svg path {
@@ -152,11 +153,10 @@ button.big-icon-btn:active {
   height: 3.3rem;
 }
 
-.add-tags-btn {
+button.add-tags-btn {
   padding: var(--input-text-padding) 2rem;
-  height: 100%;
+  height: auto;
   border-radius: 0 5px 5px 0;
-  font-weight: bold;
   display: flex;
   align-items: center;
 }
