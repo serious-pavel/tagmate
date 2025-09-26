@@ -332,11 +332,11 @@ body.blockL-show-tgs #recent-tgs {
 
 .post-tg-intermediate {
   display: flex;
-  gap: calc(2 * var(--gap));
+  gap: calc(1.5 * var(--gap));
   padding: 10px;
   align-items: center;
   justify-content: center;
-  min-height: calc(var(--default-btn-height) + 2rem);
+  /* min-height: calc(var(--default-btn-height) + 2rem); */
   font-size: var(--text-size-M2);
   color: var(--text-dimmed);
   font-weight: 500;
