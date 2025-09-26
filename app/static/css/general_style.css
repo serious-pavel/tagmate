@@ -111,7 +111,7 @@ body.theme-dark {
   --text-dimmed: oklch(0.56 0.04 239);
   --highlight: oklch(0.5 0.04 239);
   --border: oklch(0.4 0.04 239);
-  --border-muted: oklch(0.35 0.04 238.9);
+  --border-muted: oklch(0.44 0.04 238.79);
   --primary: oklch(0.76 0.1 239);
   --primary-inverted: oklch(0.4 0.1 239);
   --secondary: oklch(0.76 0.1 59);
