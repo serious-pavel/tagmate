@@ -217,7 +217,7 @@ body.blockL-show-tgs #recent-tgs {
   align-content: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
-  box-shadow: 0 0 0 0.075rem var(--border);
+  box-shadow: 0 0 0 var(--block-outline-w) var(--border-muted);
   padding: 0.9rem 0.8rem;
   border-radius: var(--border-radius-M);
   user-select: none;
@@ -240,7 +240,7 @@ body.blockL-show-tgs #recent-tgs {
     color: var(--text-muted);
     background: var(--border-muted);
     z-index: 5;
-    box-shadow: 0 0 0 0.075rem var(--border);
+    box-shadow: 0 0 0 var(--block-outline-w) var(--text-dimmed);
 }
 .tag.sortable-ghost,
 .tag {
