@@ -100,7 +100,7 @@ button.big-icon-btn:active .inner-element {
 }
 
 button.big-icon-btn .outer-element {
-  stroke: var(--primary);
+  stroke: #4982c6;
 }
 
 button.big-icon-btn:active .outer-element {
