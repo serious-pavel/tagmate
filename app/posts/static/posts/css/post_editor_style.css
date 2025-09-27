@@ -309,7 +309,7 @@ body.blockL-show-tgs #recent-tgs {
 .add-tags-input {
   flex: 1;
   border: none;
-  padding: var(--input-text-padding);
+  padding: var(--input-text-padding) 0.8rem;
   font-size: var(--text-size-M2);
   outline: none;
   border-radius: var(--border-radius-S) 0 0 var(--border-radius-S);
