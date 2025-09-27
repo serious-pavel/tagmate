@@ -99,10 +99,6 @@
   line-height: 1.5;
 }
 
-.list-item .fake-btn {
-  translate: -1ch -5px; /* Should be opposite of parent (list-item) padding */
-}
-
 .list-item,
 .tabs {
   margin: 0 var(--padding);
@@ -327,7 +323,6 @@ input.add-tags-input:focus {
   padding: 10px;
   align-items: center;
   justify-content: center;
-  /* min-height: calc(var(--default-btn-height) + 2rem); */
   font-size: var(--text-size-M2);
   color: var(--text-dimmed);
   font-weight: 500;

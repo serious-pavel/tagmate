@@ -17,6 +17,12 @@ svg path {
   transition: stroke 0.2s, fill 0.2s;
 }
 
+button svg {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
 button:hover:not(.tab-btn, .icon-btn) {
   background-color: var(--primary-inverted-darker);
 }
@@ -44,13 +50,6 @@ button:active {
   aspect-ratio: 1;
   font-size: 0;
   padding: 0.1rem;
-  /* box-shadow: 0 0 0px 1px var(--text-muted); */
-}
-
-.icon-btn svg {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
 }
 
 /* remove tag */
@@ -61,8 +60,6 @@ button:active {
   display: none;
   height: var(--icon-btn-height);
   border-radius: 50%;
-  /* padding: 0rem; */
-  /* box-shadow: 0 0 2px 0px var(--text-muted); */
 }
 
 /* delete item */
@@ -81,12 +78,6 @@ button:active {
 /* create-item-btn */
 button.create-item-btn {
   height: 5rem;
-}
-
-button.big-icon-btn svg {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
 }
 
 button.big-icon-btn {
