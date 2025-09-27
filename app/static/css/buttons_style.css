@@ -77,7 +77,7 @@ button:active {
 
 /* create-item-btn */
 button.create-item-btn {
-  height: 5rem;
+  height: 4.5rem;
 }
 
 button.big-icon-btn {
@@ -117,8 +117,9 @@ button.big-icon-btn:active {
 }
 
 .list-item button.create-item-btn {
-  height: 4rem;
-  width: 8ch;
+  --create-item-btn-size: 3.5rem;
+  height: var(--create-item-btn-size);
+  margin: 0 calc((8ch - var(--create-item-btn-size)) / 2); /* 8ch Should be bigger than second value */
 }
 
 .list-item.create-item-wrapper {
