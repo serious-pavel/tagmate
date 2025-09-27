@@ -255,7 +255,7 @@ body.blockL-show-tgs #recent-tgs {
   justify-content: center;
   background-color: #1554a0;
   min-width: 3.4rem;
-  height: 2rem;
+  height: 1.8rem;
   border-radius: var(--border-radius-S);
   color: #e8e8e8;
   font-size: var(--text-size-M2);
