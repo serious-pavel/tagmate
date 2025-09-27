@@ -329,9 +329,7 @@ input.add-tags-input:focus {
 }
 
 .post-tg-intermediate form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: contents;
 }
 
 .edit-like-text {
