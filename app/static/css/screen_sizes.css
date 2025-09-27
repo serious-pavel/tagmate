@@ -49,7 +49,7 @@
   }
 }
 
-@media (width <= 800px) {
+@media (width <= 64.4rem) {
   :root {
     --content-nested-padding: 0.375rem;
   }
@@ -111,5 +111,41 @@
   button.switch.on {
     background-color: var(--primary);
     color: var(--primary-inverted);
+  }
+}
+
+@media (2560px < width) {
+  :root {
+    font-size: 24px;
+  }
+}
+
+@media (2304px < width <= 2560px) {
+  :root {
+    font-size: 20px;
+  }
+}
+
+@media (1920px < width <= 2304px) {
+  :root {
+    font-size: 18px;
+  }
+}
+
+@media (1540px < width <= 1920px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media (800px < width <= 1540px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+@media (width <= 800px) {
+  :root {
+    font-size: 12px;
   }
 }
