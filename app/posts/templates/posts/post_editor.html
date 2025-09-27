@@ -37,8 +37,8 @@
         <div id="recent-posts" class="list">
           {% if current_post %}
             <div class="list-item create-item-wrapper">
-              <button type="button" class="create-item-btn" data-item-type="post" title="Create Post">
-                {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
+              <button type="button" class="big-icon-btn create-item-btn" data-item-type="post" title="Create Post">
+                {% include 'posts/buttons/add-circle-svgrepo-com.svg' %}
               </button>
               <div class="create-item-label">
                 <span>Create</span>
@@ -75,8 +75,8 @@
         <div id="recent-tgs" class="list">
           {% if current_tg %}
             <div class="list-item create-item-wrapper">
-              <button type="button" class="create-item-btn" data-item-type="taggroup" title="Create TagGroup">
-                {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
+              <button type="button" class="big-icon-btn create-item-btn" data-item-type="taggroup" title="Create TagGroup">
+                {% include 'posts/buttons/add-circle-svgrepo-com.svg' %}
               </button>
               <div class="create-item-label">
                 <span>Create</span>
@@ -155,10 +155,10 @@
                   <input type="hidden" name="action" value="post_attach_tags">
                   <input type="text" name="tags_to_attach" id="post-tags-to-attach"
                          placeholder="Add tags (comma, hashtag or space separated)"
-                         value="{{ post_tags_to_attach }}"
+                         value="{{ post_tags_to_attach }}" class="add-tags-input"
                          {% if submitted_input_id == "post-tags-to-attach" %}autofocus{% endif %}
                          required>
-                  <button type="submit">Add</button>
+                  <button class="add-tags-btn" type="submit">Add</button>
                 </label>
               </form>
 
@@ -180,8 +180,8 @@
 
             {% else %}
               <div class="create-item-wrapper">
-                <button type="button" class="create-item-btn" data-item-type="post" title="Create Post">
-                  {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
+                <button type="button" class="big-icon-btn create-item-btn" data-item-type="post" title="Create Post">
+                  {% include 'posts/buttons/add-circle-svgrepo-com.svg' %}
                 </button>
                 Create Post
               </div>
@@ -194,12 +194,17 @@
               <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="copy_tags_to_tg">
-                <button>Copy Tags to TagGroup ⬇</button>
+                <button class="big-icon-btn copy-tags-btn">
+                  {% include 'posts/buttons/round-double-alt-arrow-down-svgrepo-com.svg' %}
+                </button>
               </form>
+              Copy Tags
               <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="copy_tags_to_post">
-                <button>⬆ Copy Tags to Post</button>
+                <button class="big-icon-btn copy-tags-btn">
+                  {% include 'posts/buttons/round-double-alt-arrow-up-svgrepo-com.svg' %}
+                </button>
               </form>
           {% endif %}
         </div>
@@ -243,10 +248,10 @@
                   <input type="hidden" name="action" value="tg_attach_tags">
                   <input type="text" name="tags_to_attach" id="tg-tags-to-attach"
                          placeholder="Add tags (comma, hashtag or space separated)"
-                         value="{{ tg_tags_to_attach }}"
+                         value="{{ tg_tags_to_attach }}" class="add-tags-input"
                          {% if submitted_input_id == "tg-tags-to-attach" %}autofocus{% endif %}
                          required>
-                  <button type="submit">Add</button>
+                  <button class="add-tags-btn" type="submit">Add</button>
                 </label>
               </form>
 
@@ -268,8 +273,8 @@
 
             {% else %}
               <div class="create-item-wrapper">
-                <button type="button" class="create-item-btn" data-item-type="taggroup" title="Create TagGroup">
-                  {% include 'posts/buttons/plus-circle-svgrepo-com.svg' %}
+                <button type="button" class="big-icon-btn create-item-btn" data-item-type="taggroup" title="Create TagGroup">
+                  {% include 'posts/buttons/add-circle-svgrepo-com.svg' %}
                 </button>
                 Create TagGroup
               </div>
