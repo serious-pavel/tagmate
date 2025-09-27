@@ -147,8 +147,6 @@ button.big-icon-btn:active {
 button.add-tags-btn {
   padding: var(--input-text-padding) 2rem;
   border-radius: 0 var(--border-radius-S) var(--border-radius-S) 0;
-  display: flex;
-  align-items: center;
 }
 
 .add-tags-btn:active {
