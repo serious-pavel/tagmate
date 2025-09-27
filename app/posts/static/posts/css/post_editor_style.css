@@ -309,7 +309,7 @@ body.blockL-show-tgs #recent-tgs {
   font-size: var(--text-size-M2);
   outline: none;
   border-radius: var(--border-radius-S) 0 0 var(--border-radius-S);
-  background: oklch(0.72 0.05 298.58 / 0.09);
+  background: var(--input-unfocused);
   min-width: 0;
 }
 
