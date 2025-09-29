@@ -138,7 +138,7 @@
                 <button class="switch">Preview</button>
               </div>
 
-              <form method="post" class="update-form">
+              <form method="post" class="update-form name-update-form">
                 {% csrf_token %}
                 <label>
                   <input type="hidden" name="action" value="update_post_title">
@@ -231,7 +231,7 @@
                 </form>
               </div>
 
-              <form method="post" class="update-form">
+              <form method="post" class="update-form name-update-form">
                 {% csrf_token %}
                 <label>
                   <input type="hidden" name="action" value="update_tg">
@@ -285,7 +285,7 @@
 
       <div class="app-block app-block-R post-preview">
         {% if current_post %}
-          <div class="mobile-only">
+          <div class="mobile-only post-preview-header">
             <div class="block-controls">
               <form method="post" class="delete-item-form">
                 {% csrf_token %}
@@ -309,7 +309,7 @@
               <button class="switch on">< Back</button>
             </div>
 
-            <form method="post" class="update-form">
+            <form method="post" class="update-form name-update-form">
               {% csrf_token %}
               <label>
                 <input type="hidden" name="action" value="update_post_title">
