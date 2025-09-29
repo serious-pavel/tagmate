@@ -1,19 +1,26 @@
 /* general */
 button {
   background-color: var(--primary-inverted);
-  box-shadow: inset 0 0 1px 1px var(--primary);
+  box-shadow: inset 0 0 var(--block-outline-w) var(--block-outline-w) var(--primary);
   border: none;
-  border-radius: 5px;
-  font-size: var(--text-size-M2);
+  border-radius: var(--border-radius-S);
+  font-size: var(--text-size-M1);
   padding: 5px 1.5ch;
   height: var(--default-btn-height);
   color: var(--primary);
   cursor: pointer;
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  font-weight: bold;
 }
 
 svg path {
   transition: stroke 0.2s, fill 0.2s;
+}
+
+button svg {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 
 button:hover:not(.tab-btn, .icon-btn) {
@@ -25,7 +32,7 @@ button:active:not(.tab-btn, .icon-btn) {
 }
 
 button:active {
-  transform: translate(0px, 1px);
+  transform: translate(0, 1px);
 }
 
 /* update */
@@ -43,13 +50,6 @@ button:active {
   aspect-ratio: 1;
   font-size: 0;
   padding: 0.1rem;
-  /* box-shadow: 0 0 0px 1px var(--text-muted); */
-}
-
-.icon-btn svg {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
 }
 
 /* remove tag */
@@ -60,8 +60,6 @@ button:active {
   display: none;
   height: var(--icon-btn-height);
   border-radius: 50%;
-  /* padding: 0rem; */
-  /* box-shadow: 0 0 2px 0px var(--text-muted); */
 }
 
 /* delete item */
@@ -79,51 +77,49 @@ button:active {
 
 /* create-item-btn */
 button.create-item-btn {
-  height: 5rem;
+  height: 4.5rem;
+}
+
+button.big-icon-btn {
   padding: 0;
   border-radius: 50%;
   background: none;
   box-shadow: none;
 }
 
-button.create-item-btn svg {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
-
-button.create-item-btn path.plus {
+button.big-icon-btn .inner-element {
   stroke: var(--primary-inverted);
 }
 
-button.create-item-btn:hover path.plus {
+button.big-icon-btn:hover .inner-element {
   stroke: var(--primary);
 }
 
-button.create-item-btn:active path.plus {
+button.big-icon-btn:active .inner-element {
   stroke: var(--primary-inverted);
 }
 
-button.create-item-btn path.circle {
-  stroke: var(--primary);
+button.big-icon-btn .outer-element {
+  stroke: #4982c6;
 }
 
-button.create-item-btn:active path.circle {
+button.big-icon-btn:active .outer-element {
   stroke: var(--primary-inverted);
 }
 
-button.create-item-btn path.bg-layer {
+button.big-icon-btn .bg-layer {
   fill: var(--bg-dark);
 }
 
-button.create-item-btn:hover,
-button.create-item-btn:active {
+button.big-icon-btn:hover,
+button.big-icon-btn:active {
   background: none;
 }
 
 .list-item button.create-item-btn {
-  height: 4rem;
-  width: 8ch;
+  --create-item-btn-size: 3.5rem;
+  height: var(--create-item-btn-size);
+  margin: 0 calc((8ch - var(--create-item-btn-size)) / 2); /* 8ch Should be bigger than second value */
 }
 
 .list-item.create-item-wrapper {
@@ -143,4 +139,17 @@ button.create-item-btn:active {
 .create-item-label span {
   font-size: var(--text-size-M1);
   color: var(--text-dimmed);
+}
+
+.copy-tags-btn {
+  height: 3.3rem;
+}
+
+button.add-tags-btn {
+  padding: var(--input-text-padding) 2rem;
+  border-radius: 0 var(--border-radius-S) var(--border-radius-S) 0;
+}
+
+.add-tags-btn:active {
+  transform: scale(0.97);
 }
