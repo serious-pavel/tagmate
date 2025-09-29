@@ -1,27 +1,34 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const themeIcons = {
-    "light": "🌞",
-    "dark": "🌚"
-  };
+const themeIcons = {
+  "light": "🌞",
+  "dark": "🌚"
+};
 
-  // Detect theme: from storage or from system
-  let theme = localStorage.getItem('theme');
-  if (!theme) {
-    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
-    localStorage.setItem('theme', theme);
+function setTheme(theme) {
+  document.body.classList.remove("theme-light", "theme-dark");
+  document.body.classList.add("theme-" + theme);
+  const themeLabel = document.getElementById("theme-label");
+  if (themeLabel) {
+    themeLabel.textContent = themeIcons[theme];
+  } else {
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("theme-label").textContent = themeIcons[theme];
+    });
   }
-  setTheme(theme);
+}
 
-  document.getElementById("theme-toggle-btn").addEventListener("click", function() {
+// Detect theme: from storage or from system
+let theme = localStorage.getItem('theme');
+if (!theme) {
+  theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
+  localStorage.setItem('theme', theme);
+}
+setTheme(theme);
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("theme-toggle-btn").addEventListener("click", function () {
     theme = theme === "light" ? "dark" : "light";
     localStorage.setItem('theme', theme);
     setTheme(theme);
   });
-
-  function setTheme(theme) {
-    document.body.classList.remove("theme-light", "theme-dark");
-    document.body.classList.add("theme-" + theme);
-    document.getElementById("theme-label").textContent = themeIcons[theme];
-  }
 });
 

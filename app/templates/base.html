@@ -16,7 +16,6 @@
   {% endblock links %}
   <script>{% block script %}{% endblock script %}</script>
   <script src="{% static 'js/show_messages.js' %}"></script>
-  <script src="{% static 'js/toggle_theme.js' %}"></script>
   <script src="{% static 'js/foolproof_deletion.js' %}"></script>
   <script src="{% static 'js/modal_window_interactions.js' %}"></script>
   <script src="{% static 'js/mobile_layout.js' %}"></script>
@@ -28,6 +27,7 @@
   <title>TagMate - {% block title %}{% endblock title %}</title>
 </head>
 <body>
+<script src="{% static 'js/toggle_theme.js' %}"></script>
 <script>
   (function () {
     var tab = localStorage.getItem('blockL_selected_tab') || 'posts';
