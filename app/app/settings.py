@@ -217,3 +217,6 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
 SOCIALACCOUNT_ADAPTER = 'core.social_adapters.MySocialAccountAdapter'
 ACCOUNT_ADAPTER = 'core.account_adapters.NoSignUpAccountAdapter'
+
+# Security
+CSRF_FAILURE_VIEW = "core.views.csrf_failure"
