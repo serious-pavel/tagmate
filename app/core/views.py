@@ -102,4 +102,3 @@ def server_error(request):
 # Django calls CSRF_FAILURE_VIEW instead of handler403 for CSRF errors
 def csrf_failure(request, reason):
     return render_error(request, 403)
-
