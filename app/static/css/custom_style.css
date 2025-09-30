@@ -170,3 +170,37 @@ div.profile-actions {
   aspect-ratio: 1 / 1;
   background-color: var(--bg-light);
 }
+
+.error-wrapper {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message-card {
+  background: var(--bg-dark);
+  padding: 1.8rem;
+  border-radius: var(--border-radius-M);
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.error-status,
+.error-message-data {
+  font-size: var(--text-size-M2);
+}
+
+.error-message-header {
+  font-size: x-large;
+  font-weight: 500;
+}
+
+code {
+  background: var(--bg);
+  border-radius: var(--border-radius-S);
+  padding: 0.2rem 0.4rem;
+  box-shadow: 0 0 0 1px var(--border);
+}
