@@ -85,6 +85,7 @@ button.big-icon-btn {
   border-radius: 50%;
   background: none;
   box-shadow: none;
+  aspect-ratio: 1 / 1;
 }
 
 button.big-icon-btn .inner-element {
