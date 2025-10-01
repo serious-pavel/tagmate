@@ -177,7 +177,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
             if action == 'update_tg':
                 tg_name = request.POST.get('tg_name')
                 current_tg.name = tg_name
-
+                try:
+                    current_tg.full_clean()
+                except ValidationError as e:
+                    field_validation_sender(request, e)
+                    return redirect(request.path)
                 current_tg.save()
                 messages.success(request, f'TagGroup {current_tg.name} updated')
                 return redirect(request.path)
