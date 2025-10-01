@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+  Error
+{% endblock title %}
+
+{% block content %}
+  <div class="error-wrapper">
+    <div class="error-message-card">
+      <div class="error-status">HTTP {{ status_code }} — {{ status_text }}</div>
+      <div class="error-message-header">SOMETHING WENT WRONG</div>
+      <div class="error-message-data">
+      {% if status_code == 404 %}
+        We couldn’t find requested page: <div class="error-message-path">{{ path }}</div>
+      {% elif status_code == 403 %}
+        You don’t have permission to access this resource
+      {% elif status_code == 400 %}
+        The server could not understand your request
+      {% elif status_code == 500 %}
+        An unexpected error occurred on our side
+      {% else %}
+        The server returned an error
+      {% endif %}
+      </div>
+      <div class="error-message-actions">
+        <button onclick="history.back()">Go Back</button>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

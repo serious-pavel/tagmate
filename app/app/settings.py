@@ -74,6 +74,9 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+if IS_PRODUCTION == 0 and not DEBUG:
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
 ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
@@ -214,3 +217,6 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
 SOCIALACCOUNT_ADAPTER = 'core.social_adapters.MySocialAccountAdapter'
 ACCOUNT_ADAPTER = 'core.account_adapters.NoSignUpAccountAdapter'
+
+# Security
+CSRF_FAILURE_VIEW = "core.views.csrf_failure"

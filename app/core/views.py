@@ -8,6 +8,7 @@ from allauth.socialaccount.providers.google import views as google_views
 from allauth.account.views import LogoutView as AllauthLogoutView
 from django.http import Http404, HttpResponse
 from django.views import View
+from http import HTTPStatus
 
 
 def profile(request):
@@ -63,3 +64,41 @@ def delete_account(request):
 
 def health_check(request):
     return HttpResponse("OK", status=200)
+
+
+def render_error(request, status_code: int):
+    try:
+        status = HTTPStatus(status_code)
+        status_text = status.phrase
+    except ValueError:
+        status_text = "Error"
+
+    context = {
+        "status_code": status_code,
+        "status_text": status_text,
+        "path": request.get_full_path(),
+    }
+
+    return render(request, "error.html", context=context, status=status_code)
+
+
+def bad_request(request, exception):
+    return render_error(request, 400)
+
+
+def permission_denied(request, exception):
+    return render_error(request, 403)
+
+
+def page_not_found(request, exception):
+    return render_error(request, 404)
+
+
+# handler500 doesn't need an exception
+def server_error(request):
+    return render_error(request, 500)
+
+
+# Django calls CSRF_FAILURE_VIEW instead of handler403 for CSRF errors
+def csrf_failure(request, reason):
+    return render_error(request, 403)

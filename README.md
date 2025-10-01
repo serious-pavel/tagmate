@@ -48,6 +48,11 @@ This gives you access to the Admin panel and other superuser features. If you do
 
 You can build and deploy all containers, start a Django app, find your uid in the Profile tab (http://127.0.0.1:8000/profile). Set it as `SU_UID` and re-deploy docker app container. This should update your user and grant it superuser rights.
 
+###### Debugging options
+**Optional**.
+
+You also probably want to enable debugging on the development server. Set `DEBUG` to `1` for this. `0` is a default value. 
+
 ### Build and Start the Containers
 ```sh
 docker-compose build

@@ -23,6 +23,11 @@ from allauth.account.decorators import secure_admin_login
 admin.autodiscover()
 admin.site.login = secure_admin_login(admin.site.login)
 
+handler400 = "core.views.bad_request"
+handler403 = "core.views.permission_denied"
+handler404 = "core.views.page_not_found"
+handler500 = "core.views.server_error"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('core.urls')),
