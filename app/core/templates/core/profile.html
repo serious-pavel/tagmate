@@ -6,7 +6,7 @@
   {% if user.is_authenticated %}
     <img src="{{ user.profile_picture }}" alt="" class="rounded">
     <p>You're signed in as {{ user.full_name }} ({{ user.email }})</p>
-    <p>Your uid is {{ social_acc.uid }}</p>
+    <p class="hidden">Your uid is {{ social_acc.uid }}</p>
     {% if user.is_staff and user.is_superuser %}
       You have access to the <a href="{% url 'admin:index' %}">Admin Panel</a>
     {% endif %}
