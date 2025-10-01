@@ -69,6 +69,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
         if action == 'create_post':
             new_post_title = request.POST.get('new_item_name') or 'Untitled Post'
             new_post = Post(user=request.user, title=new_post_title)
+            try:
+                new_post.full_clean()
+            except ValidationError as e:
+                field_validation_sender(request, e)
+                return redirect(request.path)
             new_post.save()
             messages.success(request, f'New Post {new_post.title} created')
             return redirect_post_editor(request, new_post.id, tg_pk)
