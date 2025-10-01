@@ -169,6 +169,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 post_desc = request.POST.get('post_desc')
                 if post_desc is not None:
                     current_post.description = post_desc
+                    try:
+                        current_post.full_clean()
+                    except ValidationError as e:
+                        field_validation_sender(request, e)
+                        return redirect(request.path)
                     current_post.save()
                     messages.success(request, f'Post {current_post.title} updated')
                     return redirect(request.path)
