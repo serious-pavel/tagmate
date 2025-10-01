@@ -136,7 +136,8 @@ body.theme-dark {
   color: var(--text-muted);
 }
 
-input[type="text"]::placeholder {
+input[type="text"]::placeholder,
+textarea::placeholder {
   color: var(--text-dimmed);
 }
 
