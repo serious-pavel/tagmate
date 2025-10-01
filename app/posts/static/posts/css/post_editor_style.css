@@ -3,7 +3,7 @@
   --padding: 0.8rem;
   --tab-height: 2.4rem;
   /* Block inner outline width */
-  --block-outline-w: 1px;
+  --outline-width: 1px;
 }
 
 .content-nested {
@@ -28,7 +28,7 @@
   overflow: auto;
   background-color: var(--bg);
   border-radius: var(--border-radius-L);
-  box-shadow: inset 0 0 var(--block-outline-w) var(--block-outline-w) var(--border-muted);
+  box-shadow: inset 0 0 var(--outline-width) var(--outline-width) var(--border-muted);
   position: relative;
 }
 
@@ -125,9 +125,9 @@
 .list-end {
   position: absolute;
   bottom: 0;
-  left: var(--block-outline-w);
+  left: var(--outline-width);
   height: 6rem;
-  width: calc(100% - var(--block-outline-w) * 2);
+  width: calc(100% - var(--outline-width) * 2);
   background: linear-gradient(to top, var(--bg) 0, transparent 4rem);
   pointer-events: none;
 }
@@ -220,7 +220,7 @@ body.blockL-show-tgs #recent-tgs {
   align-content: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
-  box-shadow: 0 0 0 var(--block-outline-w) var(--border-muted);
+  box-shadow: 0 0 0 var(--outline-width) var(--border-muted);
   padding: 0.9rem 0.8rem;
   border-radius: var(--border-radius-M);
   user-select: none;
@@ -243,12 +243,12 @@ body.blockL-show-tgs #recent-tgs {
     color: var(--text-muted);
     background: var(--border-muted);
     z-index: 5;
-    box-shadow: 0 0 0 var(--block-outline-w) var(--text-dimmed);
+    box-shadow: 0 0 0 var(--outline-width) var(--text-dimmed);
 }
 .tag.sortable-ghost,
 .tag {
   position: relative;
-  box-shadow: 0 0 0 var(--block-outline-w) var(--primary);
+  box-shadow: 0 0 0 var(--outline-width) var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -266,12 +266,12 @@ body.blockL-show-tgs #recent-tgs {
 .tag.sortable-ghost:nth-child(1n+31),
 .tag:nth-child(1n+31) {
   background-color: #5f5d5d;
-  box-shadow: 0 0 0 var(--block-outline-w) var(--primary);
+  box-shadow: 0 0 0 var(--outline-width) var(--primary);
 }
 
 .tag.sortable-chosen {
   background-color: #134481;
-  box-shadow: 0 0 0 var(--block-outline-w) #e8e8e8;
+  box-shadow: 0 0 0 var(--outline-width) #e8e8e8;
 }
 
 .tag:hover button {

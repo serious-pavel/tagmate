@@ -1,7 +1,7 @@
 /* general */
 button {
   background-color: var(--primary-inverted);
-  box-shadow: inset 0 0 var(--block-outline-w) var(--block-outline-w) var(--primary);
+  box-shadow: inset 0 0 var(--outline-width) var(--outline-width) var(--primary);
   border: none;
   border-radius: var(--border-radius-S);
   font-size: var(--text-size-M1);
