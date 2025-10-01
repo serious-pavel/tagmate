@@ -81,6 +81,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
         if action == 'create_tg':
             new_tg_name = request.POST.get('new_item_name')
             new_tg = TagGroup(user=request.user, name=new_tg_name)
+            try:
+                new_tg.full_clean()
+            except ValidationError as e:
+                field_validation_sender(request, e)
+                return redirect(request.path)
             new_tg.save()
             messages.success(request, f'New TagGroup {new_tg.name} created')
             return redirect_post_editor(request, post_pk, new_tg.id)
