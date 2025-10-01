@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MaxLengthValidator
 from django.db.models import Count
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
@@ -218,7 +218,7 @@ class Post(TagOperationMixin):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     title = StrippedCharField(max_length=100)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, validators=[MaxLengthValidator(5000)])
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
