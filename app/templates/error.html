@@ -10,7 +10,7 @@
       <div class="error-message-header">SOMETHING WENT WRONG</div>
       <div class="error-message-data">
       {% if status_code == 404 %}
-        We couldn’t find requested page: <code>{{ path }}</code>
+        We couldn’t find requested page: <div class="error-message-path">{{ path }}</div>
       {% elif status_code == 403 %}
         You don’t have permission to access this resource
       {% elif status_code == 400 %}
