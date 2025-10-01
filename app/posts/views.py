@@ -139,6 +139,13 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 post_title = request.POST.get('post_title')
                 if post_title:
                     current_post.title = post_title
+                    try:
+                        current_post.full_clean()
+                    except ValidationError as e:
+                        for field, messages_list in e.message_dict.items():
+                            for msg in messages_list:
+                                messages.error(request, f"{field.capitalize()}: {msg}")
+                        return redirect(request.path)
                     current_post.save()
                     messages.success(request, f'Post {current_post.title} updated')
                     return redirect(request.path)
