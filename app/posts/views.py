@@ -10,6 +10,13 @@ import json
 from posts.models import Post, Tag, TagGroup
 
 
+def field_validation_sender(request, val_error: ValidationError):
+    """Sends a message for any field that failed validation"""
+    for field, messages_list in val_error.message_dict.items():
+        for msg in messages_list:
+            messages.error(request, f"{field.capitalize()}: {msg}")
+
+
 def redirect_post_editor(request, post_pk=None, tg_pk=None):
     if tg_pk is not None and post_pk is not None:
         return redirect('post_tg_editor', post_pk=post_pk, tg_pk=tg_pk)
@@ -62,6 +69,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
         if action == 'create_post':
             new_post_title = request.POST.get('new_item_name') or 'Untitled Post'
             new_post = Post(user=request.user, title=new_post_title)
+            try:
+                new_post.full_clean()
+            except ValidationError as e:
+                field_validation_sender(request, e)
+                return redirect(request.path)
             new_post.save()
             messages.success(request, f'New Post {new_post.title} created')
             return redirect_post_editor(request, new_post.id, tg_pk)
@@ -69,6 +81,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
         if action == 'create_tg':
             new_tg_name = request.POST.get('new_item_name')
             new_tg = TagGroup(user=request.user, name=new_tg_name)
+            try:
+                new_tg.full_clean()
+            except ValidationError as e:
+                field_validation_sender(request, e)
+                return redirect(request.path)
             new_tg.save()
             messages.success(request, f'New TagGroup {new_tg.name} created')
             return redirect_post_editor(request, post_pk, new_tg.id)
@@ -139,6 +156,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 post_title = request.POST.get('post_title')
                 if post_title:
                     current_post.title = post_title
+                    try:
+                        current_post.full_clean()
+                    except ValidationError as e:
+                        field_validation_sender(request, e)
+                        return redirect(request.path)
                     current_post.save()
                     messages.success(request, f'Post {current_post.title} updated')
                     return redirect(request.path)
@@ -147,6 +169,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
                 post_desc = request.POST.get('post_desc')
                 if post_desc is not None:
                     current_post.description = post_desc
+                    try:
+                        current_post.full_clean()
+                    except ValidationError as e:
+                        field_validation_sender(request, e)
+                        return redirect(request.path)
                     current_post.save()
                     messages.success(request, f'Post {current_post.title} updated')
                     return redirect(request.path)
@@ -165,7 +192,11 @@ def post_editor(request, post_pk=None, tg_pk=None):
             if action == 'update_tg':
                 tg_name = request.POST.get('tg_name')
                 current_tg.name = tg_name
-
+                try:
+                    current_tg.full_clean()
+                except ValidationError as e:
+                    field_validation_sender(request, e)
+                    return redirect(request.path)
                 current_tg.save()
                 messages.success(request, f'TagGroup {current_tg.name} updated')
                 return redirect(request.path)
