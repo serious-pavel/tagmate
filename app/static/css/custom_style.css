@@ -186,6 +186,7 @@ div.profile-actions {
   flex-direction: column;
   gap: 1.3rem;
   box-shadow: 0 0 0 1px var(--border);
+  max-width: calc(100% - 5rem);
 }
 
 .error-status,
@@ -198,9 +199,20 @@ div.profile-actions {
   font-weight: 500;
 }
 
-code {
+.error-message-path {
   background: var(--bg);
   border-radius: var(--border-radius-S);
-  padding: 0.2rem 0.4rem;
-  box-shadow: 0 0 0 1px var(--border);
+  padding: 0.2rem 0.5rem;
+  box-shadow: inset 0 0 0 1px var(--border);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 0.3rem;
+  min-width: 2ch;
+}
+
+.error-message-data {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
