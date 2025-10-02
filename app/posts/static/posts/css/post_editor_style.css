@@ -69,7 +69,7 @@
   cursor: pointer;
   color: var(--text-muted);
   background-color: var(--bg-dark);
-  box-shadow: 2px 2px 5px var(--border), inset 1px 1px 4px var(--bg);
+  box-shadow: 0 0 0 var(--outline-width) var(--border-muted);
   font-weight: 350;
 }
 
@@ -386,7 +386,7 @@ input.edit-like-text {
 .active {
   font-weight: 400;
   background-color: var(--bg-light);
-  box-shadow: 2px 2px 5px var(--primary), inset 0 0 2px 0 var(--primary);
+  box-shadow: 0 0 0 var(--outline-width) var(--border-light);
   color: var(--text);
 }
 
