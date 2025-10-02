@@ -71,10 +71,6 @@
   background-color: var(--bg-dark);
   box-shadow: 0 0 0 var(--outline-width) var(--border-muted);
   font-weight: 350;
-}
-
-.tab-btn,
-.list-item {
   padding: 5px 1ch;
 }
 
@@ -243,6 +239,7 @@ body.blockL-show-tgs #recent-tgs {
     z-index: 5;
     box-shadow: 0 0 0 var(--outline-width) var(--text-dimmed);
 }
+
 .tag.sortable-ghost,
 .tag {
   position: relative;
@@ -381,7 +378,6 @@ input.edit-like-text {
 .post-preview-header {
   width: 100%;
 }
-
 
 /* common styles */
 .active {
