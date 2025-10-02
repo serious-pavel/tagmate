@@ -119,7 +119,7 @@
 
 .tab-btn:hover:not(.active),
 .list-inner .list-item:hover:not(.active) {
-  box-shadow: 0 0 0 var(--outline-width) #1554a0;
+  box-shadow: 0 0 0 var(--outline-width) var(--primary-universal);
 }
 
 .list-inner .list-item:active {
@@ -257,7 +257,7 @@ body.blockL-show-tgs #recent-tgs {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1554a0;
+  background-color: var(--primary-universal);
   min-width: 3.4rem;
   height: 1.8rem;
   border-radius: var(--border-radius-S);
