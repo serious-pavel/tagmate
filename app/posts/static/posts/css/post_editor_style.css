@@ -72,6 +72,7 @@
   box-shadow: 0 0 0 var(--outline-width) var(--border-muted);
   font-weight: 350;
   padding: 5px 1ch;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
 .tab-btn {
@@ -114,6 +115,15 @@
   overflow: auto;
   scrollbar-width: none;
   padding-top: var(--outline-width);
+}
+
+.tab-btn:hover:not(.active),
+.list-inner .list-item:hover:not(.active) {
+  box-shadow: 0 0 0 var(--outline-width) #1554a0;
+}
+
+.list-inner .list-item:active {
+  transform: scale(0.98);
 }
 
 .list-end {
