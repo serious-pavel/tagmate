@@ -64,8 +64,7 @@
 
 /* Unified style for item-like objects */
 .tab-btn,
-.list-item,
-.fake-btn {
+.list-item {
   border-radius: var(--border-radius-S);
   cursor: pointer;
   color: var(--text-muted);
