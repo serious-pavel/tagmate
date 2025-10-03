@@ -89,7 +89,7 @@ body {
 .header a {
   word-spacing: -0.3rem;
   text-decoration: none;
-  color: #bcbaba;
+  color: var(--header-item);
   font-size: var(--text-size-L);
   display: contents;
 }
