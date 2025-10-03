@@ -67,10 +67,12 @@
       </button>
     </div>
     {% block header-filter %}
-      <a href="https://github.com/serious-pavel/personal_site" target="_blank"><img src="{% static 'img/github-142-svgrepo-com.svg' %}"
-                                                                    alt=""></a>
-      <a href="https://www.linkedin.com/in/pavel-makhnev/" target="_blank"><img src="{% static 'img/linkedin-fill-svgrepo-com.svg' %}"
-                                                                alt=""></a>
+      <a href="https://github.com/serious-pavel/personal_site" target="_blank">
+        {% include 'buttons/github-142-svgrepo-com.svg' %}
+      </a>
+      <a href="https://www.linkedin.com/in/pavel-makhnev/" target="_blank">
+        {% include 'buttons/linkedin-fill-svgrepo-com.svg' %}
+      </a>
       {% if user.is_superuser %}
         <span id="resolution-widget"></span>
       {% endif %}

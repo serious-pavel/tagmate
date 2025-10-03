@@ -94,6 +94,11 @@ body {
   display: contents;
 }
 
+.header-right a svg .full-image {
+  fill: var(--header-item);
+  /* stroke: var(--header-item); */
+}
+
 .header-left a svg {
   width: var(--header-left-item-size);
   height: var(--header-left-item-size);
