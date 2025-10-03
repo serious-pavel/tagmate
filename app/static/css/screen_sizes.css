@@ -65,6 +65,10 @@
   #app-main > .app-block-L.visible {
     left: 0;
   }
+
+  .header a {
+    display: contents;
+  }
 }
 
 @media (width <= 64.4rem) {

@@ -75,8 +75,7 @@ body {
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
-  font-size: 15px;
-  gap: var(--gap);
+  gap: var(--header-gap);
 }
 
 .header-right > * {
@@ -91,7 +90,6 @@ body {
   text-decoration: none;
   color: var(--header-item);
   font-size: var(--text-size-L);
-  display: contents;
 }
 
 .header-right a svg .full-image {
