@@ -43,7 +43,7 @@
             {% include 'buttons/nav-combined.svg' %}
           </button>
         {% endif %}
-        <a href="/" class="header-logo">
+        <a href="{% url 'index' %}" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">
           {% include 'buttons/hashtag.svg' %}
         </a>
         {% if user.is_authenticated %}
