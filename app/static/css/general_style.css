@@ -15,6 +15,9 @@
   --outline-width: 1px;
   --header-height: 50px;
 
+  --header-left-item-size: 35px;
+  --header-right-item-size: 25px;
+
   font-size: 16px;
   --border-light: oklch(0.75 0.11 239.74);
   --primary-universal: #1554a0;
