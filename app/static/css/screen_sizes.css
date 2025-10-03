@@ -26,6 +26,20 @@
     color: #fff;
   }
 
+  button#mobile-posts-toggle svg .outer-element {
+    stroke: var(--header-item);
+  }
+
+  button#mobile-posts-toggle.show-nav-back svg .nav-back,
+  button#mobile-posts-toggle.show-nav-list svg .nav-list {
+    stroke: var(--header-item);
+  }
+
+  button#mobile-posts-toggle.show-nav-list svg .nav-back,
+  button#mobile-posts-toggle.show-nav-back svg .nav-list {
+    stroke: transparent;
+  }
+
   #app-main {
     position: relative;
   }
