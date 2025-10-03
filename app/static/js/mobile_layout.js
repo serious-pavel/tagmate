@@ -34,14 +34,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   setPreviewStateFromLocalStorage(postPreview, 'preview');
 
-  postsMenuToggle.addEventListener('click', function () {
+  postsMenuToggle?.addEventListener('click', function () {
     togglePostsMenu(postsMenu, postsMenuToggle, defaultText);
   });
 
-  previewModeToggle.addEventListener('click', function () {
+  previewModeToggle?.addEventListener('click', function () {
     toggleVisibleElement(postPreview, 'preview');
   });
-  tagsModeToggle.addEventListener('click', function () {
+  tagsModeToggle?.addEventListener('click', function () {
     toggleVisibleElement(postPreview, 'preview');
   });
 });
