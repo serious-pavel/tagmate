@@ -18,6 +18,7 @@
   font-size: 16px;
   --border-light: oklch(0.75 0.11 239.74);
   --primary-universal: #1554a0;
+  --header-item: #d8eef8;
 
   /* Default theme variables (fallback to light theme) */
   --primary-inverted-darker: rgb(146 199 243);
