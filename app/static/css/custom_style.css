@@ -109,12 +109,6 @@ body {
   font-weight: 600;
 }
 
-.header-logo {
-  color: white;
-  font-weight: 600;
-  display: flex;
-}
-
 img.rounded {
   border-radius: 50%;
   width: 7rem;
