@@ -118,7 +118,7 @@ button.big-icon-btn:active {
 }
 
 .list-item button.create-item-btn {
-  --create-item-btn-size: 3.5rem;
+  --create-item-btn-size: 3.4rem;
   height: var(--create-item-btn-size);
   margin: 0 calc((8ch - var(--create-item-btn-size)) / 2); /* 8ch Should be bigger than second value */
 }

@@ -64,19 +64,15 @@
 
 /* Unified style for item-like objects */
 .tab-btn,
-.list-item,
-.fake-btn {
+.list-item {
   border-radius: var(--border-radius-S);
   cursor: pointer;
   color: var(--text-muted);
   background-color: var(--bg-dark);
-  box-shadow: 2px 2px 5px var(--border), inset 1px 1px 4px var(--bg);
+  box-shadow: 0 0 0 var(--outline-width) var(--border-muted);
   font-weight: 350;
-}
-
-.tab-btn,
-.list-item {
   padding: 5px 1ch;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
 .tab-btn {
@@ -118,6 +114,16 @@
   gap: var(--gap);
   overflow: auto;
   scrollbar-width: none;
+  padding-top: var(--outline-width);
+}
+
+.tab-btn:hover:not(.active),
+.list-inner .list-item:hover:not(.active) {
+  box-shadow: 0 0 0 var(--outline-width) var(--primary-universal);
+}
+
+.list-inner .list-item:active {
+  transform: scale(0.98);
 }
 
 .list-end {
@@ -243,6 +249,7 @@ body.blockL-show-tgs #recent-tgs {
     z-index: 5;
     box-shadow: 0 0 0 var(--outline-width) var(--text-dimmed);
 }
+
 .tag.sortable-ghost,
 .tag {
   position: relative;
@@ -250,7 +257,7 @@ body.blockL-show-tgs #recent-tgs {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1554a0;
+  background-color: var(--primary-universal);
   min-width: 3.4rem;
   height: 1.8rem;
   border-radius: var(--border-radius-S);
@@ -382,12 +389,11 @@ input.edit-like-text {
   width: 100%;
 }
 
-
 /* common styles */
 .active {
   font-weight: 400;
   background-color: var(--bg-light);
-  box-shadow: 2px 2px 5px var(--primary), inset 0 0 2px 0 var(--primary);
+  box-shadow: 0 0 0 var(--outline-width) var(--border-light);
   color: var(--text);
 }
 
