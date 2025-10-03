@@ -325,9 +325,9 @@
               <button id="update-post-desc-btn" class="update-btn">Save!</button>
               <label>
                 <input type="hidden" name="action" value="update_post_desc">
-                <textarea type="text" class="edit-like-text submit-on-blur"
-                          oninput="auto_grow(this)" id="post-desc"
-                          name="post_desc" placeholder="">{{ current_post.description }}</textarea>
+                <textarea type="text" class="edit-like-text submit-on-blur" id="post-desc"
+                          oninput="setTextAreaHeight(this)" name="post_desc"
+                          placeholder="Your post description goes here...">{{ current_post.description }}</textarea>
               </label>
             </form>
 
@@ -337,7 +337,7 @@
               {% endfor %}
             </div>
           </div>
-          <button type="button" onclick="copyPreviewText()">Copy as Plain Text</button>
+          <button type="button" id="copy-preview-btn" onclick="copyPreviewText()">Copy as Plain Text</button>
         {% else %}
           <div class="empty-state-text">
             <span class="highlighted-text">Post preview</span> will appear here

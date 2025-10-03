@@ -346,7 +346,6 @@ input.add-tags-input:focus {
   font: inherit;
   padding: var(--input-text-padding);
   margin: 0;
-  overflow: hidden !important;
   border-radius: var(--border-radius-S);
   color: var(--text-muted);
 }
@@ -359,8 +358,9 @@ input.add-tags-input:focus {
 textarea.edit-like-text {
   width: calc(100% - 2 * var(--input-text-padding));
   resize: none;
-  min-height: 115px;
+  min-height: calc((100vh - 2 * var(--padding) - 2 * var(--content-nested-padding) - var(--header-height)) / 3);
   font-size: var(--text-size-M1);
+  field-sizing: content;
 }
 
 input.edit-like-text {

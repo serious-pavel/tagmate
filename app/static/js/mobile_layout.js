@@ -1,7 +1,11 @@
 const toggleVisibleElement = (element, key) => {
   element.classList.toggle('visible');
   if (key) {
-    window.localStorage.setItem(key, element.classList.contains('visible') ? 'true' : 'false');
+    const isVisible = element.classList.contains('visible');
+    window.localStorage.setItem(key, isVisible.toString());
+    if (isVisible) {
+      setTextAreaStyle();
+    }
   }
 };
 
@@ -33,14 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   setPreviewStateFromLocalStorage(postPreview, 'preview');
 
-  postsMenuToggle.addEventListener('click', function () {
+  postsMenuToggle?.addEventListener('click', function () {
     togglePostsMenu(postsMenu, postsMenuToggle, defaultText);
   });
 
-  previewModeToggle.addEventListener('click', function () {
+  previewModeToggle?.addEventListener('click', function () {
     toggleVisibleElement(postPreview, 'preview');
   });
-  tagsModeToggle.addEventListener('click', function () {
+  tagsModeToggle?.addEventListener('click', function () {
     toggleVisibleElement(postPreview, 'preview');
   });
 });
