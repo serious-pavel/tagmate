@@ -61,6 +61,7 @@ body {
   padding: 0 30px;
   justify-content: space-between;
   font-size: var(--text-size-L);
+  user-select: none;
 }
 
 .header-left {
