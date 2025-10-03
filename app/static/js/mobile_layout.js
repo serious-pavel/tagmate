@@ -18,18 +18,19 @@ const setPreviewStateFromLocalStorage = (element, key) => {
   }
 }
 
-const togglePostsMenu = (postsMenu, postsMenuToggle, defaultButtonText) => {
+const togglePostsMenu = (postsMenu, postsMenuToggle) => {
   toggleVisibleElement(postsMenu);
   if (postsMenu.classList.contains('visible')) {
-    postsMenuToggle.innerHTML = '< Back';
+    postsMenuToggle.classList.add('show-nav-back');
+    postsMenuToggle.classList.remove('show-nav-list');
   } else {
-    postsMenuToggle.innerHTML = defaultButtonText;
+    postsMenuToggle.classList.add('show-nav-list');
+    postsMenuToggle.classList.remove('show-nav-back');
   }
 };
 
 document.addEventListener("DOMContentLoaded", function () {
   const postsMenuToggle = document.querySelector('#mobile-posts-toggle');
-  const defaultText = postsMenuToggle.innerHTML;
   const postsMenu = document.querySelector('.app-block-L');
   const previewModeToggle = document.querySelector('#preview-toggle');
   const tagsModeToggle = document.querySelector('#tags-toggle');
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setPreviewStateFromLocalStorage(postPreview, 'preview');
 
   postsMenuToggle?.addEventListener('click', function () {
-    togglePostsMenu(postsMenu, postsMenuToggle, defaultText);
+    togglePostsMenu(postsMenu, postsMenuToggle);
   });
 
   previewModeToggle?.addEventListener('click', function () {
