@@ -3,6 +3,9 @@ const toggleVisibleElement = (element, key) => {
   if (key) {
     const isVisible = element.classList.contains('visible');
     window.localStorage.setItem(key, isVisible.toString());
+    if (isVisible) {
+      setTextAreaMaxHeight();
+    }
   }
 };
 
