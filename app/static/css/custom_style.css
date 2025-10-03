@@ -99,6 +99,7 @@ body {
   /* stroke: var(--header-item); */
 }
 
+.header-left button,
 .header-left a svg {
   width: var(--header-left-item-size);
   height: var(--header-left-item-size);
