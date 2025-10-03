@@ -2,9 +2,11 @@ const sum = (array) => array.reduce((a, b) => a + b, 0);
 const toNumber = (array) => array.map(m => parseFloat(m) || 0);
 
 const setTextAreaHeight = (textarea) => {
-  if (textarea.innerHTML) {
-    textarea.style.height = '5px';
-    textarea.style.height = `${textarea.scrollHeight}px`;
+  if (textarea.innerHTML && !isChrome) {
+    setTimeout(() => {
+      textarea.style.height = '5px';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }, 0);
   }
 };
 
@@ -33,7 +35,7 @@ const setTextAreaMaxHeight = (textarea) => {
     const maxHeight = parentHeight - parentPaddings - siblingsHeight - margins - textareaPaddings;
 
     textarea.style.maxHeight = `${maxHeight}px`;
-  }, 100);
+  }, 0);
 }
 
 const setTextAreaStyle = () => {
@@ -59,5 +61,5 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-document.addEventListener('DOMContentLoaded', setTextAreaStyle);
+window.addEventListener('load', setTextAreaStyle);
 window.addEventListener('resize', setTextAreaStyle);
