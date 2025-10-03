@@ -15,7 +15,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("theme-toggle-btn").addEventListener("click", function () {
     theme = theme === "light" ? "dark" : "light";
     localStorage.setItem('theme', theme);
-    setTheme(theme);
+
+    if (!document.startViewTransition) {
+      setTheme(theme);
+      return;
+    }
+    document.startViewTransition(() => {
+      setTheme(theme);
+    });
   });
 });
 
