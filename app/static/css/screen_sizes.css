@@ -52,6 +52,7 @@
 @media (width <= 64.4rem) {
   :root {
     --content-nested-padding: 0.375rem;
+    --icon-btn-height: 1.75rem;
   }
 
   .header {
