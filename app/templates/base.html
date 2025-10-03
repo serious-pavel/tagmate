@@ -39,7 +39,9 @@
   {% with request.resolver_match.url_name as url_name %}
     <div class="header-left small-screen-only" id="nav-icons">
         {% if url_name != 'profile' %}
-          <button id="mobile-posts-toggle" class="small-screen-only"><div class="icon-placeholder"></div></button>
+          <button id="mobile-posts-toggle" class="small-screen-only">
+            {% include 'buttons/nav-combined.svg' %}
+          </button>
         {% endif %}
         <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt=""
                                             loading="lazy"></a>
