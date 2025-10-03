@@ -20,7 +20,7 @@ const setPreviewStateFromLocalStorage = (element, key) => {
 
 const togglePostsMenu = (postsMenu, postsMenuToggle) => {
   toggleVisibleElement(postsMenu);
-  const prevNavActive = document.querySelector('#mobile-posts-toggle + a');
+  const prevNavActive = document.querySelector('#nav-toggle-btn + a');
   if (postsMenu.classList.contains('visible')) {
     postsMenuToggle.classList.add('show-nav-back');
     postsMenuToggle.classList.remove('show-nav-list');
@@ -35,7 +35,7 @@ const togglePostsMenu = (postsMenu, postsMenuToggle) => {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  const postsMenuToggle = document.querySelector('#mobile-posts-toggle');
+  const navToggleButton = document.querySelector('#nav-toggle-btn');
   const postsMenu = document.querySelector('.app-block-L');
   const previewModeToggle = document.querySelector('#preview-toggle');
   const tagsModeToggle = document.querySelector('#tags-toggle');
@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   setPreviewStateFromLocalStorage(postPreview, 'preview');
 
-  postsMenuToggle?.addEventListener('click', function () {
-    togglePostsMenu(postsMenu, postsMenuToggle);
+  navToggleButton?.addEventListener('click', function () {
+    togglePostsMenu(postsMenu, navToggleButton);
   });
 
   previewModeToggle?.addEventListener('click', function () {

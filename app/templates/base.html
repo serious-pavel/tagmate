@@ -39,7 +39,7 @@
   {% with request.resolver_match.url_name as url_name %}
     <div class="header-left small-screen-only" id="nav-icons">
         {% if url_name != 'profile' %}
-          <button id="mobile-posts-toggle" class="small-screen-only show-nav-list">
+          <button id="nav-toggle-btn" class="small-screen-only show-nav-list">
             {% include 'buttons/nav-combined.svg' %}
           </button>
         {% endif %}

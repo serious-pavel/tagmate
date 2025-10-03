@@ -17,7 +17,7 @@
     gap: var(--header-gap);
   }
 
-  button#mobile-posts-toggle {
+  button#nav-toggle-btn {
     display: block;
     padding: 0;
     background-color: transparent;
@@ -26,21 +26,21 @@
     color: #fff;
   }
 
-  button#mobile-posts-toggle svg .outer-element {
+  button#nav-toggle-btn svg .outer-element {
     stroke: var(--header-item);
   }
 
-  button#mobile-posts-toggle.show-nav-back svg .nav-back,
-  button#mobile-posts-toggle.show-nav-list svg .nav-list {
+  button#nav-toggle-btn.show-nav-back svg .nav-back,
+  button#nav-toggle-btn.show-nav-list svg .nav-list {
     stroke: var(--header-item);
   }
 
-  button#mobile-posts-toggle.nav-active svg .full-image {
+  button#nav-toggle-btn.nav-active svg .full-image {
     stroke: white;
   }
 
-  button#mobile-posts-toggle.show-nav-list svg .nav-back,
-  button#mobile-posts-toggle.show-nav-back svg .nav-list {
+  button#nav-toggle-btn.show-nav-list svg .nav-back,
+  button#nav-toggle-btn.show-nav-back svg .nav-list {
     stroke: transparent;
   }
 
