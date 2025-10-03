@@ -14,10 +14,15 @@
   --content-nested-padding: 1.25rem;
   --outline-width: 1px;
   --header-height: 50px;
+  --gap: 0.8rem;
+
+  --header-left-item-size: 35px;
+  --header-right-item-size: 25px;
 
   font-size: 16px;
   --border-light: oklch(0.75 0.11 239.74);
   --primary-universal: #1554a0;
+  --header-item: #d8eef8;
 
   /* Default theme variables (fallback to light theme) */
   --primary-inverted-darker: rgb(146 199 243);
@@ -156,4 +161,21 @@ textarea[type="text"]:focus {
 .add-tags-input,
 button {
   font-family: "Reddit Sans", serif;
+}
+
+::view-transition-old(root) {
+  animation-delay: 0.5s;
+}
+
+::view-transition-new(root) {
+  animation: triangle-wipe 0.5s ease-in;
+}
+
+@keyframes triangle-wipe {
+  from {
+    clip-path: polygon(100% 0, 100% 0, 100% 0);
+  }
+  to {
+    clip-path: polygon(100% 0, 100% 200%, -100% 0);
+  }
 }

@@ -154,3 +154,20 @@ button.add-tags-btn {
 .add-tags-btn:active {
   transform: scale(0.97);
 }
+
+body.theme-dark #theme-toggle-btn .dark,
+body.theme-light #theme-toggle-btn .light {
+  stroke: transparent;
+  fill: transparent;
+}
+
+body.theme-light #theme-toggle-btn .light {
+  stroke: var(--header-item);
+  transition: stroke 1s;
+
+}
+
+body.theme-dark #theme-toggle-btn .dark {
+  fill: var(--header-item);
+  transition: fill 1s;
+}

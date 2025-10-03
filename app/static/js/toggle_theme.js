@@ -1,19 +1,6 @@
-const themeIcons = {
-  "light": "🌞",
-  "dark": "🌚"
-};
-
 function setTheme(theme) {
   document.body.classList.remove("theme-light", "theme-dark");
   document.body.classList.add("theme-" + theme);
-  const themeLabel = document.getElementById("theme-label");
-  if (themeLabel) {
-    themeLabel.textContent = themeIcons[theme];
-  } else {
-    document.addEventListener("DOMContentLoaded", function () {
-      document.getElementById("theme-label").textContent = themeIcons[theme];
-    });
-  }
 }
 
 // Detect theme: from storage or from system
@@ -28,7 +15,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("theme-toggle-btn").addEventListener("click", function () {
     theme = theme === "light" ? "dark" : "light";
     localStorage.setItem('theme', theme);
-    setTheme(theme);
+
+    if (!document.startViewTransition) {
+      setTheme(theme);
+      return;
+    }
+    document.startViewTransition(() => {
+      setTheme(theme);
+    });
   });
 });
 

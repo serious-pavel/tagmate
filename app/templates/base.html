@@ -39,17 +39,23 @@
   {% with request.resolver_match.url_name as url_name %}
     <div class="header-left small-screen-only" id="nav-icons">
         {% if url_name != 'profile' %}
-          <button id="mobile-posts-toggle" class="small-screen-only"><div class="icon-placeholder"></div></button>
+          <button id="nav-toggle-btn" class="small-screen-only show-nav-list">
+            {% include 'buttons/nav-combined.svg' %}
+          </button>
         {% endif %}
-        <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt=""
-                                            loading="lazy"></a>
+        <a href="{% url 'index' %}" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">
+          {% include 'buttons/hashtag.svg' %}
+        </a>
         {% if user.is_authenticated %}
-          <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}"><div class="icon-placeholder"></div></a>
+          <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}">
+            {% include 'buttons/profile.svg' %}
+          </a>
         {% endif %}
     </div>
     <div class="header-left large-screen-only">
-      <a href="{% url 'index' %}" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">Post
-        Editor</a>
+      <a href="{% url 'index' %}" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">
+        Post Editor
+      </a>
       {% if user.is_authenticated %}
         <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}">Profile</a>
       {% endif %}
@@ -58,16 +64,18 @@
   <div class="header-right">
     <div class="theme-toggle">
       <button id="theme-toggle-btn" aria-label="Toggle theme">
-        <span id="theme-label">🌞</span>
+        {% include 'buttons/theme-toggle.svg' %}
       </button>
     </div>
     {% block header-filter %}
-      <a href="https://github.com/serious-pavel/personal_site" target="_blank"><img src="{% static 'img/github-142-svgrepo-com.svg' %}"
-                                                                    alt=""></a>
-      <a href="https://www.linkedin.com/in/pavel-makhnev/" target="_blank"><img src="{% static 'img/linkedin-fill-svgrepo-com.svg' %}"
-                                                                alt=""></a>
+      <a href="https://github.com/serious-pavel/personal_site" target="_blank">
+        {% include 'buttons/github-142-svgrepo-com.svg' %}
+      </a>
+      <a href="https://www.linkedin.com/in/pavel-makhnev/" target="_blank">
+        {% include 'buttons/linkedin-fill-svgrepo-com.svg' %}
+      </a>
       {% if user.is_superuser %}
-        <span id="resolutionWidget" style="font-size: small; color: #888;"></span>
+        <span id="resolution-widget"></span>
       {% endif %}
     {% endblock %}
   </div>
