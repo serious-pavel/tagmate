@@ -159,6 +159,19 @@ button {
   font-family: "Reddit Sans", serif;
 }
 
-::view-transition-group(root) {
-  animation-duration: 0.8s;
+::view-transition-old(root) {
+  animation-delay: 0.5s;
+}
+
+::view-transition-new(root) {
+  animation: triangle-wipe 0.5s ease-in;
+}
+
+@keyframes triangle-wipe {
+  from {
+    clip-path: polygon(100% 0, 100% 0, 100% 0);
+  }
+  to {
+    clip-path: polygon(100% 0, 100% 200%, -100% 0);
+  }
 }
