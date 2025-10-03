@@ -121,6 +121,11 @@ img.rounded {
   box-shadow: none;
 }
 
+#resolution-widget {
+  font-size: var(--text-size-M1);
+  color: var(--header-item);
+}
+
 div.profile-actions {
   display: flex;
 }

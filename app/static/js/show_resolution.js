@@ -1,5 +1,5 @@
     function updateResolution() {
-      const widget = document.getElementById('resolutionWidget');
+      const widget = document.getElementById('resolution-widget');
       if (widget) {
         widget.textContent = `${window.innerWidth} × ${window.innerHeight} px`;
       }
