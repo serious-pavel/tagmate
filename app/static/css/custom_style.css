@@ -118,15 +118,6 @@ img.rounded {
   box-shadow: none;
 }
 
-#theme-label {
-  font-size: 1.5rem;
-}
-
-/* Fallback for theme label before JavaScript loads */
-#theme-label:empty::before {
-  content: "🌞"; /* Default to light theme icon */
-}
-
 div.profile-actions {
   display: flex;
 }
@@ -136,13 +127,6 @@ div.profile-actions {
   align-items: center;
   height: 25px;
   width: 25px;
-}
-
-#theme-label {
-  display: flex;
-  align-items: center;
-  transform: translate(-0, 1px);
-  font-size: 27px;
 }
 
 .header-right img {
