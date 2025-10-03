@@ -53,8 +53,9 @@
         {% endif %}
     </div>
     <div class="header-left large-screen-only">
-      <a href="{% url 'index' %}" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">Post
-        Editor</a>
+      <a href="{% url 'index' %}" class="nav-link {% if url_name in 'index post_editor post_tg_editor' %}nav-active{% endif %}">
+        Post Editor
+      </a>
       {% if user.is_authenticated %}
         <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}">Profile</a>
       {% endif %}
