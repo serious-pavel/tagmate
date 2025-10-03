@@ -44,7 +44,9 @@
         <a href="/" class="header-logo"><img src="{% static 'img/hashtag-square-svgrepo-com.svg' %}" height="35" alt=""
                                             loading="lazy"></a>
         {% if user.is_authenticated %}
-          <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}"><div class="icon-placeholder"></div></a>
+          <a href="{% url 'profile' %}" class="nav-link {% if url_name == 'profile' %}nav-active{% endif %}">
+            {% include 'buttons/profile.svg' %}
+          </a>
         {% endif %}
     </div>
     <div class="header-left large-screen-only">
