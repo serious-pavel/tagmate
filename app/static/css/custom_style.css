@@ -64,6 +64,15 @@ body {
   user-select: none;
 }
 
+.header a svg {
+  height: 35px;
+  width: 35px;
+}
+
+.header-left a {
+  display: contents;
+}
+
 .header-left {
   display: flex;
   flex-direction: row;
