@@ -214,3 +214,11 @@ div.profile-actions {
 .hidden {
   display: none;
 }
+
+.header-left svg .full-image {
+  stroke: var(--header-item);
+}
+
+.header-left .nav-active svg .full-image {
+  stroke: white;
+}
