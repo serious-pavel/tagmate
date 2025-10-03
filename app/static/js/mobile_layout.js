@@ -1,7 +1,14 @@
 const toggleVisibleElement = (element, key) => {
   element.classList.toggle('visible');
   if (key) {
-    window.localStorage.setItem(key, element.classList.contains('visible') ? 'true' : 'false');
+    const isVisible = element.classList.contains('visible');
+    window.localStorage.setItem(key, isVisible ? 'true' : 'false');
+    if (key === 'preview' && isVisible) {
+      setTimeout(() => {
+        const textarea = element.querySelector('textarea');
+        autoGrow(textarea);
+      }, 0);
+    }
   }
 };
 

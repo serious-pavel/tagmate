@@ -352,7 +352,7 @@ input.add-tags-input:focus {
 textarea.edit-like-text {
   width: calc(100% - 2 * var(--input-text-padding));
   resize: none;
-  min-height: 315px;
+  min-height: calc((100vh - 2 * var(--padding) - 2 * var(--content-nested-padding) - var(--header-height)) / 3);
   font-size: var(--text-size-M1);
   field-sizing: content;
 }
