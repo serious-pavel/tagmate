@@ -96,7 +96,6 @@ body {
 
 .header-right a svg .full-image {
   fill: var(--header-item);
-  /* stroke: var(--header-item); */
 }
 
 .header-left button,
