@@ -20,12 +20,17 @@ const setPreviewStateFromLocalStorage = (element, key) => {
 
 const togglePostsMenu = (postsMenu, postsMenuToggle) => {
   toggleVisibleElement(postsMenu);
+  const prevNavActive = document.querySelector('#mobile-posts-toggle + a');
   if (postsMenu.classList.contains('visible')) {
     postsMenuToggle.classList.add('show-nav-back');
     postsMenuToggle.classList.remove('show-nav-list');
+    postsMenuToggle.classList.add('nav-active');
+    prevNavActive.classList.remove('nav-active');
   } else {
     postsMenuToggle.classList.add('show-nav-list');
     postsMenuToggle.classList.remove('show-nav-back');
+    postsMenuToggle.classList.remove('nav-active');
+    prevNavActive.classList.add('nav-active');
   }
 };
 
