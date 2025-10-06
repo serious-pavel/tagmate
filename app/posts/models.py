@@ -31,6 +31,16 @@ hashtag_validator = RegexValidator(
 )
 
 
+def generate_unique_tg_name(user):
+    counter = 1
+    base_name = 'Untitled TagGroup {}'
+    unique_name = base_name.format(counter)
+    while TagGroup.objects.filter(name=unique_name, user=user).exists():
+        counter += 1
+        unique_name = base_name.format(counter)
+    return unique_name
+
+
 class TagOperationMixin(models.Model):
     """Mixin that provides operations on tags for Post and TagGroup"""
 
@@ -188,13 +198,7 @@ class TagGroup(TagOperationMixin):
 
     def save(self, *args, **kwargs):
         if not self.name:
-            counter = 1
-            base_name = 'Untitled TagGroup {}'
-            unique_name = base_name.format(counter)
-            while TagGroup.objects.filter(name=unique_name, user=self.user).exists():
-                counter += 1
-                unique_name = base_name.format(counter)
-            self.name = unique_name
+            self.name = generate_unique_tg_name(self.user)
         super().save(*args, **kwargs)
 
 

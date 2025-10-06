@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 import json
 
-from posts.models import Post, Tag, TagGroup
+from posts.models import Post, Tag, TagGroup, generate_unique_tg_name as gen_tg_name
 
 
 def field_validation_sender(request, val_error: ValidationError):
@@ -79,7 +79,7 @@ def post_editor(request, post_pk=None, tg_pk=None):
             return redirect_post_editor(request, new_post.id, tg_pk)
 
         if action == 'create_tg':
-            new_tg_name = request.POST.get('new_item_name')
+            new_tg_name = request.POST.get('new_item_name') or gen_tg_name(request.user)
             new_tg = TagGroup(user=request.user, name=new_tg_name)
             try:
                 new_tg.full_clean()
