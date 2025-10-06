@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('input.submit-on-blur, textarea.submit-on-blur').forEach(function(field) {
         // Save initial value as a property on the DOM node
         field.dataset.initialValue = field.value;
+        field.dataset.initialWidth = field.style.width;
+        field.dataset.initialHeight = field.style.height;
 
         field.addEventListener('blur', function() {
             // Only submit if changed (and optional simple validation)
@@ -21,7 +23,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         field.addEventListener('keydown', function(e) {
             if (e.key === "Escape") {
-                field.value = field.dataset.initialValue;
+                if (field.tagName.toLowerCase() === 'textarea') {
+                    field.style.height = field.dataset.initialHeight;
+                    field.value = field.dataset.initialValue;
+                } else if (field.tagName.toLowerCase() === 'input') {
+                    field.value = field.dataset.initialValue;
+                    field.style.width = field.dataset.initialWidth;
+                }
                 field.blur();
                 e.preventDefault();
             } else if (
