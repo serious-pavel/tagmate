@@ -62,6 +62,7 @@ body {
   justify-content: space-between;
   font-size: var(--text-size-L);
   user-select: none;
+  gap: var(--header-gap);
 }
 
 .header-left {
