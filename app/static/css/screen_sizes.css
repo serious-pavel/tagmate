@@ -1,6 +1,7 @@
 @media (width <= 1280px) {
   :root {
     --content-nested-padding: 0.8rem;
+    --transition-duration: 0.3s;
   }
 
   .small-screen-only {
@@ -49,21 +50,41 @@
   }
 
   #app-main > .app-block.app-block-L {
-    --dur: 0.3s;
     position: fixed;
     z-index: 10;
-    height: 100%;
+    height: calc(100% - var(--header-height));
     box-sizing: border-box;
     width: var(--block-L-min-width);
     min-width: var(--block-L-min-width);
     left: calc(-1 * var(--block-L-min-width));
     border-radius: 0;
     top: 50px;
-    transition: left var(--dur) ease;
+    transition: left var(--transition-duration) ease;
+  }
+
+  #app-main > .posts-menu-overlay {
+    display: none;
+    opacity: 0;
+    transition-property: opacity display;
+    transition-duration: var(--transition-duration);
+    transition-behavior: allow-discrete;
+    position: absolute;
+    top: calc(-1 * var(--content-nested-padding));
+    left: calc(-1 * var(--content-nested-padding));
+    bottom: calc(-1 * var(--content-nested-padding));
+    right: calc(-1 * var(--content-nested-padding));
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    z-index: 10;
   }
 
   #app-main > .app-block-L.visible {
     left: 0;
+  }
+
+  #app-main > .posts-menu-overlay.visible {
+    display: block;
+    opacity: 1;
   }
 
   .header a {
