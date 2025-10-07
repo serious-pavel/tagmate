@@ -25,6 +25,7 @@
   gap: 2rem;
   overflow: auto;
   max-height: 90vh;
+  max-width: calc(100vw - 6em);
 }
 
 .modal-window-header {
@@ -32,5 +33,10 @@
 }
 
 .modal-window-body {
+  font-size: var(--text-size-M1);
+}
+
+.edit-like-text.modal-window-body {
+  width: 80%;
   font-size: var(--text-size-M1);
 }
