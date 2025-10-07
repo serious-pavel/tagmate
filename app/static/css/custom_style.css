@@ -18,6 +18,11 @@ html {
   font-style: normal;
 }
 
+* {
+  scrollbar-color: var(--border-muted) transparent;
+  scrollbar-width: thin;
+}
+
 html,
 body {
   height: 100%;
