@@ -157,9 +157,9 @@
     width: 100%;
   }
 
-  button.switch.on {
-    background-color: var(--primary);
-    color: var(--primary-inverted);
+  button.switch {
+    min-width: 8ch;
+    padding: 5px 1ch;
   }
 }
 

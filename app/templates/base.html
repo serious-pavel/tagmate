@@ -94,8 +94,8 @@
         <div class="modal-window">
           <div class="highlighted-text modal-window-header" id="delete-item-name">Delete item</div>
           <div id="delete-modal-text" class="modal-window-body">Are you sure you want to delete this item?</div>
-          <div>
-            <button id="confirm-delete-btn" class="highlighted">Yes, Delete</button>
+          <div class="modal-window-controls">
+            <button id="confirm-delete-btn" class="danger-btn">Yes, Delete</button>
             <button id="cancel-delete-btn">Cancel</button>
           </div>
         </div>
@@ -112,9 +112,9 @@
                     class="edit-like-text modal-window-body" enterkeyhint="send">
             </label>
           </form>
-          <div>
-            <button type="submit" id="modal-confirm-btn" form="create-item-form" class="highlighted">Confirm</button>
-            <button id="modal-cancel-btn">Cancel</button>
+          <div class="modal-window-controls">
+            <button type="submit" id="modal-confirm-btn" form="create-item-form">Create</button>
+            <button id="modal-cancel-btn" class="cancel-btn">Cancel</button>
           </div>
         </div>
       </div>

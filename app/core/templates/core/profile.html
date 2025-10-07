@@ -18,8 +18,7 @@
       </form>
       <form method="post" action="{% url 'delete_account' %}" style="display: inline; margin-left: 1rem;">
         {% csrf_token %}
-        <button type="button" class="delete-item-btn" style="background-color: #dc3545; color: white;"
-                data-item-name="{{ user.email }}"
+        <button type="button" class="delete-item-btn danger-btn" data-item-name="{{ user.email }}"
                 data-delete-type="account" title="Delete Account">Delete Account</button>
       </form>
     </div>

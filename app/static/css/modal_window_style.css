@@ -36,6 +36,10 @@
   font-size: var(--text-size-M1);
 }
 
+.modal-window-controls button:first-child {
+  margin-right: 0.5rem;
+}
+
 .edit-like-text.modal-window-body {
   width: 80%;
   font-size: var(--text-size-M1);

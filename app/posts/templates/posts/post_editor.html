@@ -189,25 +189,25 @@
           </div>
         </div>
 
-        <div class="post-tg-intermediate">
-          {% if current_post and current_tg %}
-              <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="copy_tags_to_tg">
-                <button class="big-icon-btn copy-tags-btn">
-                  {% include 'posts/buttons/round-double-alt-arrow-down-svgrepo-com.svg' %}
-                </button>
-              </form>
-              Copy Tags
-              <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="copy_tags_to_post">
-                <button class="big-icon-btn copy-tags-btn">
-                  {% include 'posts/buttons/round-double-alt-arrow-up-svgrepo-com.svg' %}
-                </button>
-              </form>
-          {% endif %}
-        </div>
+        {% if current_post and current_tg %}
+          <div class="post-tg-intermediate">
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="copy_tags_to_tg">
+              <button class="big-icon-btn copy-tags-btn">
+                {% include 'posts/buttons/round-double-alt-arrow-down-svgrepo-com.svg' %}
+              </button>
+            </form>
+            Copy Tags
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="copy_tags_to_post">
+              <button class="big-icon-btn copy-tags-btn">
+                {% include 'posts/buttons/round-double-alt-arrow-up-svgrepo-com.svg' %}
+              </button>
+            </form>
+          </div>
+        {% endif %}
 
         <div class="app-block">
           <div class="item-editor">
@@ -306,7 +306,7 @@
             </div>
 
             <div id="tags-toggle">
-              <button class="switch on">< Back</button>
+              <button class="switch cancel-btn">< Back</button>
             </div>
 
             <form method="post" class="update-form name-update-form">

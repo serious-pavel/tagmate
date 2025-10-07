@@ -23,11 +23,11 @@ button svg {
   height: 100%;
 }
 
-button:hover:not(.tab-btn, .icon-btn) {
+button:hover {
   background-color: var(--primary-inverted-darker);
 }
 
-button:active:not(.tab-btn, .icon-btn) {
+button:active {
   background-color: var(--primary-inverted-darkest);
 }
 
@@ -41,8 +41,7 @@ button:active {
 }
 
 /* icon */
-.icon-btn {
-  box-shadow: none;
+button.icon-btn {
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 40%;
@@ -50,10 +49,19 @@ button:active {
   aspect-ratio: 1;
   font-size: 0;
   padding: 0.1rem;
+  box-shadow: 0 0 0 var(--outline-width) var(--text-dimmed);
+}
+
+button.icon-btn:hover {
+  box-shadow: 0 0 0 var(--outline-width) var(--primary);
+}
+
+button.icon-btn:active {
+  box-shadow: 0 0 0 var(--outline-width) var(--primary);
 }
 
 /* remove tag */
-.remove-tag-btn {
+button.remove-tag-btn {
   position: absolute;
   top: calc(var(--icon-btn-height) / 4 * -1);
   right: calc(var(--icon-btn-height) / 4 * -1);
@@ -63,16 +71,20 @@ button:active {
 }
 
 /* delete item */
-.delete-item-btn {
+button.delete-item-btn {
   background-color: var(--danger);
+}
+
+button.delete-item-btn:hover {
+  background-color: var(--danger-stronger);
+}
+
+button.delete-item-btn:active {
+  background-color: var(--danger-stronger);
 }
 
 .icon-btn .full-image {
   stroke: var(--text-muted);
-}
-
-/* close item */
-.close-item-btn {
 }
 
 /* create-item-btn */
@@ -170,4 +182,32 @@ body.theme-light #theme-toggle-btn .light {
 body.theme-dark #theme-toggle-btn .dark {
   fill: var(--header-item);
   transition: fill 1s;
+}
+
+button.danger-btn {
+  background-color: var(--danger-btn-bg);
+  box-shadow: inset 0 0 var(--outline-width) var(--outline-width) var(--danger-btn-outline);
+  color: var(--text-contrast-universal);
+}
+
+button.danger-btn:hover {
+  background-color: var(--danger-btn-bg-stronger);
+  box-shadow: inset 0 0 var(--outline-width) var(--outline-width) var(--danger-btn-outline);
+}
+
+button.danger-btn:active {
+  background-color: var(--danger-btn-bg-strongest);
+  box-shadow: inset 0 0 var(--outline-width) var(--outline-width) var(--danger-btn-outline-stronger);
+}
+
+button.cancel-btn {
+  background-color: var(--primary-inverted-darkest);
+}
+
+button.cancel-btn:hover {
+  background-color: var(--primary-inverted-darker);
+}
+
+button.cancel-btn:active {
+  background-color: var(--primary-inverted);
 }

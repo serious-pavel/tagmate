@@ -23,6 +23,7 @@
   --border-light: oklch(0.75 0.11 239.74);
   --primary-universal: #1554a0;
   --header-item: #c0e1f0;
+  --text-contrast-universal: oklch(0.96 0.02 253.09);
 
   /* Default theme variables (fallback to light theme) */
   --primary-inverted-darker: rgb(146 199 243);
@@ -57,6 +58,7 @@
   --primary-inverted: oklch(0.76 0.1 239);
   --secondary: oklch(0.4 0.1 59);
   --danger: oklch(0.5 0.05 30);
+  --danger-stronger: oklch(0.43 0.05 30.31);
   --warning: oklch(0.5 0.05 100);
   --success: oklch(0.5 0.05 160);
   --info: oklch(0.5 0.05 260);
@@ -66,6 +68,12 @@ body.theme-light {
   --primary-inverted-darker: rgb(146 199 243);
   --primary-inverted-darkest: rgb(187 221 249);
   --input-unfocused: #f0faff;
+  --danger-btn-bg: #e70101;
+  --danger-btn-bg-stronger: #c10000;
+  --danger-btn-bg-strongest: #9e0202;
+  --danger-btn-outline: #911c28;
+  --danger-btn-outline-stronger: #ff0b0b;
+
   /* hsl (fallback color) */
   --bg-dark: hsl(205 45% 90%);
   --bg: hsl(205 93% 95%);
@@ -96,6 +104,7 @@ body.theme-light {
   --secondary: oklch(0.4 0.1 59);
   --danger-inverted: oklch(0.5 0.05 30);
   --danger: oklch(0.7 0.05 30);
+  --danger-stronger: oklch(0.74 0.03 29.67);
   --warning: oklch(0.5 0.05 100);
   --success: oklch(0.5 0.05 160);
   --info: oklch(0.5 0.05 260);
@@ -104,6 +113,12 @@ body.theme-dark {
   --primary-inverted-darker: rgb(6 62 109);
   --primary-inverted-darkest: rgb(11 42 68);
   --input-unfocused: var(--bg-dark);
+  --danger-btn-bg: #7d1e28;
+  --danger-btn-bg-stronger: #6b151e;
+  --danger-btn-bg-strongest: #540712;
+  --danger-btn-outline: #ff0b0b;
+  --danger-btn-outline-stronger: var(--danger-btn-outline);
+
   /* hsl (fallback color) */
   --bg-dark: hsl(213 92% 2%);
   --bg: hsl(206 63% 4%);
@@ -153,6 +168,12 @@ textarea[type="text"] {
   font-family: "Reddit Mono", monospace;
   box-shadow: inset 0 0 0 var(--outline-width) var(--border-muted);
 }
+
+input[type="text"]:hover,
+textarea[type="text"]:hover {
+  box-shadow: inset 0 0 0 var(--outline-width) var(--primary-universal);
+}
+
 input[type="text"]:focus,
 textarea[type="text"]:focus {
   box-shadow: inset 0 0 0 var(--outline-width) var(--border-light);
