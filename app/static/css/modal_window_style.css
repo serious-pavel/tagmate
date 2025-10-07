@@ -34,3 +34,8 @@
 .modal-window-body {
   font-size: var(--text-size-M1);
 }
+
+.edit-like-text.modal-window-body {
+  width: 80%;
+  font-size: var(--text-size-M1);
+}
