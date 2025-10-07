@@ -42,7 +42,6 @@ button:active {
 
 /* icon */
 button.icon-btn {
-  box-shadow: none;
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 40%;
@@ -50,18 +49,19 @@ button.icon-btn {
   aspect-ratio: 1;
   font-size: 0;
   padding: 0.1rem;
+  box-shadow: 0 0 0 var(--outline-width) var(--text-dimmed);
 }
 
 button.icon-btn:hover {
-  background-color: var(--primary-inverted);
+  box-shadow: 0 0 0 var(--outline-width) var(--primary);
 }
 
 button.icon-btn:active {
-  background-color: var(--primary-inverted);
+  box-shadow: 0 0 0 var(--outline-width) var(--primary);
 }
 
 /* remove tag */
-.remove-tag-btn {
+button.remove-tag-btn {
   position: absolute;
   top: calc(var(--icon-btn-height) / 4 * -1);
   right: calc(var(--icon-btn-height) / 4 * -1);
@@ -76,19 +76,15 @@ button.delete-item-btn {
 }
 
 button.delete-item-btn:hover {
-  background-color: var(--danger);
+  background-color: var(--danger-stronger);
 }
 
 button.delete-item-btn:active {
-  background-color: var(--danger);
+  background-color: var(--danger-stronger);
 }
 
 .icon-btn .full-image {
   stroke: var(--text-muted);
-}
-
-/* close item */
-.close-item-btn {
 }
 
 /* create-item-btn */
