@@ -199,3 +199,15 @@ button.danger-btn:active {
   background-color: var(--danger-btn-bg-strongest);
   box-shadow: inset 0 0 var(--outline-width) var(--outline-width) var(--danger-btn-outline-stronger);
 }
+
+button.cancel-btn {
+  background-color: var(--primary-inverted-darkest);
+}
+
+button.cancel-btn:hover {
+  background-color: var(--primary-inverted-darker);
+}
+
+button.cancel-btn:active {
+  background-color: var(--primary-inverted);
+}
