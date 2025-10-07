@@ -23,11 +23,11 @@ button svg {
   height: 100%;
 }
 
-button:hover:not(.tab-btn, .icon-btn) {
+button:hover {
   background-color: var(--primary-inverted-darker);
 }
 
-button:active:not(.tab-btn, .icon-btn) {
+button:active {
   background-color: var(--primary-inverted-darkest);
 }
 
@@ -41,7 +41,7 @@ button:active {
 }
 
 /* icon */
-.icon-btn {
+button.icon-btn {
   box-shadow: none;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -50,6 +50,14 @@ button:active {
   aspect-ratio: 1;
   font-size: 0;
   padding: 0.1rem;
+}
+
+button.icon-btn:hover {
+  background-color: var(--primary-inverted);
+}
+
+button.icon-btn:active {
+  background-color: var(--primary-inverted);
 }
 
 /* remove tag */
@@ -63,7 +71,15 @@ button:active {
 }
 
 /* delete item */
-.delete-item-btn {
+button.delete-item-btn {
+  background-color: var(--danger);
+}
+
+button.delete-item-btn:hover {
+  background-color: var(--danger);
+}
+
+button.delete-item-btn:active {
   background-color: var(--danger);
 }
 
