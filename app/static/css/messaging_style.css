@@ -1,20 +1,25 @@
 .message-area {
+  --message-gap: 0.6rem;
+
   position: fixed;
-  top: 0.6rem;
+  top: var(--message-gap);
   left: 50%;
   transform: translateX(-50%);
   z-index: 1500;
-  width: max-content;
-  max-width: 90vw;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--message-gap);
 }
 
 .message {
+  width: max-content;
+  max-width: 80vw;
   opacity: 0;
   background: var(--bg-dark);
   padding: 1rem 1.7rem;
   border-radius: var(--border-radius-S);
-  margin-bottom: 0.6rem;
   pointer-events: auto;
   font-size: var(--text-size-M2);
   transition: all 0.3s ease-in-out;
