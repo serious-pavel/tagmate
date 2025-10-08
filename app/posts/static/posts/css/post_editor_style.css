@@ -63,7 +63,7 @@
 }
 
 /* Unified style for item-like objects */
-.tab-btn,
+button.tab-btn,
 .list-item {
   border-radius: var(--border-radius-S);
   cursor: pointer;
@@ -117,8 +117,8 @@
   padding-top: var(--outline-width);
 }
 
-.tab-btn:hover:not(.active),
-.list-inner .list-item:hover:not(.active) {
+button.tab-btn:hover,
+.list-inner .list-item:hover {
   box-shadow: 0 0 0 var(--outline-width) var(--primary-universal);
 }
 
@@ -388,11 +388,17 @@ input.edit-like-text {
 }
 
 /* common styles */
-.active {
+button.tab-btn.active,
+.list-item.active {
   font-weight: 400;
   background-color: var(--bg-light);
   box-shadow: 0 0 0 var(--outline-width) var(--border-light);
   color: var(--text);
+}
+
+.list-item.active:hover,
+.list-item.active:active {
+  box-shadow: 0 0 0 var(--outline-width) var(--border-light);
 }
 
 .list-item.active > .list-item-date {
