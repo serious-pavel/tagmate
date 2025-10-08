@@ -57,7 +57,6 @@ function setupDndSortable(config) {
                 if (!data.success) {
                     showMessage("Failed to update tag order: " + (data.error || ""));
                 } else {
-                    showMessage("Tag order saved!", "success");
                     if (config.previewId && data.tag_text) {
                         const preview = document.getElementById(config.previewId);
                         if (preview) preview.textContent = data.tag_text;
