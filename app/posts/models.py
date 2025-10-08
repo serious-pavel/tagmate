@@ -24,6 +24,9 @@ HASHTAG_REGEX = (
     r'\U000024C2-\U0001F251'
     r']+$'
 )
+TG_NAME_MAX_LENGTH = 64
+POST_TITLE_MAX_LENGTH = 100
+POST_DESC_MAX_LENGTH = 5000
 
 hashtag_validator = RegexValidator(
     regex=HASHTAG_REGEX,
@@ -180,7 +183,7 @@ class TagGroup(TagOperationMixin):
     objects: models.Manager['TagGroup']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tag_groups')
-    name = StrippedCharField(max_length=64)
+    name = StrippedCharField(max_length=TG_NAME_MAX_LENGTH)
 
     tags = models.ManyToManyField(
         Tag,
@@ -221,8 +224,9 @@ class Post(TagOperationMixin):
     objects: models.Manager['Post']
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
-    title = StrippedCharField(max_length=100)
-    description = models.TextField(blank=True, validators=[MaxLengthValidator(5000)])
+    title = StrippedCharField(max_length=POST_TITLE_MAX_LENGTH)
+    description = models.TextField(blank=True,
+                                   validators=[MaxLengthValidator(POST_DESC_MAX_LENGTH)])
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

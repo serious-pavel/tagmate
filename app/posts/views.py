@@ -7,7 +7,11 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 import json
 
-from posts.models import Post, Tag, TagGroup, generate_unique_tg_name as gen_tg_name
+from posts.models import (Post, Tag, TagGroup,
+                          POST_TITLE_MAX_LENGTH,
+                          POST_DESC_MAX_LENGTH,
+                          TG_NAME_MAX_LENGTH,
+                          generate_unique_tg_name as gen_tg_name)
 
 
 def field_validation_sender(request, val_error: ValidationError):
@@ -173,6 +177,7 @@ def post_editor(request, post_pk=None, tg_pk=None):
                         current_post.full_clean()
                     except ValidationError as e:
                         field_validation_sender(request, e)
+                        request.session['post_desc'] = post_desc
                         return redirect(request.path)
                     current_post.save()
                     messages.success(request, f'Post {current_post.title} updated')
@@ -216,7 +221,10 @@ def post_editor(request, post_pk=None, tg_pk=None):
             'post_tags_to_attach': request.session.pop('post_tags_to_attach', ''),
             'tg_tags_to_attach': request.session.pop('tg_tags_to_attach', ''),
             'submitted_input_id': request.session.pop('submitted_input_id', ''),
-        })
+            'post_title_max_length': POST_TITLE_MAX_LENGTH,
+            'tg_name_max_length': TG_NAME_MAX_LENGTH,
+            'post_desc_max_length': POST_DESC_MAX_LENGTH,
+    })
 
     return render(
         request,

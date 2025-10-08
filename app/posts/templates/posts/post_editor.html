@@ -37,7 +37,8 @@
         <div id="recent-posts" class="list">
           {% if current_post %}
             <div class="list-item create-item-wrapper">
-              <button type="button" class="big-icon-btn create-item-btn" data-item-type="post" title="Create Post">
+              <button type="button" class="big-icon-btn create-item-btn" data-item-type="post"
+                      title="Create Post" data-max-length="{{ post_title_max_length }}">
                 {% include 'posts/buttons/add-circle-svgrepo-com.svg' %}
               </button>
               <div class="create-item-label">
@@ -75,7 +76,8 @@
         <div id="recent-tgs" class="list">
           {% if current_tg %}
             <div class="list-item create-item-wrapper">
-              <button type="button" class="big-icon-btn create-item-btn" data-item-type="taggroup" title="Create TagGroup">
+              <button type="button" class="big-icon-btn create-item-btn" data-item-type="taggroup"
+                      data-max-length="{{ tg_name_max_length }}" title="Create TagGroup">
                 {% include 'posts/buttons/add-circle-svgrepo-com.svg' %}
               </button>
               <div class="create-item-label">
@@ -143,7 +145,7 @@
                 <label>
                   <input type="hidden" name="action" value="update_post_title">
                   <input type="text" class="edit-like-text submit-on-blur shrinkable-input" id="post-title"
-                         name="post_title" placeholder="" enterkeyhint="send"
+                         name="post_title" placeholder="" enterkeyhint="send" maxlength="{{ post_title_max_length }}"
                          value="{{ current_post.title }}" required>
                 </label>
                 <button class="update-btn" id="update-post-title-btn">Update Title</button>
@@ -180,7 +182,8 @@
 
             {% else %}
               <div class="create-item-wrapper">
-                <button type="button" class="big-icon-btn create-item-btn" data-item-type="post" title="Create Post">
+                <button type="button" class="big-icon-btn create-item-btn" data-item-type="post"
+                        data-max-length="{{ post_title_max_length }}" title="Create Post">
                   {% include 'posts/buttons/add-circle-svgrepo-com.svg' %}
                 </button>
                 Create Post
@@ -235,7 +238,7 @@
                 {% csrf_token %}
                 <label>
                   <input type="hidden" name="action" value="update_tg">
-                  <input type="text" name="tg_name" placeholder=""
+                  <input type="text" name="tg_name" placeholder="" maxlength="{{ tg_name_max_length }}"
                          value="{{ current_tg.name }}" enterkeyhint="send"
                          id="tg-name" class="edit-like-text shrinkable-input submit-on-blur" required>
                 </label>
@@ -273,7 +276,8 @@
 
             {% else %}
               <div class="create-item-wrapper">
-                <button type="button" class="big-icon-btn create-item-btn" data-item-type="taggroup" title="Create TagGroup">
+                <button type="button" class="big-icon-btn create-item-btn" data-item-type="taggroup"
+                        data-max-length="{{ tg_name_max_length }}" title="Create TagGroup">
                   {% include 'posts/buttons/add-circle-svgrepo-com.svg' %}
                 </button>
                 Create TagGroup
@@ -327,7 +331,7 @@
               <label>
                 <input type="hidden" name="action" value="update_post_desc">
                 <textarea type="text" class="edit-like-text submit-on-blur" id="post-desc"
-                          oninput="setTextAreaHeight(this)" name="post_desc"
+                          oninput="setTextAreaHeight(this)" name="post_desc" maxlength="{{ post_desc_max_length }}"
                           placeholder="Your post description goes here...">{{ current_post.description }}</textarea>
               </label>
             </form>
