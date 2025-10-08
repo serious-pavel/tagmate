@@ -1,6 +1,6 @@
 .message-area {
   position: fixed;
-  top: 10px;
+  top: 0.6rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1500;
@@ -12,9 +12,9 @@
 .message {
   opacity: 0;
   background: var(--bg-dark);
-  padding: 14px 24px;
-  border-radius: 5px;
-  margin-bottom: 8px;
+  padding: 1rem 1.7rem;
+  border-radius: var(--border-radius-S);
+  margin-bottom: 0.6rem;
   pointer-events: auto;
   font-size: var(--text-size-M2);
   transition: all 0.3s ease-in-out;
