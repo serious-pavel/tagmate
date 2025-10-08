@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
         default: "create_item"
     };
 
+    const MAX_LENGTH = {
+        post: "100",
+        taggroup: "64",
+        default: "100"
+    }
+
     document.querySelectorAll('.create-item-btn').forEach(btn => {
         btn.addEventListener('click', function(evt) {
             evt.preventDefault();
@@ -32,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Look for a custom message or type
             let type = btn.getAttribute('data-item-type');
+            let maxLength = btn.getAttribute('data-max-length');
+
             let custom = modalText.textContent;
             modalText.textContent = MESSAGES[type] || custom || MESSAGES.default;
 
@@ -47,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (titleInput) {
                     titleInput.focus();
                     titleInput.placeholder = PLACEHOLDERS[type] || PLACEHOLDERS.default;
+                    titleInput.maxLength = maxLength || MAX_LENGTH[type] || MAX_LENGTH.default;
                 }
             }
         });
