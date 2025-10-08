@@ -24,6 +24,7 @@
   --primary-universal: #1554a0;
   --header-item: #c0e1f0;
   --text-contrast-universal: oklch(0.96 0.02 253.09);
+  --error: #c90125;
 
   /* Default theme variables (fallback to light theme) */
   --primary-inverted-darker: rgb(146 199 243);
