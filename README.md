@@ -5,6 +5,24 @@ a **Django Framework** application. It includes a **PostgreSQL database**, and *
 
 This application allows only authentication through social accounts (only Google for now), you can't create or use a local account.
 
+## Icons
+
+This project uses:
+
+- **Solar Linear Icons** collection by [480 Design](https://www.figma.com/@480design) and [R4IN80W](https://www.figma.com/@voidrainbow).
+
+    Licensed under the [Creative Commons Attribution License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  
+
+    Modified for color, size and animation consistency.
+
+- **Social Media Fill Icons** collection by [Agence DnD](https://www.svgrepo.com/collection/social-media-fill-icons/)
+
+    Provided under the [Logo License](https://www.svgrepo.com/page/licensing/#logo-license).  
+
+    Logos are trademarks of their respective companies.
+
+    Adjustments were made only to color and layout for design consistency.
+
 ## ⚠️ IMPORTANT ⚠️
 
 If you started your project before any `tag` that is presented in the project, you need to conduct a transition to the newest version following this [instruction](#transition-to-the-newest-version).
