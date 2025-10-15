@@ -19,6 +19,7 @@
   <script src="{% static 'js/show_messages.js' %}"></script>
   <script src="{% static 'js/foolproof_deletion.js' %}"></script>
   <script src="{% static 'js/modal_window_interactions.js' %}"></script>
+  <script src="{% static 'js/about_modal_window.js' %}"></script>
   <script src="{% static 'js/mobile_layout.js' %}"></script>
   {% if user.is_superuser %}
     <script src="{% static 'js/show_resolution.js' %}"></script>
@@ -69,7 +70,7 @@
     </div>
     {% block header-filter %}
       <a href="https://github.com/serious-pavel/tagmate" target="_blank">
-        {% include 'buttons/github-142-svgrepo-com.svg' %}
+        {% include 'buttons/github-fill-svgrepo-com.svg' %}
       </a>
       <a href="https://www.linkedin.com/in/pavel-makhnev/" target="_blank">
         {% include 'buttons/linkedin-fill-svgrepo-com.svg' %}
@@ -77,6 +78,9 @@
       {% if user.is_superuser %}
         <span id="resolution-widget"></span>
       {% endif %}
+      <button id="about-btn" aria-label="About">
+        {% include 'buttons/question-circle.svg' %}
+      </button>
     {% endblock %}
   </div>
 </div>
@@ -115,6 +119,35 @@
           <div class="modal-window-controls">
             <button type="submit" id="modal-confirm-btn" form="create-item-form">Create</button>
             <button id="modal-cancel-btn" class="cancel-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="about-modal-bg" class="modal-bg" style="display:none;">
+        <div class="modal-window">
+          <div class="highlighted-text modal-window-header" id="generic-modal-text">Icons &amp; Licenses</div>
+          <div class="modal-window-body">
+            <section id="about-icons" style="font-size: var(--text-size-S);">
+              <p style="font-size: var(--text-size-M1)">
+                This project uses the following icon collections:
+              </p>
+              <p>
+                <strong><a href="https://www.svgrepo.com/collection/solar-linear-icons/" target="_blank" rel="noopener noreferrer">Solar Linear Icons</a></strong>
+                by <a href="https://www.figma.com/@480design" target="_blank" rel="noopener noreferrer">480 Design</a> and
+                <a href="https://www.figma.com/@voidrainbow" target="_blank" rel="noopener noreferrer">R4IN80W</a>. Licensed under the
+                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution License (CC BY 4.0)</a>.
+                Some elements were added, modified or removed for visual and functional integration into the site’s design.
+              </p>
+              <p>
+                <strong><a href="https://www.svgrepo.com/collection/social-media-fill-icons/" target="_blank" rel="noopener noreferrer">Social Media Fill Icons</a></strong>
+                by <a href="https://dribbble.com/agencednd" target="_blank" rel="noopener noreferrer">Agence DnD</a>. Provided under the
+                <a href="https://www.svgrepo.com/page/licensing/#Logo" target="_blank" rel="noopener noreferrer">Logo License</a>.
+                Adjustments were made only to color and layout for design consistency. Logos are trademarks of their respective companies and are used for identification only.
+              </p>
+            </section>
+          </div>
+          <div class="modal-window-controls">
+            <button id="about-close-btn" class="cancel-btn">Close</button>
           </div>
         </div>
       </div>
