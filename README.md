@@ -9,13 +9,13 @@ This application allows only authentication through social accounts (only Google
 
 This project uses:
 
-- **Solar Linear Icons** collection by [480 Design](https://www.figma.com/@480design) and [R4IN80W](https://www.figma.com/@voidrainbow).
+- [**Solar Linear Icons**](https://www.svgrepo.com/collection/solar-linear-icons/) collection by [480 Design](https://www.figma.com/@480design) and [R4IN80W](https://www.figma.com/@voidrainbow).
 
     Licensed under the [Creative Commons Attribution License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  
 
     Changes were made to color, stroke width, size, and some elements were added or removed for visual and functional integration into the site’s design.
 
-- **Social Media Fill Icons** collection by [Agence DnD](https://www.svgrepo.com/collection/social-media-fill-icons/)
+- [**Social Media Fill Icons**](https://www.svgrepo.com/collection/social-media-fill-icons/) collection by [Agence DnD](https://dribbble.com/agencednd)
 
     Provided under the [Logo License](https://www.svgrepo.com/page/licensing/#logo-license).  
 
