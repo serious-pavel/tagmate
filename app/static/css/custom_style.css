@@ -101,6 +101,14 @@ body {
   fill: var(--header-item);
 }
 
+.header-right #about-btn .full-image.strokes {
+  stroke: var(--header-item);
+}
+
+.header-right #about-btn .full-image.fills {
+  fill: var(--header-item);
+}
+
 .header-left button,
 .header-left a svg {
   width: var(--header-left-item-size);
@@ -122,11 +130,16 @@ img.rounded {
   width: 7rem;
 }
 
-#theme-toggle-btn {
+#theme-toggle-btn,
+#about-btn {
   background: transparent;
   border: none;
   padding: 0;
   box-shadow: none;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  width: 25px;
 }
 
 #resolution-widget {
@@ -136,13 +149,6 @@ img.rounded {
 
 div.profile-actions {
   display: flex;
-}
-
-#theme-toggle-btn {
-  display: flex;
-  align-items: center;
-  height: 25px;
-  width: 25px;
 }
 
 .header-right img {
