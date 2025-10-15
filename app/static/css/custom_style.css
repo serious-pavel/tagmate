@@ -138,8 +138,8 @@ img.rounded {
   box-shadow: none;
   display: flex;
   align-items: center;
-  height: 25px;
-  width: 25px;
+  height: var(--header-right-item-size);
+  width: var(--header-right-item-size);
 }
 
 #resolution-widget {
@@ -152,7 +152,8 @@ div.profile-actions {
 }
 
 .header-right img {
-  height: 25px;
+  height: var(--header-right-item-size);
+  width: var(--header-right-item-size);
 }
 
 .highlighted-text {
