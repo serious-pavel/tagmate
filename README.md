@@ -13,7 +13,7 @@ This project uses:
 
     Licensed under the [Creative Commons Attribution License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  
 
-    Modified for color, size and animation consistency.
+    Changes were made to color, stroke width, size, and some elements were added or removed for visual and functional integration into the site’s design.
 
 - **Social Media Fill Icons** collection by [Agence DnD](https://www.svgrepo.com/collection/social-media-fill-icons/)
 
