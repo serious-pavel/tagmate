@@ -5,7 +5,7 @@ a **Django Framework** application. It includes a **PostgreSQL database**, and *
 
 This application allows only authentication through social accounts (only Google for now), you can't create or use a local account.
 
-## Icons
+## Icons & Licenses
 
 This project uses:
 
