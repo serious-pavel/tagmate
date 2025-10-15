@@ -17,7 +17,7 @@ This project uses:
 
 - [**Social Media Fill Icons**](https://www.svgrepo.com/collection/social-media-fill-icons/) collection by [Agence DnD](https://dribbble.com/agencednd)
 
-    Provided under the [Logo License](https://www.svgrepo.com/page/licensing/#logo-license).  
+    Provided under the [Logo License](https://www.svgrepo.com/page/licensing/#Logo).  
 
     Logos are trademarks of their respective companies.
 
