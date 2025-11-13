@@ -46,3 +46,7 @@ services:
 
 volumes:
   dev-db-data:
+
+networks:
+  traefik:
+    external: true
