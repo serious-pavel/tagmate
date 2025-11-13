@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }}
-          envs: DEPLOY_TARGET
+          envs: DEPLOY_TARGET,DB_NAME,DB_USER,DB_PASS,DJANGO_SECRET_KEY,DEBUG,IS_PRODUCTION,GOOGLE_WEBAPP_CLIENT_ID,GOOGLE_WEBAPP_CLIENT_SECRET,SU_UID,SU_EMAIL
           script: |
             cd "$DEPLOY_TARGET"
             envsubst < .env.prod.template > .env.prod
