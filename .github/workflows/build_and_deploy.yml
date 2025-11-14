@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }}
-          envs: DEPLOY_TARGET,DB_NAME,DB_USER,DB_PASS,DJANGO_SECRET_KEY,DEBUG,IS_PRODUCTION,GOOGLE_WEBAPP_CLIENT_ID,GOOGLE_WEBAPP_CLIENT_SECRET,SU_UID,SU_EMAIL
+          envs: DEPLOY_TARGET,DB_NAME,DB_USER,DB_PASS,DJANGO_SECRET_KEY,DJANGO_ALLOWED_HOSTS,GOOGLE_WEBAPP_CLIENT_ID,GOOGLE_WEBAPP_CLIENT_SECRET,SU_UID,SU_EMAIL,DEBUG,IS_PRODUCTION
           script: |
             cd "$DEPLOY_TARGET"
             envsubst < .env.prod.template > .env.prod
@@ -42,6 +42,7 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASS: ${{ secrets.DB_PASS }}
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
           GOOGLE_WEBAPP_CLIENT_ID: ${{ secrets.GOOGLE_WEBAPP_CLIENT_ID }}
           GOOGLE_WEBAPP_CLIENT_SECRET: ${{ secrets.GOOGLE_WEBAPP_CLIENT_SECRET }}
           SU_UID: ${{ secrets.SU_UID }}
