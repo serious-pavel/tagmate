@@ -74,7 +74,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-if IS_PRODUCTION == 0 and not DEBUG:
+if not IS_PRODUCTION and not DEBUG:
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 ROOT_URLCONF = 'app.urls'
