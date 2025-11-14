@@ -42,13 +42,13 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASS: ${{ secrets.DB_PASS }}
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-          DEBUG: ${{ secrets.DEBUG }}
-          IS_PRODUCTION: ${{ secrets.IS_PRODUCTION }}
           GOOGLE_WEBAPP_CLIENT_ID: ${{ secrets.GOOGLE_WEBAPP_CLIENT_ID }}
           GOOGLE_WEBAPP_CLIENT_SECRET: ${{ secrets.GOOGLE_WEBAPP_CLIENT_SECRET }}
           SU_UID: ${{ secrets.SU_UID }}
           SU_EMAIL: ${{ secrets.SU_EMAIL }}
           DEPLOY_TARGET: ${{ env.DEPLOY_TARGET }}
+          DEBUG: ${{ vars.DEBUG }}
+          IS_PRODUCTION: ${{ vars.IS_PRODUCTION }}
 
       - name: Pull and Up application
         uses: appleboy/ssh-action@v1
