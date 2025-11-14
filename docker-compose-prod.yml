@@ -32,7 +32,7 @@ services:
       - "traefik.http.routers.tagmate-secure.entrypoints=websecure"
       - "traefik.http.routers.tagmate-secure.tls.certresolver=le"
       - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
-
+      - "traefik.http.routers.tagmate.middlewares=restricted-ips@file"
 
   db:
     image: postgres:14.15-alpine
