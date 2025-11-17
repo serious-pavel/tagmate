@@ -57,11 +57,13 @@ INSTALLED_APPS = [
 # Add storages only in production
 if IS_PRODUCTION:
     INSTALLED_APPS.append('storages')
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
