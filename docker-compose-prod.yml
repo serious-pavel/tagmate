@@ -25,11 +25,6 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tagmate.rule=Host(`tagmate2.seriouspavel.com`)"
-      - "traefik.http.routers.tagmate.entrypoints=web"
-      # Redirect HTTP to HTTPS
-      - "traefik.http.routers.tagmate.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       # For HTTPS with Let's Encrypt
       - "traefik.http.routers.tagmate-secure.rule=Host(`tagmate2.seriouspavel.com`)"
       - "traefik.http.routers.tagmate-secure.entrypoints=websecure"
