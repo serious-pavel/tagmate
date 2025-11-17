@@ -61,6 +61,7 @@ jobs:
           envs: DEPLOY_TARGET
           script: |
             cd "$DEPLOY_TARGET"
+            docker compose -f docker-compose-prod.yml --env-file .env.prod stop app
             docker compose -f docker-compose-prod.yml --env-file .env.prod pull
             docker compose -f docker-compose-prod.yml --env-file .env.prod up -d
         env:
