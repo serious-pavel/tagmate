@@ -1,3 +1,7 @@
+networks:
+  traefik:
+    external: true
+
 services:
   app:
     build:
@@ -33,7 +37,6 @@ services:
       - "traefik.http.routers.tagmate-secure.middlewares=restricted-ips@file"
       - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
 
-
   db:
     image: postgres:14.15-alpine
     volumes:
@@ -48,7 +51,3 @@ services:
 
 volumes:
   dev-db-data:
-
-networks:
-  traefik:
-    external: true
