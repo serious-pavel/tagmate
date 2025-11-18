@@ -36,7 +36,6 @@ services:
       - "traefik.http.routers.tagmate-secure.tls.certresolver=le"
       - "traefik.http.routers.tagmate-secure.middlewares=restricted-ips@file"
       - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
-      - "traefik.docker.network=traefik"
 
   db:
     image: postgres:14.15-alpine
