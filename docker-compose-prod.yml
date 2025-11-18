@@ -26,8 +26,8 @@ services:
       - db
     restart: always
     networks:
-      - default
       - traefik
+      - default
     labels:
       - "traefik.enable=true"
       # For HTTPS with Let's Encrypt
