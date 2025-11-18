@@ -30,6 +30,7 @@ services:
       - "traefik.http.routers.tagmate-secure.rule=Host(`tagmate2.seriouspavel.com`)"
       - "traefik.http.routers.tagmate-secure.entrypoints=websecure"
       - "traefik.http.routers.tagmate-secure.tls.certresolver=le"
+      - "traefik.http.routers.tagmate-secure.middlewares=restricted-ips@file"
       - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
 
 
