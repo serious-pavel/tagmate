@@ -1,6 +1,13 @@
 networks:
   traefik:
     external: true
+  internal:
+    external: false
+
+volumes:
+  dev-db-data:
+  staticfiles:
+    external: true
 
 services:
   app:
@@ -8,6 +15,7 @@ services:
       context: .
     volumes:
       - ./app:/app
+      - staticfiles:/app/staticfiles
     command: python manage.py runserver 0.0.0.0:8000
     environment:
       - DB_HOST=db
@@ -27,7 +35,7 @@ services:
     restart: always
     networks:
       - traefik
-      - default
+      - internal
     labels:
       - "traefik.enable=true"
       # For HTTPS with Let's Encrypt
@@ -47,7 +55,4 @@ services:
       - POSTGRES_PASSWORD=${DB_PASS}
     restart: always
     networks:
-      - default
-
-volumes:
-  dev-db-data:
+      - internal
