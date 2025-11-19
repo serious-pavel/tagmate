@@ -30,6 +30,7 @@ services:
       - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
       - DEBUG=${DEBUG}
       - IS_PRODUCTION=${IS_PRODUCTION}
+      - DOMAIN=${DOMAIN}
     depends_on:
       - db
     restart: always
