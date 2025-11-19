@@ -56,8 +56,6 @@ INSTALLED_APPS = [
 
 # Add storages only in production
 if IS_PRODUCTION:
-    INSTALLED_APPS.append('storages')
-
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -147,26 +145,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 if IS_PRODUCTION:
-    STORAGES = {
-        "staticfiles": {
-            "BACKEND": "storages.backends.s3.S3Storage",
-            "OPTIONS": {
-                "access_key": os.getenv("AWS_ACCESS_KEY_ID"),
-                "secret_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
-                "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME"),
-                "default_acl": "public-read",
-                "querystring_auth": False,
-                "location": "tagmate/static",
-                "file_overwrite": True,
-                "region_name": f"{os.getenv('AWS_REGION')}",
-            },
-        },
-    }
+    DOMAIN = os.getenv('DOMAIN', 'localhost')
+    STATIC_URL = f'https://static.{DOMAIN}/tagmate/'
+    STATIC_ROOT = BASE_DIR / 'staticfiles' / 'tagmate'
+else:
+    STATIC_URL = 'static/'
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
