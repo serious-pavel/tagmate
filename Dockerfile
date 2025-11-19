@@ -11,8 +11,6 @@ COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 
 COPY ./app /app
 RUN chmod +x /app/entrypoint.sh
-RUN mkdir -p /app/staticfiles/tagmate
-RUN chmod +w /app/staticfiles/tagmate
 
 EXPOSE 8000
 
