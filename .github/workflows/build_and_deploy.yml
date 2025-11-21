@@ -26,7 +26,7 @@ jobs:
           source: "."
           target: "${{ env.DEPLOY_TARGET }}"
 
-      - name: Write .env file to VPS
+      - name: Write secrets to .env file
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -52,7 +52,7 @@ jobs:
           IS_PRODUCTION: ${{ vars.IS_PRODUCTION }}
           DOMAIN: ${{ vars.DOMAIN }}
 
-      - name: Pull and Up application
+      - name: Pull, Build and Run services
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
