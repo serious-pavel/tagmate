@@ -61,6 +61,7 @@ jobs:
           passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }}
           envs: DEPLOY_TARGET
           capture_stdout: true
+          debug: true
           script: |
             cd "$DEPLOY_TARGET"
             docker compose -f docker-compose-prod.yml --env-file .env.prod down
