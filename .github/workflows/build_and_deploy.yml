@@ -65,6 +65,7 @@ jobs:
             cd "$DEPLOY_TARGET"
             docker compose -f docker-compose-prod.yml --env-file .env.prod down
             docker compose -f docker-compose-prod.yml --env-file .env.prod pull
+            docker compose -f docker-compose-prod.yml --env-file .env.prod build
             docker compose -f docker-compose-prod.yml --env-file .env.prod up -d
         env:
           DEPLOY_TARGET: ${{ env.DEPLOY_TARGET }}
