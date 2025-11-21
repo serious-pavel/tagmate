@@ -45,6 +45,14 @@ services:
       - "traefik.http.routers.tagmate-secure.tls.certresolver=le"
       - "traefik.http.routers.tagmate-secure.middlewares=restricted-ips@file"
       - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/health-check/"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+      start_interval: 10s
+
 
   db:
     image: postgres:14.15-alpine
