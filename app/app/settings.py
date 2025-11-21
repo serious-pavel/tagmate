@@ -30,9 +30,8 @@ DEBUG = os.getenv('DEBUG', '0') == '1'
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 # Allow running health checks locally
-hostname = socket.gethostname()
-container_ip = socket.gethostbyname(hostname)
-ALLOWED_HOSTS.append(container_ip)
+if '127.0.0.1' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('127.0.0.1')
 
 IS_PRODUCTION = os.getenv('IS_PRODUCTION', '0') == '1'
 
