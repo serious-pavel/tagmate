@@ -43,7 +43,7 @@ services:
       - "traefik.http.routers.tagmate-secure.entrypoints=websecure"
       - "traefik.http.routers.tagmate-secure.tls.certresolver=le"
       - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
-      - # --- Admin path restriction ---
+      - # Admin path restriction
       - "traefik.http.routers.tagmate-admin.rule=Host(`tagmate.${DOMAIN}`) && PathPrefix(`/admin`)"
       - "traefik.http.routers.tagmate-admin.entrypoints=websecure"
       - "traefik.http.routers.tagmate-admin.tls.certresolver=le"
