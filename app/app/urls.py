@@ -36,8 +36,6 @@ urlpatterns = [
     path('', include('posts.urls')),
     path('health-check/', core_views.health_check, name='health_check'),
     path("robots.txt", TemplateView.as_view(
-                template_name="robots.txt",
-                content_type="text/plain"
-            )
-        )
+        template_name="robots.txt", content_type="text/plain")
+         )
 ]
