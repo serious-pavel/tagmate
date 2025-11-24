@@ -38,12 +38,14 @@ services:
       - internal
     labels:
       - "traefik.enable=true"
-      # For HTTPS with Let's Encrypt
+      # Service definition
+      - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
+      # Main application
       - "traefik.http.routers.tagmate-secure.rule=Host(`tagmate.${DOMAIN}`)"
       - "traefik.http.routers.tagmate-secure.entrypoints=websecure"
       - "traefik.http.routers.tagmate-secure.tls.certresolver=le"
-      - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
-      - # Admin path restriction
+      - "traefik.http.routers.tagmate-secure.service=tagmate"
+      # Admin path restriction
       - "traefik.http.routers.tagmate-admin.rule=Host(`tagmate.${DOMAIN}`) && PathPrefix(`/admin`)"
       - "traefik.http.routers.tagmate-admin.entrypoints=websecure"
       - "traefik.http.routers.tagmate-admin.tls.certresolver=le"
