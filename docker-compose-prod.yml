@@ -43,6 +43,12 @@ services:
       - "traefik.http.routers.tagmate-secure.entrypoints=websecure"
       - "traefik.http.routers.tagmate-secure.tls.certresolver=le"
       - "traefik.http.services.tagmate.loadbalancer.server.port=8000"
+      - # --- Admin path restriction ---
+      - "traefik.http.routers.tagmate-admin.rule=Host(`tagmate.${DOMAIN}`) && PathPrefix(`/admin`)"
+      - "traefik.http.routers.tagmate-admin.entrypoints=websecure"
+      - "traefik.http.routers.tagmate-admin.tls.certresolver=le"
+      - "traefik.http.routers.tagmate-admin.service=tagmate"
+      - "traefik.http.routers.tagmate-admin.middlewares=restricted-ips@file"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/health-check/"]
       interval: 1m
