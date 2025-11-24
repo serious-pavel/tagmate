@@ -9,11 +9,10 @@ python manage.py clear_orphaned_tags
 
 # Collect static files only in production
 if [ "$IS_PRODUCTION" = "1" ] || [ "$DEBUG" = "0" ]; then
-    echo "️ Collecting static files to S3..."
+    echo "️Collecting static files..."
     python manage.py collectstatic --noinput
-    echo "✅ Static files collected successfully!"
 else
-    echo " Skipping collectstatic (not in production)"
+    echo "Skipping collectstatic..."
 fi
 
 # Start the application
