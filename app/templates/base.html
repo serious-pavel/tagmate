@@ -24,10 +24,10 @@
     <script src="{% static 'js/modal_window_interactions.js' %}"></script>
     <script src="{% static 'js/about_modal_window.js' %}"></script>
     <script src="{% static 'js/mobile_layout.js' %}"></script>
-    {% if user.is_superuser %}
-      <script src="{% static 'js/show_resolution.js' %}"></script>
-    {% endif %}
   {% endcompress %}
+  {% if user.is_superuser %}
+    <script src="{% static 'js/show_resolution.js' %}"></script>
+  {% endif %}
   {% block scripts %}
   {% endblock scripts %}
   <title>TagMate - {% block title %}{% endblock title %}</title>

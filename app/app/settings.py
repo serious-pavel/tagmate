@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',  # Enable Google authentication
     'posts',
     'compressor',
+    'django.contrib.humanize',
 ]
 
 # Add storages only in production
