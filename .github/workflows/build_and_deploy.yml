@@ -13,6 +13,12 @@ jobs:
     env:
       DEPLOY_TARGET: "/opt/${{ github.event.repository.name }}"
     steps:
+      - name: Check previous workflow status
+        if: github.event.workflow_run.conclusion != 'success'
+        run: |
+          echo "CI - Test and Lint failed or was cancelled. Skipping deployment."
+          exit 1
+
       - name: Checkout code
         uses: actions/checkout@v4
 
