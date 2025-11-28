@@ -7,6 +7,9 @@ python manage.py migrate
 python manage.py pre_create_su
 python manage.py clear_orphaned_tags
 
+
+echo "$IS_PRODUCTION"
+echo "$DEBUG"
 # Collect static files only in production
 if [ "$IS_PRODUCTION" = "1" ] || [ "$DEBUG" = "0" ]; then
     echo "️Collecting and compressing static files..."

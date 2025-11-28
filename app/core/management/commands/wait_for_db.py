@@ -24,3 +24,9 @@ class Command(BaseCommand):
                 self.stdout.write('DB is unavailable. Waiting for 1 second...')
                 time.sleep(1)
         self.stdout.write(self.style.SUCCESS('Database available!'))
+
+        from app import settings
+        self.stdout.write(f'DEBUG is {settings.DEBUG}')
+        self.stdout.write(f'IS_PRODUCTION is {settings.IS_PRODUCTION}')
+        self.stdout.write(f'COMPRESS_OFFLINE is {settings.COMPRESS_OFFLINE}')
+        self.stdout.write(f'COMPRESS_ENABLED is {settings.COMPRESS_ENABLED}')

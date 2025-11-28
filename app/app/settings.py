@@ -165,9 +165,9 @@ STATICFILES_FINDERS = [
     "compressor.finders.CompressorFinder",
 ]
 
-COMPRESS_ENABLED = True
 if IS_PRODUCTION and not DEBUG:
     COMPRESS_OFFLINE = True
+    COMPRESS_ENABLED = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
