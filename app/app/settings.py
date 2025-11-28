@@ -165,7 +165,8 @@ STATICFILES_FINDERS = [
 ]
 
 COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True
+if IS_PRODUCTION and not DEBUG:
+    COMPRESS_OFFLINE = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
