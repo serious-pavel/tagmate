@@ -1,35 +1,41 @@
 <!DOCTYPE html>
-{% load static %}
+{% load compress static %}
 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
   <link rel="shortcut icon" href="{% static 'img/hashtag-square-svgrepo-com.svg' %}" sizes="any">
-  <link rel="stylesheet" href="{% static 'css/general_style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/messaging_style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/buttons_style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/modal_window_style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/screen_sizes.css' %}">
+  {% compress css %}
+    <link rel="stylesheet" href="{% static 'css/general_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messaging_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/buttons_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modal_window_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/screen_sizes.css' %}">
+  {% endcompress %}
   {% block links %}
   {% endblock links %}
   <script>{% block script %}{% endblock script %}</script>
-  <script src="{% static 'js/browsers.js' %}"></script>
-  <script src="{% static 'js/show_messages.js' %}"></script>
-  <script src="{% static 'js/foolproof_deletion.js' %}"></script>
-  <script src="{% static 'js/modal_window_interactions.js' %}"></script>
-  <script src="{% static 'js/about_modal_window.js' %}"></script>
-  <script src="{% static 'js/mobile_layout.js' %}"></script>
-  {% if user.is_superuser %}
-    <script src="{% static 'js/show_resolution.js' %}"></script>
-  {% endif %}
+  {% compress js %}
+    <script src="{% static 'js/browsers.js' %}"></script>
+    <script src="{% static 'js/show_messages.js' %}"></script>
+    <script src="{% static 'js/foolproof_deletion.js' %}"></script>
+    <script src="{% static 'js/modal_window_interactions.js' %}"></script>
+    <script src="{% static 'js/about_modal_window.js' %}"></script>
+    <script src="{% static 'js/mobile_layout.js' %}"></script>
+    {% if user.is_superuser %}
+      <script src="{% static 'js/show_resolution.js' %}"></script>
+    {% endif %}
+  {% endcompress %}
   {% block scripts %}
   {% endblock scripts %}
   <title>TagMate - {% block title %}{% endblock title %}</title>
 </head>
 <body>
-<script src="{% static 'js/toggle_theme.js' %}"></script>
+{% compress js %}
+  <script src="{% static 'js/toggle_theme.js' %}"></script>
+{% endcompress %}
 <script>
   (function () {
     var tab = localStorage.getItem('blockL_selected_tab') || 'posts';

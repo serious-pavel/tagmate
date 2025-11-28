@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load compress static %}
 
 {% block links %}
   <link rel="stylesheet" href="{% static 'posts/css/post_editor_style.css' %}">
@@ -10,11 +10,13 @@
 
 {% block scripts %}
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-  <script src="{% static 'js/copy_preview_text.js' %}"></script>
-  <script src="{% static 'js/dnd_sortable.js' %}"></script>
-  <script src="{% static 'js/auto_grow_text_inputs.js' %}"></script>
-  <script src="{% static 'js/submit_on_blur.js' %}"></script>
-  <script src="{% static 'js/switch_left_tabs.js' %}"></script>
+  {%  compress js %}
+    <script src="{% static 'js/copy_preview_text.js' %}"></script>
+    <script src="{% static 'js/dnd_sortable.js' %}"></script>
+    <script src="{% static 'js/auto_grow_text_inputs.js' %}"></script>
+    <script src="{% static 'js/submit_on_blur.js' %}"></script>
+    <script src="{% static 'js/switch_left_tabs.js' %}"></script>
+  {% endcompress %}
 {% endblock scripts %}
 
 {% block title %}Post Editor{% endblock title %}

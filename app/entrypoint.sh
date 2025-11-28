@@ -9,8 +9,9 @@ python manage.py clear_orphaned_tags
 
 # Collect static files only in production
 if [ "$IS_PRODUCTION" = "1" ] || [ "$DEBUG" = "0" ]; then
-    echo "️Collecting static files..."
+    echo "️Collecting and compressing static files..."
     python manage.py collectstatic --noinput
+    python manage.py compress
 else
     echo "Skipping collectstatic..."
 fi
