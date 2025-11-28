@@ -165,6 +165,8 @@ STATICFILES_FINDERS = [
     "compressor.finders.CompressorFinder",
 ]
 
+COMPRESS_OFFLINE = False
+COMPRESS_ENABLED = False
 if IS_PRODUCTION and not DEBUG:
     COMPRESS_OFFLINE = True
     COMPRESS_ENABLED = True
