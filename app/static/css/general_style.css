@@ -1,3 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Reddit+Sans:ital,wght@0,200..900;1,200..900&display=swap');
+
+html {
+  font-family: "Reddit Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  position: relative;
+}
+
 :root {
   --text-size-L: 1.2rem;
   --text-size-M2: 1.1rem;
@@ -110,6 +130,7 @@ body.theme-light {
   --success: oklch(0.5 0.05 160);
   --info: oklch(0.5 0.05 260);
 }
+
 body.theme-dark {
   --primary-inverted-darker: rgb(6 62 109);
   --primary-inverted-darkest: rgb(11 42 68);
@@ -157,6 +178,8 @@ body.theme-dark {
 
 * {
   color: var(--text-muted);
+  scrollbar-color: var(--border-muted) transparent;
+  scrollbar-width: thin;
 }
 
 input[type="text"]::placeholder,
@@ -182,7 +205,7 @@ textarea[type="text"]:focus {
 
 .add-tags-input,
 button {
-  font-family: "Reddit Sans", serif;
+  font-family: "Reddit Sans", sans-serif;
 }
 
 ::view-transition-old(root) {
